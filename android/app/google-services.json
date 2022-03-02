@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "86561641574",
+    "project_id": "the-office-ef23a",
+    "storage_bucket": "the-office-ef23a.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:86561641574:android:09af2d77b862a1afb349a7",
+        "android_client_info": {
+          "package_name": "chris.gxg.vasi.the_office"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "86561641574-8ta6f8m97lhedpolg33i4o6oaf4ebif7.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBAs8z2LKauVMr3aOui3d--G4Zse3jX4eE"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "86561641574-8ta6f8m97lhedpolg33i4o6oaf4ebif7.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
