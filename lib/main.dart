@@ -1,8 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:the_office/screens/sign_in_screen.dart';
 import 'package:firebase_core/firebase_core.dart';
+import 'screens/user_search _screen.dart';
 
-void main() async{
+void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp();
   runApp(const MyApp());
@@ -18,7 +19,7 @@ class MyApp extends StatelessWidget {
       theme: ThemeData(
         primarySwatch: Colors.blue,
       ),
-      home:const SignInPage(),
+      home: const UserSearchScreen(),
     );
   }
 }

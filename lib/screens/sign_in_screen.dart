@@ -13,7 +13,6 @@ class _SignInPageState extends State<SignInPage> {
   final TextEditingController _emailController = TextEditingController();
   final TextEditingController _passwordController = TextEditingController();
 
-
   @override
   void dispose() {
     super.dispose();
@@ -28,7 +27,7 @@ class _SignInPageState extends State<SignInPage> {
         child: SafeArea(
           child: Container(
             width: double.infinity,
-            padding: EdgeInsets.symmetric(horizontal: 32),
+            padding: const EdgeInsets.symmetric(horizontal: 32),
             child: Column(
               mainAxisAlignment: MainAxisAlignment.end,
               crossAxisAlignment: CrossAxisAlignment.center,
@@ -54,7 +53,7 @@ class _SignInPageState extends State<SignInPage> {
                 ),
                 //spatiu
                 SizedBox(
-                  height: MediaQuery.of(context).size.height*0.0075,
+                  height: MediaQuery.of(context).size.height * 0.0075,
                 ),
                 //al doilea text field
                 TextFieldInput(
@@ -69,13 +68,17 @@ class _SignInPageState extends State<SignInPage> {
                 MaterialButton(
                   //elevation: 0,
                   color: Colors.grey[300],
-                  child: Padding(
-                    padding: const EdgeInsets.symmetric(horizontal: 40,vertical: 10),
-                    child: Text('Login',style: TextStyle(fontSize: 24),),
+                  child: const Padding(
+                    padding: EdgeInsets.symmetric(horizontal: 40, vertical: 10),
+                    child: Text(
+                      'Login',
+                      style: TextStyle(fontSize: 24),
+                    ),
                   ),
-                  onPressed: () {  },///adauga login
-                ),
+                  onPressed: () {},
 
+                  ///adauga login
+                ),
               ],
             ),
           ),
