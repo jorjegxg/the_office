@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+//import 'package:the_office/widgets/custom_button.dart';
 import 'package:the_office/widgets/text_field_input.dart';
 
 class SignInPage extends StatefulWidget {
@@ -12,22 +13,33 @@ class _SignInPageState extends State<SignInPage> {
   //cotrollere pentru text field //gen controller.clear //copntroller.text
   final TextEditingController _emailController = TextEditingController();
   final TextEditingController _passwordController = TextEditingController();
+  late FocusNode _passwordFocusNode;
+  late FocusNode _emailFocusNode;
+
+  @override
+  void initState() {
+    super.initState();
+    _passwordFocusNode = FocusNode();
+    _emailFocusNode = FocusNode();
+  }
 
   @override
   void dispose() {
     super.dispose();
     _emailController.dispose();
     _passwordController.dispose();
+    _passwordFocusNode.dispose();
+    _emailFocusNode.dispose();
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: SingleChildScrollView(
-        child: SafeArea(
-          child: Container(
-            width: double.infinity,
-            padding: const EdgeInsets.symmetric(horizontal: 32),
+      body: SafeArea(
+        child: Container(
+          width: double.infinity,
+          padding: EdgeInsets.symmetric(horizontal: 32),
+          child: SingleChildScrollView(
             child: Column(
               mainAxisAlignment: MainAxisAlignment.end,
               crossAxisAlignment: CrossAxisAlignment.center,
@@ -50,6 +62,8 @@ class _SignInPageState extends State<SignInPage> {
                   textEditingController: _emailController,
                   hintText: 'Enter your email',
                   textInputType: TextInputType.emailAddress,
+                  focusNode: _emailFocusNode,
+                  nextNode: _passwordFocusNode,
                 ),
                 //spatiu
                 SizedBox(
@@ -61,24 +75,22 @@ class _SignInPageState extends State<SignInPage> {
                   hintText: 'Enter your password',
                   textInputType: TextInputType.text,
                   isPass: true,
+                  focusNode: _passwordFocusNode,
                 ),
                 SizedBox(
                   height: MediaQuery.of(context).size.height * 0.05,
                 ),
-                MaterialButton(
-                  //elevation: 0,
-                  color: Colors.grey[300],
-                  child: const Padding(
-                    padding: EdgeInsets.symmetric(horizontal: 40, vertical: 10),
-                    child: Text(
-                      'Login',
-                      style: TextStyle(fontSize: 24),
-                    ),
-                  ),
-                  onPressed: () {},
+                // CustomButton(
+                //   color: Colors.white38,
+                //   circularCorners: 12,
+                //   text: 'Login',
+                //   fontSize: 19,
+                //   onPressed: () {
+                //     FocusManager.instance.primaryFocus?.unfocus();
+                //   },
+                // ),
 
-                  ///adauga login
-                ),
+                ///adauga login
               ],
             ),
           ),
