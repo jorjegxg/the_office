@@ -3,6 +3,8 @@ import 'package:flutter/material.dart';
 import 'package:the_office/screens/log_in_screen.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:the_office/screens/verificare_cont_special.dart';
+import 'screens/admin/user_search _screen.dart';
+import 'screens/admin/building_search _screen.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -20,6 +22,10 @@ class MyApp extends StatelessWidget {
       theme: ThemeData(
         primarySwatch: Colors.purple,
       ),
+      routes: {
+        "/first": (context) => UserSearchScreen(),
+        "/second": (context) => BuildingSearchScreen(),
+      },
       //verific daca userul a fost logat deja
       home: StreamBuilder(
           stream: FirebaseAuth.instance.authStateChanges(),

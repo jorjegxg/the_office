@@ -1,32 +1,37 @@
 import 'package:flutter/material.dart';
-import 'package:the_office/screens/admin/create_user.dart';
 import 'package:the_office/widgets/user_list_widget.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:the_office/widgets/text_field_input.dart';
-class UserSearchScreen extends StatefulWidget {
-  UserSearchScreen({Key? key}) : super(key: key);
+
+class BuildingSearchScreen extends StatefulWidget {
+  BuildingSearchScreen({Key? key}) : super(key: key);
 
   @override
-  State<UserSearchScreen> createState() => _UserSearchScreenState();
+  State<BuildingSearchScreen> createState() => _BuildingSearchScreenState();
 }
 
-class _UserSearchScreenState extends State<UserSearchScreen> {
-
+class _BuildingSearchScreenState extends State<BuildingSearchScreen> {
+  int _selectedIndex = 0;
   final TextEditingController _textController = TextEditingController();
-  final List<Widget> user_list = [];
+  final List<Widget> building_list = [];
 
+  void _onItemTapped(int index) {
+    setState(() {
+      _selectedIndex = index;
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Center(child: Text("Users")),
+        title: const Center(child: Text("Buildings")),
       ),
       floatingActionButton: FloatingActionButton(
-        child: const Icon(Icons.person_add),
+        child: const Icon(Icons.add),
         onPressed: () {
           setState(() {
-            user_list.add(
+            building_list.add(
               const UserListWidget(
                 nume: 'nume',
                 imagine: "imagini/imagine.jpeg",
@@ -41,7 +46,7 @@ class _UserSearchScreenState extends State<UserSearchScreen> {
             padding: const EdgeInsets.symmetric(vertical: 20, horizontal: 20),
             child: TextFieldInput(
               textEditingController: _textController,
-              hintText: "Search users",
+              hintText: "Search buildings",
             ),
           ),
           Expanded(
@@ -49,7 +54,7 @@ class _UserSearchScreenState extends State<UserSearchScreen> {
               padding: const EdgeInsets.only(
                   left: 20, right: 20, top: 20, bottom: 30),
               child: ListView.builder(
-                itemCount: user_list.length,
+                itemCount: building_list.length,
                 itemBuilder: (BuildContext context, int index) {
                   return UserListWidget(
                     nume: 'nume',

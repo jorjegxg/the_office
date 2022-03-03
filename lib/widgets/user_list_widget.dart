@@ -1,17 +1,9 @@
-import 'dart:ffi';
-
 import 'package:flutter/material.dart';
 
 class UserListWidget extends StatelessWidget {
-  const UserListWidget({
-    required this.corp,
-    required this.etaj,
-    required this.nume,
-    required this.sala,
-  });
+  const UserListWidget({required this.nume, required this.imagine});
 
-  final String nume, corp;
-  final int etaj, sala;
+  final String nume, imagine;
 
   @override
   Widget build(BuildContext context) {
@@ -23,13 +15,12 @@ class UserListWidget extends StatelessWidget {
           fillColor: Colors.grey[300],
           onPressed: () {},
           child: ListTile(
-            leading: const CircleAvatar(
+            leading: CircleAvatar(
               backgroundImage: AssetImage(
-                "imagini/imagine.jpeg",
+                imagine,
               ),
             ),
             title: Text(nume),
-            subtitle: Text('Corp $corp ,etaj $etaj ,sala $sala'),
           ),
         ),
         SizedBox(

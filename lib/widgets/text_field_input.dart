@@ -40,7 +40,9 @@ class TextFieldInput extends StatelessWidget {
       ),
       keyboardType: textInputType,
       obscureText: isPass,
-      onEditingComplete: () => nextNode == null ? FocusManager.instance.primaryFocus?.unfocus() : nextNode!.requestFocus() ,
+      onEditingComplete: () => nextNode == null
+          ? FocusManager.instance.primaryFocus?.unfocus()
+          : nextNode!.requestFocus(),
     );
   }
 }
