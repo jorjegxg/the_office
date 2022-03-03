@@ -7,8 +7,8 @@ class TextFieldInput extends StatelessWidget {
     Key? key,
     required this.textEditingController,
     required this.hintText,
-    required this.textInputType,
-    required this.focusNode,
+    this.textInputType = TextInputType.text,
+    this.focusNode,
     this.isPass = false,
     this.nextNode,
   }) : super(key: key);
@@ -16,7 +16,7 @@ class TextFieldInput extends StatelessWidget {
   final TextEditingController textEditingController;
   final String hintText;
   final TextInputType textInputType;
-  final FocusNode focusNode;
+  final FocusNode? focusNode;
   final bool isPass;
   final FocusNode? nextNode;
 
@@ -38,7 +38,9 @@ class TextFieldInput extends StatelessWidget {
       ),
       keyboardType: textInputType,
       obscureText: isPass,
-      onEditingComplete: () => nextNode == null ? FocusManager.instance.primaryFocus?.unfocus() : nextNode!.requestFocus() ,
+      onEditingComplete: () => nextNode == null
+          ? FocusManager.instance.primaryFocus?.unfocus()
+          : nextNode!.requestFocus(),
     );
   }
 }
