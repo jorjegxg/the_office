@@ -41,23 +41,21 @@ class _UserSearchScreenState extends State<UserSearchScreen> {
       appBar: AppBar(
         title: const Center(child: Text("Users")),
       ),
-      body: Center(child: user_list[_selectedIndex]),
-
-      // body: Column(
-      //   children: [
-      //     TextField(),
-      //     SizedBox(
-      //       height: 200,
-      //       child: Padding(
-      //         padding: const EdgeInsets.only(
-      //             left: 20, right: 20, top: 20, bottom: 30),
-      //         child: ListView(
-      //           children: user_list,
-      //         ),
-      //       ),
-      //     ),
-      //   ],
-      // ),
+      body: Column(
+        children: [
+          TextField(),
+          SizedBox(
+            height: 200,
+            child: Padding(
+              padding: const EdgeInsets.only(
+                  left: 20, right: 20, top: 20, bottom: 30),
+              child: ListView(
+                children: user_list,
+              ),
+            ),
+          ),
+        ],
+      ),
       bottomNavigationBar: BottomNavigationBar(
         items: const <BottomNavigationBarItem>[
           BottomNavigationBarItem(

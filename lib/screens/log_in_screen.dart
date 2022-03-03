@@ -1,21 +1,24 @@
 import 'package:flutter/material.dart';
-//import 'package:the_office/widgets/custom_button.dart';
+import 'package:the_office/widgets/custom_button.dart';
+import 'package:the_office/services/auth_methods.dart';
+import 'package:the_office/widgets/custom_button.dart';
 import 'package:the_office/widgets/text_field_input.dart';
 
-class SignInPage extends StatefulWidget {
-  const SignInPage({Key? key}) : super(key: key);
+class LogInScreen extends StatefulWidget {
+  const LogInScreen({Key? key}) : super(key: key);
 
   @override
-  State<SignInPage> createState() => _SignInPageState();
+  State<LogInScreen> createState() => _LogInScreenState();
 }
 
-class _SignInPageState extends State<SignInPage> {
+class _LogInScreenState extends State<LogInScreen> {
   //cotrollere pentru text field //gen controller.clear //copntroller.text
   final TextEditingController _emailController = TextEditingController();
   final TextEditingController _passwordController = TextEditingController();
   late FocusNode _passwordFocusNode;
   late FocusNode _emailFocusNode;
 
+  //primul lucru
   @override
   void initState() {
     super.initState();
@@ -23,6 +26,7 @@ class _SignInPageState extends State<SignInPage> {
     _emailFocusNode = FocusNode();
   }
 
+  //atunci cand se trece pe alta pagina sa strice widgeturile
   @override
   void dispose() {
     super.dispose();
@@ -30,6 +34,13 @@ class _SignInPageState extends State<SignInPage> {
     _passwordController.dispose();
     _passwordFocusNode.dispose();
     _emailFocusNode.dispose();
+  }
+
+  //logheaza userul
+  void loginUser(String email, String password) async {
+    String statusMessage =
+        await AuthMethods().loginUser(email: email, password: password);
+    print(statusMessage);
   }
 
   @override
@@ -80,17 +91,17 @@ class _SignInPageState extends State<SignInPage> {
                 SizedBox(
                   height: MediaQuery.of(context).size.height * 0.05,
                 ),
-                // CustomButton(
-                //   color: Colors.white38,
-                //   circularCorners: 12,
-                //   text: 'Login',
-                //   fontSize: 19,
-                //   onPressed: () {
-                //     FocusManager.instance.primaryFocus?.unfocus();
-                //   },
-                // ),
-
-                ///adauga login
+                //buton login
+                CustomButton(
+                  color: Colors.white38,
+                  circularCorners: 12,
+                  text: 'Login',
+                  fontSize: 19,
+                  onPressed: () {
+                    FocusManager.instance.primaryFocus?.unfocus();
+                    loginUser(_emailController.text, _passwordController.text);
+                  },
+                ),
               ],
             ),
           ),
