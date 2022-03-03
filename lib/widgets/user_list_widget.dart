@@ -15,35 +15,27 @@ class UserListWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return RawMaterialButton(
-      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(20)),
-      fillColor: Colors.grey[300],
-      padding: const EdgeInsets.all(10),
-      onPressed: () {},
-      child: Row(
-        children: [
-          CircleAvatar(
-            backgroundColor: Colors.transparent,
-            child: SizedBox(
-              width: 60,
-              height: 60,
-              child: ClipOval(
-                child: Image.asset(
-                  "imagini/imagine.jpeg",
-                ),
+    return Column(
+      children: [
+        RawMaterialButton(
+          shape:
+              RoundedRectangleBorder(borderRadius: BorderRadius.circular(20)),
+          fillColor: Colors.grey[300],
+          onPressed: () {},
+          child: ListTile(
+            leading: const CircleAvatar(
+              backgroundImage: AssetImage(
+                "imagini/imagine.jpeg",
               ),
             ),
+            title: Text(nume),
+            subtitle: Text('Corp $corp ,etaj $etaj ,sala $sala'),
           ),
-          SizedBox(width: 15),
-          Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Text(nume),
-              Text('Corp $corp ,etaj $etaj ,sala $sala'),
-            ],
-          ),
-        ],
-      ),
+        ),
+        SizedBox(
+          height: 20,
+        ),
+      ],
     );
   }
 }
