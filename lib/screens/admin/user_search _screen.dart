@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:the_office/screens/admin/create_user.dart';
 import 'package:the_office/widgets/user_list_widget.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
@@ -17,6 +18,7 @@ class _UserSearchScreenState extends State<UserSearchScreen> {
     UserListWidget(corp: 'corp', etaj: 3, nume: 'nume', sala: 321),
     UserListWidget(corp: 'corp', etaj: 4, nume: 'nume', sala: 321),
   ];
+
   void _onItemTapped(int index) {
     setState(() {
       _selectedIndex = index;
@@ -29,13 +31,11 @@ class _UserSearchScreenState extends State<UserSearchScreen> {
       floatingActionButton: FloatingActionButton(
         child: const Icon(Icons.add),
         onPressed: () {
-          setState(() {
-            print("greu");
-            user_list.add(
-              const UserListWidget(
-                  corp: 'corp', etaj: 1, nume: 'nume', sala: 321),
-            );
-          });
+          Navigator.of(context).push(
+            MaterialPageRoute(
+              builder: (context) => CreateUser(),
+            ),
+          );
         },
       ),
       appBar: AppBar(
@@ -78,7 +78,7 @@ class _UserSearchScreenState extends State<UserSearchScreen> {
           ),
         ],
         currentIndex: _selectedIndex,
-        selectedItemColor: Colors.blue,
+        selectedItemColor: Theme.of(context).primaryColor,
         unselectedItemColor: Colors.grey,
         onTap: _onItemTapped,
       ),

@@ -1,4 +1,3 @@
-import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:the_office/screens/log_in_screen.dart';
@@ -19,7 +18,7 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       title: 'The office',
       theme: ThemeData(
-        primarySwatch: Colors.blue,
+        primarySwatch: Colors.purple,
       ),
       //verific daca userul a fost logat deja
       home: StreamBuilder(

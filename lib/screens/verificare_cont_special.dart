@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:the_office/screens/admin/prima_pagina.dart';
+import 'package:the_office/screens/admin/user_search%20_screen.dart';
 
 class VerificareContSpecial extends StatelessWidget {
   const VerificareContSpecial({Key? key}) : super(key: key);
@@ -9,6 +9,6 @@ class VerificareContSpecial extends StatelessWidget {
   }
   @override
   Widget build(BuildContext context) {
-    return PrimaPagina();
+    return UserSearchScreen();
   }
 }
