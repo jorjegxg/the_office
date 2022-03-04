@@ -49,7 +49,7 @@ class _UserSearchScreenState extends State<UserSearchScreen> {
               child: ListView.builder(
                 itemCount: user_list.length,
                 itemBuilder: (BuildContext context, int index) {
-                  return UserListWidget(
+                  return const UserListWidget(
                     nume: 'nume',
                     imagine: "imagini/imagine.jpeg",
                   );

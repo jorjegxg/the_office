@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:the_office/widgets/custom_button.dart';
 import 'package:the_office/services/auth_methods.dart';
-import 'package:the_office/widgets/custom_button.dart';
 import 'package:the_office/widgets/text_field_input.dart';
 
 class LogInScreen extends StatefulWidget {
@@ -49,7 +48,7 @@ class _LogInScreenState extends State<LogInScreen> {
       body: SafeArea(
         child: Container(
           width: double.infinity,
-          padding: EdgeInsets.symmetric(horizontal: 32),
+          padding: const EdgeInsets.symmetric(horizontal: 32),
           child: SingleChildScrollView(
             child: Column(
               mainAxisAlignment: MainAxisAlignment.end,

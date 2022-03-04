@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'building_search _screen.dart';
 import 'user_search _screen.dart';
+import 'remote_requests_screen.dart';
 
 class NavigationScreen extends StatefulWidget {
   NavigationScreen({Key? key}) : super(key: key);
@@ -15,7 +16,7 @@ class _NavigationScreenState extends State<NavigationScreen> {
   final screens = [
     UserSearchScreen(),
     BuildingSearchScreen(),
-    BuildingSearchScreen(),
+    RemoteRequestScreen(),
     BuildingSearchScreen(),
   ];
 
