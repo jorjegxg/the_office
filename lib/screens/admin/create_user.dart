@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_holo_date_picker/flutter_holo_date_picker.dart';
+import 'package:the_office/widgets/custom_button.dart';
 import 'package:the_office/widgets/text_field_input.dart';
 
 class CreateUser extends StatefulWidget {
@@ -9,6 +11,22 @@ class CreateUser extends StatefulWidget {
 }
 
 class _CreateUserState extends State<CreateUser> {
+
+  ///pentru firebase : controller.text + _date + selectedRole + selectedGender
+
+  DateTime? _date;
+  String selectedRole = "User";
+  List<DropdownMenuItem<String>> roleItems = [
+    DropdownMenuItem(child: Text("User"), value: "User"),
+    DropdownMenuItem(
+        child: Text("Office Administrator"), value: "Office Administrator"),
+    DropdownMenuItem(child: Text("Administrator"), value: "Administrator"),
+  ];
+  String selectedGender = "Male";
+  List<DropdownMenuItem<String>> genderItems = [
+    DropdownMenuItem(child: Text("Male"), value: "Male"),
+    DropdownMenuItem(child: Text("Female"), value: "Female"),
+  ];
 
   final TextEditingController _nameController = TextEditingController();
   final TextEditingController _lastNameController = TextEditingController();
@@ -32,6 +50,7 @@ class _CreateUserState extends State<CreateUser> {
     _nationalityFocusNode = FocusNode();
   }
 
+  @override
   void dispose() {
     super.dispose();
     _nameController.dispose();
@@ -45,9 +64,9 @@ class _CreateUserState extends State<CreateUser> {
     _emailFocusNode.dispose();
     _passwordFocusNode.dispose();
     _nationalityFocusNode.dispose();
-
   }
 
+  ///birth date picker + role + gender
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -68,14 +87,18 @@ class _CreateUserState extends State<CreateUser> {
               focusNode: _nameFocusNode,
               nextNode: _lastNameFocusNode,
             ),
-            SizedBox(height: 20,),
+            SizedBox(
+              height: 20,
+            ),
             TextFieldInput(
               textEditingController: _lastNameController,
               hintText: 'Last name',
               focusNode: _lastNameFocusNode,
               nextNode: _emailFocusNode,
             ),
-            SizedBox(height: 20,),
+            SizedBox(
+              height: 20,
+            ),
             TextFieldInput(
               textEditingController: _emailController,
               hintText: 'Email',
@@ -83,7 +106,9 @@ class _CreateUserState extends State<CreateUser> {
               nextNode: _passwordFocusNode,
               textInputType: TextInputType.emailAddress,
             ),
-            SizedBox(height: 20,),
+            SizedBox(
+              height: 20,
+            ),
             TextFieldInput(
               isPass: true,
               textEditingController: _passwordController,
@@ -91,13 +116,80 @@ class _CreateUserState extends State<CreateUser> {
               focusNode: _passwordFocusNode,
               nextNode: _nationalityFocusNode,
             ),
-            SizedBox(height: 20,),
+            SizedBox(
+              height: 20,
+            ),
             TextFieldInput(
               textEditingController: _nationalityController,
               hintText: 'Nationality',
               focusNode: _nationalityFocusNode,
             ),
+            SizedBox(
+              height: 20,
+            ),
+            CustomButton(
+              color: Colors.white60,
+              circularCorners: 12,
+              text: _date == null
+                  ? 'Pick date'
+                  : 'Date picked : ${_date!.year}-${_date!.month}-${_date!.day}',
+              fontSize: 14,
+              onPressed: () async {
+                var datePicked = await DatePicker.showSimpleDatePicker(
+                  context,
+                  initialDate: DateTime(1994),
+                  firstDate: DateTime(1960),
+                  lastDate: DateTime(2012),
+                  dateFormat: "dd-MMMM-yyyy",
+                  locale: DateTimePickerLocale.ro,
+                  // looping: true,
+                );
+                setState(() {
+                  _date = datePicked;
+                });
+              },
+            ),
+
+            ///fa-l sa arate bine
+            Padding(
+              padding: const EdgeInsets.symmetric(vertical: 8.0),
+              child: Align(
+                alignment: Alignment.center,
+                child: DropdownButton(
+                  value: selectedRole,
+                  items: roleItems,
+                  onChanged: (String? value) {
+                    setState(() {
+                      selectedRole = value!;
+                    });
+                  },
+                ),
+              ),
+            ),
+            Padding(
+              padding: const EdgeInsets.symmetric(vertical: 8.0),
+              child: Align(
+                alignment: Alignment.center,
+                child: DropdownButton(
+                  focusColor: Colors.grey,
+                  value: selectedGender,
+                  items: genderItems,
+                  onChanged: (String? value) {
+                    setState(() {
+                      selectedGender = value!;
+                    });
+                  },
+                ),
+              ),
+            ),
             SizedBox(height: 20,),
+            CustomButton(
+              color: Colors.lightBlueAccent,
+              circularCorners: 12,
+              text: 'Submit',
+              fontSize: 14,
+              onPressed: (){},
+            ),
           ],
         ),
       ),

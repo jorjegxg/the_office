@@ -19,9 +19,6 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       title: 'The office',
-      theme: ThemeData(
-        primarySwatch: Colors.purple,
-      ),
       routes: {
         "/first": (context) => UserSearchScreen(),
         "/second": (context) => BuildingSearchScreen(),

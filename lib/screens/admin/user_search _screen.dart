@@ -25,14 +25,7 @@ class _UserSearchScreenState extends State<UserSearchScreen> {
       floatingActionButton: FloatingActionButton(
         child: const Icon(Icons.person_add),
         onPressed: () {
-          setState(() {
-            user_list.add(
-              const UserListWidget(
-                nume: 'nume',
-                imagine: "imagini/imagine.jpeg",
-              ),
-            );
-          });
+            Navigator.of(context).push(MaterialPageRoute(builder: (context) => CreateUser()),);
         },
       ),
       body: Column(
