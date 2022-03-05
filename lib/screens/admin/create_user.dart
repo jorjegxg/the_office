@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_holo_date_picker/flutter_holo_date_picker.dart';
+import 'package:the_office/services/auth_methods.dart';
 import 'package:the_office/widgets/custom_button.dart';
+import 'package:the_office/widgets/show_snack_bar.dart';
 import 'package:the_office/widgets/text_field_input.dart';
 
 class CreateUser extends StatefulWidget {
@@ -11,8 +13,37 @@ class CreateUser extends StatefulWidget {
 }
 
 class _CreateUserState extends State<CreateUser> {
+  bool _isLoading = false;
 
-  ///pentru firebase : controller.text + _date + selectedRole + selectedGender
+  Future<void> createUser() async {
+    setState(() {
+      _isLoading = true;
+    });
+    String statusMessage = await AuthMethods().signUpUser(
+      name: _nameController.text,
+      lastName: _lastNameController.text,
+      email: _emailController.text,
+      password: _passwordController.text,
+      gender: selectedGender,
+      birthDate: _date != null ? '${_date!.year}-${_date!.month}-${_date!.day}' : null,
+      nationality: _nationalityController.text,
+      role: selectedRole,
+    );
+    setState(() {
+      _isLoading = false;
+    });
+    if(statusMessage == 'success'){
+      showSnackBar(context, statusMessage);
+      _nameController.clear();
+      _lastNameController.clear();
+      _emailController.clear();
+      _passwordController.clear();
+      _nationalityController.clear();
+    }
+    showSnackBar(context, statusMessage);
+
+
+  }
 
   DateTime? _date;
   String selectedRole = "User";
@@ -28,10 +59,10 @@ class _CreateUserState extends State<CreateUser> {
     DropdownMenuItem(child: Text("Female"), value: "Female"),
   ];
 
-  final TextEditingController _nameController = TextEditingController();
-  final TextEditingController _lastNameController = TextEditingController();
-  final TextEditingController _emailController = TextEditingController();
-  final TextEditingController _passwordController = TextEditingController();
+  final TextEditingController _nameController        = TextEditingController();
+  final TextEditingController _lastNameController    = TextEditingController();
+  final TextEditingController _emailController       = TextEditingController();
+  final TextEditingController _passwordController    = TextEditingController();
   final TextEditingController _nationalityController = TextEditingController();
 
   late FocusNode _nameFocusNode;
@@ -121,7 +152,7 @@ class _CreateUserState extends State<CreateUser> {
             ),
             TextFieldInput(
               textEditingController: _nationalityController,
-              hintText: 'Nationality',
+              hintText: 'Nationality (optional)',
               focusNode: _nationalityFocusNode,
             ),
             SizedBox(
@@ -131,7 +162,7 @@ class _CreateUserState extends State<CreateUser> {
               color: Colors.white60,
               circularCorners: 12,
               text: _date == null
-                  ? 'Pick date'
+                  ? 'Pick birth date (optional)'
                   : 'Date picked : ${_date!.year}-${_date!.month}-${_date!.day}',
               fontSize: 14,
               onPressed: () async {
@@ -151,44 +182,68 @@ class _CreateUserState extends State<CreateUser> {
             ),
 
             ///fa-l sa arate bine
-            Padding(
-              padding: const EdgeInsets.symmetric(vertical: 8.0),
-              child: Align(
-                alignment: Alignment.center,
-                child: DropdownButton(
-                  value: selectedRole,
-                  items: roleItems,
-                  onChanged: (String? value) {
-                    setState(() {
-                      selectedRole = value!;
-                    });
-                  },
+            Center(
+              child: Padding(
+                padding: const EdgeInsets.symmetric(vertical: 8.0),
+                child: Container(
+                  width: MediaQuery.of(context).size.width * 0.5,
+                  child: DropdownButton(
+                    isExpanded: true,
+                    value: selectedRole,
+                    items: roleItems,
+                    onChanged: (String? value) {
+                      setState(() {
+                        selectedRole = value!;
+                      });
+                    },
+                  ),
                 ),
               ),
             ),
-            Padding(
-              padding: const EdgeInsets.symmetric(vertical: 8.0),
-              child: Align(
-                alignment: Alignment.center,
-                child: DropdownButton(
-                  focusColor: Colors.grey,
-                  value: selectedGender,
-                  items: genderItems,
-                  onChanged: (String? value) {
-                    setState(() {
-                      selectedGender = value!;
-                    });
-                  },
+            Center(
+              child: Padding(
+                padding: const EdgeInsets.symmetric(vertical: 8.0),
+                child: Container(
+                  width: MediaQuery.of(context).size.width * 0.5,
+                  child: DropdownButton(
+                    isExpanded: true,
+                    focusColor: Colors.grey,
+                    value: selectedGender,
+                    items: genderItems,
+                    onChanged: (String? value) {
+                      setState(() {
+                        selectedGender = value!;
+                      });
+                    },
+                  ),
                 ),
               ),
             ),
-            SizedBox(height: 20,),
-            CustomButton(
-              color: Colors.lightBlueAccent,
-              circularCorners: 12,
-              text: 'Submit',
-              fontSize: 14,
-              onPressed: (){},
+            SizedBox(
+              height: 20,
+            ),
+
+            MaterialButton(
+              color: Colors.blue,
+              shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(12),
+              ),
+              child: Padding(
+                padding:
+                    const EdgeInsets.symmetric(horizontal: 40, vertical: 15),
+                child: _isLoading == true
+                    ? CircularProgressIndicator(
+                        color: Colors.white,
+                      )
+                    : Text(
+                        'Submit',
+                        style: TextStyle(
+                          fontSize: 14,
+                          color: Colors.white,
+                        ),
+                      ),
+              ),
+              onPressed: () => createUser(),
             ),
           ],
         ),
