@@ -4,7 +4,7 @@ import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:the_office/widgets/text_field_input.dart';
 
 class UserSearchScreen extends StatefulWidget {
-  UserSearchScreen({Key? key}) : super(key: key);
+  const UserSearchScreen({Key? key}) : super(key: key);
 
   @override
   State<UserSearchScreen> createState() => _UserSearchScreenState();
