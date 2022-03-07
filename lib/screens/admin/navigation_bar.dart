@@ -29,7 +29,7 @@ class _NavigationScreenState extends State<NavigationScreen> {
       _navigatorKeys[tabItem]!.currentState!.popUntil((route) => route.isFirst);
     } else {
       setState(() {
-        _currentTab = pageKeys[index];
+        _currentTab = tabItem;
         _selectedIndex = index;
       });
     }
@@ -49,10 +49,14 @@ class _NavigationScreenState extends State<NavigationScreen> {
   Widget build(BuildContext context) {
     return WillPopScope(
       onWillPop: () async {
-        print("SUNt aici");
         final isFirstRouteInCurrentTab =
-            !await _navigatorKeys[_selectedIndex]!.currentState!.maybePop();
-        print(isFirstRouteInCurrentTab.toString());
+            !await _navigatorKeys[_currentTab]!.currentState!.maybePop();
+        if (isFirstRouteInCurrentTab) {
+          if (_currentTab != "Page1") {
+            _selectTab("Page1", 0);
+            return false;
+          }
+        }
         return isFirstRouteInCurrentTab;
       },
       child: Scaffold(
@@ -97,7 +101,7 @@ class _NavigationScreenState extends State<NavigationScreen> {
   }
 }
 
-class TabNavigator extends StatelessWidget {
+class TabNavigator extends StatefulWidget {
   final String tabItem;
   final GlobalKey<NavigatorState> navigatorKey;
   const TabNavigator(
@@ -105,15 +109,27 @@ class TabNavigator extends StatelessWidget {
       : super(key: key);
 
   @override
+  State<TabNavigator> createState() => _TabNavigatorState();
+}
+
+class _TabNavigatorState extends State<TabNavigator> {
+  void _next() {
+    setState(() {
+      Navigator.push(
+          context, MaterialPageRoute(builder: (context) => UserProfile()));
+    });
+  }
+
+  @override
   Widget build(BuildContext context) {
     Widget child = const UserSearchScreen();
 
-    switch (tabItem) {
+    switch (widget.tabItem) {
       case "Page1":
         child = const UserSearchScreen();
         break;
       case "Page2":
-        child = const BuildingSearchScreen();
+        child = BuildingSearchScreen(next: _next);
         break;
       case "Page3":
         child = const RemoteRequestScreen();
@@ -123,7 +139,7 @@ class TabNavigator extends StatelessWidget {
         break;
     }
     return Navigator(
-      key: navigatorKey,
+      key: widget.navigatorKey,
       onGenerateRoute: (routeSettings) {
         return MaterialPageRoute(builder: (context) => child);
       },
