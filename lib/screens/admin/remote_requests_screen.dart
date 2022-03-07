@@ -15,7 +15,7 @@ class RemoteRequestScreen extends StatelessWidget {
         children: [
           RemoteRequestWidget(
             nume: 'nume',
-            imagine: "imagini/imagine.jpeg",
+            imagine: "imagini/profile.jpeg",
           ),
         ],
       ),

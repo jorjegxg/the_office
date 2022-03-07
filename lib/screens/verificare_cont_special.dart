@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:the_office/screens/admin/user_search%20_screen.dart';
 import 'admin/navigation_bar.dart';
-import 'package:the_office/screens/admin/user_profile_view.dart';
+import 'package:the_office/screens/admin/office_search_screen.dart';
 
 class VerificareContSpecial extends StatelessWidget {
   const VerificareContSpecial({Key? key}) : super(key: key);
@@ -11,6 +10,6 @@ class VerificareContSpecial extends StatelessWidget {
   }
   @override
   Widget build(BuildContext context) {
-    return const UserProfileView();
+    return const OfficeSearchScreen();
   }
 }

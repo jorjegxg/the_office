@@ -31,7 +31,7 @@ class UserProfileView extends StatelessWidget {
           ),
           ListTile(
             leading: const CircleAvatar(
-              backgroundImage: AssetImage("imagini/imagine.jpeg"),
+              backgroundImage: AssetImage("imagini/profile.jpeg"),
               radius: 50,
             ),
             title: Text(

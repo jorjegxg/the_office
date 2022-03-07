@@ -27,7 +27,7 @@ class _BuildingSearchScreenState extends State<BuildingSearchScreen> {
       //       building_list.add(
       //         const UserListWidget(
       //           nume: 'nume',
-      //           imagine: "imagini/imagine.jpeg",
+      //           imagine: "imagini/profile.jpeg",
       //         ),
       //       );
       //     });
@@ -49,10 +49,7 @@ class _BuildingSearchScreenState extends State<BuildingSearchScreen> {
               child: ListView.builder(
                 itemCount: building_list.length,
                 itemBuilder: (BuildContext context, int index) {
-                  return const UserListWidget(
-                    nume: 'nume',
-                    imagine: "imagini/imagine.jpeg",
-                  );
+                  return building_list[index];
                 },
               ),
             ),
