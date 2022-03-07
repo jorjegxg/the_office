@@ -1,4 +1,3 @@
-import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:the_office/screens/log_in_screen.dart';
@@ -20,9 +19,6 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       title: 'The office',
-      theme: ThemeData(
-        primarySwatch: Colors.blue,
-      ),
       routes: {
         "/first": (context) => UserSearchScreen(),
         "/second": (context) => BuildingSearchScreen(),

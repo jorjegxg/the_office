@@ -19,19 +19,20 @@ class _BuildingSearchScreenState extends State<BuildingSearchScreen> {
       appBar: AppBar(
         title: const Center(child: Text("Buildings")),
       ),
-      floatingActionButton: FloatingActionButton(
-        child: const Icon(Icons.add),
-        onPressed: () {
-          setState(() {
-            building_list.add(
-              const UserListWidget(
-                nume: 'nume',
-                imagine: "imagini/imagine.jpeg",
-              ),
-            );
-          });
-        },
-      ),
+      // floatingActionButton: FloatingActionButton(
+      //   heroTag: "btnBuilding",
+      //   child: const Icon(Icons.add),
+      //   onPressed: () {
+      //     setState(() {
+      //       building_list.add(
+      //         const UserListWidget(
+      //           nume: 'nume',
+      //           imagine: "imagini/imagine.jpeg",
+      //         ),
+      //       );
+      //     });
+      //   },
+      // ),
       body: Column(
         children: [
           Padding(

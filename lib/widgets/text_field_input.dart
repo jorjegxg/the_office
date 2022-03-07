@@ -16,16 +16,18 @@ class TextFieldInput extends StatelessWidget {
   final TextEditingController textEditingController;
   final String hintText;
   final TextInputType textInputType;
-  final FocusNode? focusNode;
   final bool isPass;
+  final FocusNode? focusNode;
   final FocusNode? nextNode;
 
   @override
   Widget build(BuildContext context) {
     final inputBorder = OutlineInputBorder(
+      borderRadius: BorderRadius.circular(12),
       borderSide: Divider.createBorderSide(context),
     );
     return TextField(
+      ///fa hint textul sa se duca sus dupa ce e apasat
       controller: textEditingController,
       focusNode: focusNode,
       decoration: InputDecoration(

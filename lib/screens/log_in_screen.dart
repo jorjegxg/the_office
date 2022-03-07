@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:the_office/widgets/custom_button.dart';
 import 'package:the_office/services/auth_methods.dart';
+import 'package:the_office/widgets/custom_button.dart';
+import 'package:the_office/widgets/show_snack_bar.dart';
 import 'package:the_office/widgets/text_field_input.dart';
 
 class LogInScreen extends StatefulWidget {
@@ -16,6 +18,7 @@ class _LogInScreenState extends State<LogInScreen> {
   final TextEditingController _passwordController = TextEditingController();
   late FocusNode _passwordFocusNode;
   late FocusNode _emailFocusNode;
+  bool isLoading = false;
 
   //primul lucru
   @override
@@ -37,13 +40,26 @@ class _LogInScreenState extends State<LogInScreen> {
 
   //logheaza userul
   void loginUser(String email, String password) async {
+    FocusManager.instance.primaryFocus?.unfocus();
+    setState(() {
+      isLoading = true;
+    });
     String statusMessage =
         await AuthMethods().loginUser(email: email, password: password);
-    print(statusMessage);
+
+    showSnackBar(context, statusMessage);
+    setState(() {
+      isLoading = false;
+    });
   }
 
   @override
   Widget build(BuildContext context) {
+    //VARIABILA PENTRU TEXT FIELD - UL PASSWORD
+    final inputBorder = OutlineInputBorder(
+      borderRadius: BorderRadius.circular(15),
+      borderSide: Divider.createBorderSide(context),
+    );
     return Scaffold(
       body: SafeArea(
         child: Container(
@@ -80,27 +96,51 @@ class _LogInScreenState extends State<LogInScreen> {
                   height: MediaQuery.of(context).size.height * 0.0075,
                 ),
                 //al doilea text field
-                TextFieldInput(
-                  textEditingController: _passwordController,
-                  hintText: 'Enter your password',
-                  textInputType: TextInputType.text,
-                  isPass: true,
+                TextField(
+                  controller: _passwordController,
                   focusNode: _passwordFocusNode,
+                  decoration: InputDecoration(
+                    hintText: 'Enter your password',
+                    border: inputBorder,
+                    focusedBorder: inputBorder,
+                    enabledBorder: inputBorder,
+                    filled: true,
+                    contentPadding: const EdgeInsets.all(8),
+                  ),
+                  keyboardType: TextInputType.text,
+                  obscureText: true,
+
+                  //atunci cand termini de scris in password se logheaza
+                  onEditingComplete: () => loginUser(
+                      _emailController.text, _passwordController.text),
                 ),
                 SizedBox(
                   height: MediaQuery.of(context).size.height * 0.05,
                 ),
                 //buton login
-                CustomButton(
+
+                MaterialButton(
                   color: Colors.white38,
-                  circularCorners: 12,
-                  text: 'Login',
-                  fontSize: 19,
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(12),
+                  ),
+                  child: Padding(
+                    padding: const EdgeInsets.symmetric(
+                        horizontal: 40, vertical: 10),
+                    child: isLoading
+                        ? CircularProgressIndicator(
+                            color: Colors.black,
+                          )
+                        : Text(
+                            'Login',
+                            style: TextStyle(fontSize: 19),
+                          ),
+                  ),
                   onPressed: () {
                     FocusManager.instance.primaryFocus?.unfocus();
                     loginUser(_emailController.text, _passwordController.text);
                   },
-                ),
+                )
               ],
             ),
           ),

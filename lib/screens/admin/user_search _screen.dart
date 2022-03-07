@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:the_office/screens/admin/create_user.dart';
 import 'package:the_office/widgets/user_list_widget.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:the_office/widgets/text_field_input.dart';
-
 class UserSearchScreen extends StatefulWidget {
   const UserSearchScreen({Key? key}) : super(key: key);
 
@@ -11,8 +11,10 @@ class UserSearchScreen extends StatefulWidget {
 }
 
 class _UserSearchScreenState extends State<UserSearchScreen> {
+
   final TextEditingController _textController = TextEditingController();
   final List<Widget> user_list = [];
+
 
   @override
   Widget build(BuildContext context) {
@@ -23,14 +25,7 @@ class _UserSearchScreenState extends State<UserSearchScreen> {
       floatingActionButton: FloatingActionButton(
         child: const Icon(Icons.person_add),
         onPressed: () {
-          setState(() {
-            user_list.add(
-              const UserListWidget(
-                nume: 'nume',
-                imagine: "imagini/imagine.jpeg",
-              ),
-            );
-          });
+            Navigator.of(context).push(MaterialPageRoute(builder: (context) => CreateUser()),);
         },
       ),
       body: Column(

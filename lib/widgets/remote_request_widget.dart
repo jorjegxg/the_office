@@ -5,7 +5,7 @@ import 'user_list_widget.dart';
 class RemoteRequestWidget extends StatelessWidget {
   const RemoteRequestWidget({required this.nume, required this.imagine});
 
-  void onPressed() {`}
+  void onPressed() {}
 
   final String nume, imagine;
   @override

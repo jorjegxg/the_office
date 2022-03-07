@@ -8,12 +8,14 @@ class CustomButton extends StatelessWidget {
     required this.text,
     required this.fontSize,
     required this.onPressed,
+    this.fontColor = Colors.black,
   }) : super(key: key);
   final Color color;
   final double circularCorners;
   final String text;
   final double fontSize;
   final Function() onPressed;
+  final Color fontColor;
 
   @override
   Widget build(BuildContext context) {
@@ -23,10 +25,13 @@ class CustomButton extends StatelessWidget {
         borderRadius: BorderRadius.circular(circularCorners),
       ),
       child: Padding(
-        padding: const EdgeInsets.symmetric(horizontal: 40, vertical: 10),
+        padding: const EdgeInsets.symmetric(horizontal: 40, vertical: 15),
         child: Text(
           text,
-          style: TextStyle(fontSize: fontSize),
+          style: TextStyle(
+            fontSize: fontSize,
+            color: fontColor,
+          ),
         ),
       ),
       onPressed: onPressed,
