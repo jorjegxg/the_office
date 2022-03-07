@@ -21,9 +21,14 @@ class UserProfile extends StatelessWidget {
         title: const Text(
           "Profile",
         ),
-        actions: const [
-          Icon(Icons.logout),
-          SizedBox(
+        actions: [
+          GestureDetector(
+            child: Icon(Icons.logout),
+            onTap: () {
+              ///TODO add de-login
+            },
+          ),
+          const SizedBox(
             width: 10,
           ),
         ],
