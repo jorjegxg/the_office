@@ -22,10 +22,6 @@ class MyApp extends StatelessWidget {
       theme: ThemeData(
         primarySwatch: Colors.indigo,
       ),
-      routes: {
-        "/first": (context) => UserSearchScreen(),
-        "/second": (context) => BuildingSearchScreen(),
-      },
       //verific daca userul a fost logat deja
       home: StreamBuilder(
           stream: FirebaseAuth.instance.authStateChanges(),

@@ -25,24 +25,23 @@ class _CreateUserState extends State<CreateUser> {
       email: _emailController.text,
       password: _passwordController.text,
       gender: selectedGender,
-      birthDate: _date != null ? '${_date!.year}-${_date!.month}-${_date!.day}' : null,
+      birthDate:
+          _date != null ? '${_date!.year}-${_date!.month}-${_date!.day}' : null,
       nationality: _nationalityController.text,
       role: selectedRole,
     );
     setState(() {
       _isLoading = false;
     });
-    if(statusMessage == 'success'){
+    if (statusMessage == 'success') {
       _nameController.clear();
       _lastNameController.clear();
       _emailController.clear();
       _passwordController.clear();
       _nationalityController.clear();
-    }else{
-    showSnackBar(context, statusMessage);
+    } else {
+      showSnackBar(context, statusMessage);
     }
-
-
   }
 
   DateTime? _date;
@@ -59,10 +58,10 @@ class _CreateUserState extends State<CreateUser> {
     DropdownMenuItem(child: Text("Female"), value: "Female"),
   ];
 
-  final TextEditingController _nameController        = TextEditingController();
-  final TextEditingController _lastNameController    = TextEditingController();
-  final TextEditingController _emailController       = TextEditingController();
-  final TextEditingController _passwordController    = TextEditingController();
+  final TextEditingController _nameController = TextEditingController();
+  final TextEditingController _lastNameController = TextEditingController();
+  final TextEditingController _emailController = TextEditingController();
+  final TextEditingController _passwordController = TextEditingController();
   final TextEditingController _nationalityController = TextEditingController();
 
   late FocusNode _nameFocusNode;
@@ -224,7 +223,7 @@ class _CreateUserState extends State<CreateUser> {
             ),
 
             MaterialButton(
-              color: Colors.blue,
+              color: Theme.of(context).primaryColor,
               shape: RoundedRectangleBorder(
                 borderRadius: BorderRadius.circular(12),
               ),
