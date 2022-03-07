@@ -47,8 +47,9 @@ class _LogInScreenState extends State<LogInScreen> {
     String statusMessage =
         await AuthMethods().loginUser(email: email, password: password);
 
-
-    showSnackBar(context, statusMessage);
+    if (statusMessage != "success") {
+      showSnackBar(context, statusMessage);
+    }
     setState(() {
       isLoading = false;
     });
@@ -97,23 +98,24 @@ class _LogInScreenState extends State<LogInScreen> {
                   height: MediaQuery.of(context).size.height * 0.0075,
                 ),
                 //al doilea text field
-            TextField(
-              controller: _passwordController,
-              focusNode: _passwordFocusNode,
-              decoration: InputDecoration(
-                hintText: 'Enter your password',
-                border: inputBorder,
-                focusedBorder: inputBorder,
-                enabledBorder: inputBorder,
-                filled: true,
-                contentPadding: const EdgeInsets.all(8),
-              ),
-              keyboardType: TextInputType.text,
-                obscureText: true,
+                TextField(
+                  controller: _passwordController,
+                  focusNode: _passwordFocusNode,
+                  decoration: InputDecoration(
+                    hintText: 'Enter your password',
+                    border: inputBorder,
+                    focusedBorder: inputBorder,
+                    enabledBorder: inputBorder,
+                    filled: true,
+                    contentPadding: const EdgeInsets.all(8),
+                  ),
+                  keyboardType: TextInputType.text,
+                  obscureText: true,
 
-              //atunci cand termini de scris in password se logheaza
-              onEditingComplete: () => loginUser(_emailController.text, _passwordController.text) ,
-            ),
+                  //atunci cand termini de scris in password se logheaza
+                  onEditingComplete: () => loginUser(
+                      _emailController.text, _passwordController.text),
+                ),
                 SizedBox(
                   height: MediaQuery.of(context).size.height * 0.05,
                 ),
@@ -129,8 +131,8 @@ class _LogInScreenState extends State<LogInScreen> {
                         horizontal: 40, vertical: 10),
                     child: isLoading
                         ? CircularProgressIndicator(
-                      color: Colors.black,
-                    )
+                            color: Colors.black,
+                          )
                         : Text(
                             'Login',
                             style: TextStyle(fontSize: 19),
