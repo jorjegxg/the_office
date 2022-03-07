@@ -47,7 +47,10 @@ class _LogInScreenState extends State<LogInScreen> {
     String statusMessage =
         await AuthMethods().loginUser(email: email, password: password);
 
-    showSnackBar(context, statusMessage);
+
+    if (statusMessage != "success") {
+      showSnackBar(context, statusMessage);
+    }
     setState(() {
       isLoading = false;
     });

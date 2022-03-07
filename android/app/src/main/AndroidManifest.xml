@@ -2,6 +2,7 @@
     package="chris.gxg.vasi.the_office">
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
    <application
+       android:allowBackup="false"
         android:label="the_office"
         android:name="${applicationName}"
         android:icon="@mipmap/ic_launcher">

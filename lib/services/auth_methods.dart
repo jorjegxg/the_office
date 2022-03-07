@@ -1,13 +1,10 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:firebase_core/firebase_core.dart';
 
 import 'package:the_office/models/user_model.dart';
 
-
 class AuthMethods {
-  final FirebaseAuth _auth = FirebaseAuth.instance;
-  final FirebaseFirestore _firestore = FirebaseFirestore.instance;
-
   // Signing Up User
 
   Future<String> signUpUser({
@@ -21,14 +18,20 @@ class AuthMethods {
     String? nationality,
   }) async {
     String res = "Some error Occurred";
+
+    FirebaseApp app = await Firebase.initializeApp(
+        name: 'Secondary', options: Firebase.app().options);
+
+    final FirebaseAuth _auth = FirebaseAuth.instanceFor(app: app);
+    final FirebaseFirestore _firestore = FirebaseFirestore.instance;
+    
     try {
       if (name.isNotEmpty &&
           lastName.isNotEmpty &&
           email.isNotEmpty &&
           password.isNotEmpty &&
           gender.isNotEmpty &&
-          role.isNotEmpty
-      ) {
+          role.isNotEmpty) {
         // registering user in auth with email and password
         UserCredential cred = await _auth.createUserWithEmailAndPassword(
           email: email,
@@ -36,15 +39,14 @@ class AuthMethods {
         );
 
         UserModel _user = UserModel(
-          name: name,
-          lastName: lastName,
-          email: email,
-          gender: gender ,
-          birthDate: birthDate ?? "",
-          nationality: nationality ?? "",
-          role: role,
-          pictureUrl : ""
-        );
+            name: name,
+            lastName: lastName,
+            email: email,
+            gender: gender,
+            birthDate: birthDate ?? "",
+            nationality: nationality ?? "",
+            role: role,
+            pictureUrl: "");
 
         // adding user in our database
         await _firestore
@@ -59,6 +61,7 @@ class AuthMethods {
     } catch (err) {
       return err.toString();
     }
+    app.delete();
     return res;
   }
 
@@ -66,6 +69,10 @@ class AuthMethods {
     required String email,
     required String password,
   }) async {
+
+    final FirebaseAuth _auth = FirebaseAuth.instance;
+    final FirebaseFirestore _firestore = FirebaseFirestore.instance;
+    
     String res = "Some error Occurred";
     try {
       if (email.isNotEmpty || password.isNotEmpty) {

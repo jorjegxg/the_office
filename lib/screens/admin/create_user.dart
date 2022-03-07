@@ -33,14 +33,14 @@ class _CreateUserState extends State<CreateUser> {
       _isLoading = false;
     });
     if(statusMessage == 'success'){
-      showSnackBar(context, statusMessage);
       _nameController.clear();
       _lastNameController.clear();
       _emailController.clear();
       _passwordController.clear();
       _nationalityController.clear();
-    }
+    }else{
     showSnackBar(context, statusMessage);
+    }
 
 
   }
