@@ -46,42 +46,51 @@ class _NavigationScreenState extends State<NavigationScreen> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      body: Stack(
-        children: <Widget>[
-          _buildOffstageNavigator("Page1"),
-          _buildOffstageNavigator("Page2"),
-          _buildOffstageNavigator("Page3"),
-          _buildOffstageNavigator("Page4"),
-        ],
-      ),
-      bottomNavigationBar: BottomNavigationBar(
-        items: const <BottomNavigationBarItem>[
-          BottomNavigationBarItem(
-            icon: FaIcon(FontAwesomeIcons.users),
-            label: 'Users',
-          ),
-          BottomNavigationBarItem(
-            icon: Icon(Icons.business),
-            label: 'Buildings',
-          ),
-          BottomNavigationBarItem(
-            icon: Icon(Icons.add_to_queue),
-            label: 'Request',
-          ),
-          BottomNavigationBarItem(
-            icon: Icon(
-              Icons.person,
+    return WillPopScope(
+      onWillPop: () async {
+        print("SUNt aici");
+        final isFirstRouteInCurrentTab =
+            !await _navigatorKeys[_selectedIndex]!.currentState!.maybePop();
+        print(isFirstRouteInCurrentTab.toString());
+        return isFirstRouteInCurrentTab;
+      },
+      child: Scaffold(
+        body: Stack(
+          children: <Widget>[
+            _buildOffstageNavigator("Page1"),
+            _buildOffstageNavigator("Page2"),
+            _buildOffstageNavigator("Page3"),
+            _buildOffstageNavigator("Page4"),
+          ],
+        ),
+        bottomNavigationBar: BottomNavigationBar(
+          items: const <BottomNavigationBarItem>[
+            BottomNavigationBarItem(
+              icon: FaIcon(FontAwesomeIcons.users),
+              label: 'Users',
             ),
-            label: 'Profile',
-          ),
-        ],
-        currentIndex: _selectedIndex,
-        selectedItemColor: Colors.blue,
-        unselectedItemColor: Colors.grey,
-        onTap: (int index) {
-          _selectTab(pageKeys[index], index);
-        },
+            BottomNavigationBarItem(
+              icon: Icon(Icons.business),
+              label: 'Buildings',
+            ),
+            BottomNavigationBarItem(
+              icon: Icon(Icons.add_to_queue),
+              label: 'Request',
+            ),
+            BottomNavigationBarItem(
+              icon: Icon(
+                Icons.person,
+              ),
+              label: 'Profile',
+            ),
+          ],
+          currentIndex: _selectedIndex,
+          selectedItemColor: Colors.blue,
+          unselectedItemColor: Colors.grey,
+          onTap: (int index) {
+            _selectTab(pageKeys[index], index);
+          },
+        ),
       ),
     );
   }
