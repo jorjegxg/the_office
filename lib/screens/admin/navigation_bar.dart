@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:the_office/screens/admin/user_profile.dart';
 import 'building_search _screen.dart';
 import 'user_search _screen.dart';
 import 'remote_requests_screen.dart';
@@ -85,7 +86,7 @@ class _NavigationScreenState extends State<NavigationScreen> {
             ),
           ],
           currentIndex: _selectedIndex,
-          selectedItemColor: Colors.blue,
+          selectedItemColor: Theme.of(context).primaryColor,
           unselectedItemColor: Colors.grey,
           onTap: (int index) {
             _selectTab(pageKeys[index], index);
@@ -118,7 +119,7 @@ class TabNavigator extends StatelessWidget {
         child = const RemoteRequestScreen();
         break;
       case "Page4":
-        child = const RemoteRequestScreen();
+        child = const UserProfile();
         break;
     }
     return Navigator(

@@ -104,7 +104,7 @@ class _CreateUserState extends State<CreateUser> {
       appBar: AppBar(
         title: Text(
           "Create user",
-          style: TextStyle(fontSize: 27),
+          style: TextStyle(fontSize: 23),
         ),
         centerTitle: true,
       ),
@@ -224,7 +224,7 @@ class _CreateUserState extends State<CreateUser> {
             ),
 
             MaterialButton(
-              color: Colors.blue,
+              color: Theme.of(context).primaryColor,
               shape: RoundedRectangleBorder(
                 borderRadius: BorderRadius.circular(12),
               ),

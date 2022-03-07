@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:the_office/services/auth_methods.dart';
 
 class UserProfile extends StatelessWidget {
   const UserProfile({Key? key}) : super(key: key);
@@ -25,7 +26,7 @@ class UserProfile extends StatelessWidget {
           GestureDetector(
             child: Icon(Icons.logout),
             onTap: () {
-              ///TODO add de-login
+              AuthMethods().logout();
             },
           ),
           const SizedBox(

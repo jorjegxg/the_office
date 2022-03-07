@@ -89,4 +89,8 @@ class AuthMethods {
     }
     return res;
   }
+
+  void logout(){
+    FirebaseAuth.instance.signOut();
+  }
 }
