@@ -42,6 +42,8 @@ dependencies:
   flutter_holo_date_picker: ^1.0.1+2
   pie_chart: ^5.1.0
   readmore: ^2.1.0
+  image_picker: ^0.8.4+10
+  
 dev_dependencies:
   flutter_test:
     sdk: flutter
@@ -66,8 +68,7 @@ flutter:
 
   # To add imagini to your application, add an imagini section, like this:
   assets:
-    - imagini/profile.jpeg
-    - imagini/office.jpeg
+    - imagini/
 
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/assets-and-images/#resolution-aware.

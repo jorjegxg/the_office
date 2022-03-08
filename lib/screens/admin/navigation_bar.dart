@@ -135,7 +135,7 @@ class _TabNavigatorState extends State<TabNavigator> {
         child = const RemoteRequestScreen();
         break;
       case "Page4":
-        child = const UserProfile();
+        child =  UserProfile();
         break;
     }
     return Navigator(
