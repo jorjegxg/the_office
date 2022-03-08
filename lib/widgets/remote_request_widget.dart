@@ -21,12 +21,12 @@ class RemoteRequestWidget extends StatelessWidget {
               ),
               radius: 30,
             ),
-            SizedBox(
+            const SizedBox(
               width: 10,
             ),
             Text(
               nume,
-              style: TextStyle(
+              style: const TextStyle(
                   fontWeight: FontWeight.bold,
                   fontSize: 20,
                   color: Colors.white),
@@ -68,7 +68,7 @@ class RemoteRequestWidget extends StatelessWidget {
               ),
             ),
             const SizedBox(
-              height: 5,
+              height: 15,
             ),
           ],
         ),

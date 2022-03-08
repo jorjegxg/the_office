@@ -1,16 +1,105 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:the_office/widgets/text_field_input.dart';
 
 class ViewRemoteRequest extends StatelessWidget {
-  const ViewRemoteRequest({required this.nume, required this.imagine});
+  ViewRemoteRequest({
+    required this.nume,
+    required this.imagine,
+  });
   final String nume, imagine;
+  final TextEditingController textEditingController = TextEditingController();
+  //Casuta pop-up
+  Widget bottomSheet(BuildContext context) {
+    return Container(
+      child: Column(
+        children: [
+          const SizedBox(
+            height: 20,
+          ),
+          Row(
+            children: [
+              const SizedBox(
+                width: 10,
+              ),
+              Icon(Icons.arrow_back),
+              const SizedBox(
+                width: 10,
+              ),
+              Expanded(
+                child: ListTile(
+                  tileColor: Color(0xffDFDFDF),
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(20),
+                  ),
+                  leading: CircleAvatar(
+                    backgroundImage: NetworkImage(
+                      imagine,
+                    ),
+                  ),
+                  title: Text(nume),
+                ),
+              ),
+              const SizedBox(
+                width: 25,
+              ),
+            ],
+          ),
+          SizedBox(
+            height: 10,
+          ),
+          Expanded(
+            child: Padding(
+              padding: const EdgeInsets.all(20),
+              child: Container(
+                decoration: BoxDecoration(
+                  color: Color(0xffDFDFDF),
+                  borderRadius: BorderRadius.circular(20),
+                ),
+                child: Padding(
+                  padding: const EdgeInsets.all(30.0),
+                  child: TextField(
+                    maxLines: double.maxFinite.floor(),
+                    controller: textEditingController,
+                    decoration: InputDecoration(
+                      border: OutlineInputBorder(
+                        borderRadius: BorderRadius.circular(20),
+                        borderSide: BorderSide(width: 0, color: Colors.white),
+                      ),
+                      enabled: true,
+                      enabledBorder: OutlineInputBorder(
+                        borderRadius: BorderRadius.circular(20),
+                        borderSide: BorderSide(width: 0, color: Colors.white),
+                      ),
+                      focusedBorder: OutlineInputBorder(
+                        borderRadius: BorderRadius.circular(20),
+                        borderSide: BorderSide(width: 0, color: Colors.white),
+                      ),
+                      filled: true,
+                      fillColor: Colors.white,
+                      hintText: "Text",
+                    ),
+                  ),
+                ),
+              ),
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
         shape: const RoundedRectangleBorder(
-            borderRadius: BorderRadius.vertical(bottom: Radius.circular(20))),
+          borderRadius: BorderRadius.vertical(
+            bottom: Radius.circular(20),
+          ),
+        ),
         leading: GestureDetector(
-          child: Icon(Icons.arrow_back),
+          child: const Icon(Icons.arrow_back),
           onTap: () {
             Navigator.pop(context);
           },
@@ -29,12 +118,12 @@ class ViewRemoteRequest extends StatelessWidget {
                   ),
                   radius: 30,
                 ),
-                SizedBox(
+                const SizedBox(
                   width: 30,
                 ),
                 Text(
                   nume,
-                  style: TextStyle(
+                  style: const TextStyle(
                     fontWeight: FontWeight.bold,
                     fontSize: 20,
                   ),
@@ -47,10 +136,10 @@ class ViewRemoteRequest extends StatelessWidget {
             Container(
               child: Text(
                 "Remote work procentage: 200%",
-                style: TextStyle(fontSize: 15),
+                style: const TextStyle(fontSize: 15),
               ),
               width: MediaQuery.of(context).size.width,
-              padding: EdgeInsets.all(10),
+              padding: const EdgeInsets.all(10),
               decoration: BoxDecoration(
                 borderRadius: BorderRadius.circular(10),
                 color: Colors.grey[300],
@@ -70,7 +159,7 @@ class ViewRemoteRequest extends StatelessWidget {
                           leadingDistribution: TextLeadingDistribution.even),
                     ),
                     width: double.infinity,
-                    padding: EdgeInsets.all(10),
+                    padding: const EdgeInsets.all(10),
                     decoration: BoxDecoration(
                       borderRadius: BorderRadius.circular(10),
                       color: Colors.grey[300],
@@ -102,7 +191,12 @@ class ViewRemoteRequest extends StatelessWidget {
                           color: Colors.white),
                     ),
                     onPressed: () {
-                      ///TODO refuse
+                      showModalBottomSheet(
+                          shape: const RoundedRectangleBorder(
+                              borderRadius: BorderRadius.vertical(
+                                  top: Radius.circular(20))),
+                          context: context,
+                          builder: bottomSheet);
                     },
                     color: Colors.red,
                   ),
