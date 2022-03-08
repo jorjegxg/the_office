@@ -1,5 +1,6 @@
 class UserModel {
   UserModel({
+    required this.id,
     required this.requestStatus,
     required this.remoteProcentage,
     required this.building,
@@ -26,6 +27,7 @@ class UserModel {
   final String building;
   final String office;
   final bool requestStatus;
+  final String id;
 
   final String pictureUrl;
 
@@ -39,11 +41,11 @@ class UserModel {
       'nationality': nationality,
       'role' : role,
       'pictureUrl' : pictureUrl,
-
       'remoteProcentage' : remoteProcentage,
       'building' : building,
       'office' : office,
       'requestStatus' : requestStatus,
+      'id' : id,
     };
   }
 }

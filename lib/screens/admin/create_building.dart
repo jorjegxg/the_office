@@ -42,7 +42,7 @@ class _CreateBuildingState extends State<CreateBuilding> {
     _buildingAddressFocusNode.dispose();
   }
 
-  void createBuilding() async{
+  void createBuilding() async {
     setState(() {
       _isLoading = true;
     });
@@ -54,7 +54,7 @@ class _CreateBuildingState extends State<CreateBuilding> {
     setState(() {
       _isLoading = false;
     });
-    if(statusMessage == 'success'){
+    if (statusMessage == 'success') {
       _buildingNameController.clear();
       _floorsCountController.clear();
       _buildingAddressController.clear();
@@ -64,6 +64,11 @@ class _CreateBuildingState extends State<CreateBuilding> {
 
   @override
   Widget build(BuildContext context) {
+    final inputBorder = OutlineInputBorder(
+      borderRadius: BorderRadius.circular(12),
+      borderSide: Divider.createBorderSide(context),
+    );
+
     return Scaffold(
       appBar: AppBar(
         title: Text(
@@ -95,11 +100,25 @@ class _CreateBuildingState extends State<CreateBuilding> {
             SizedBox(
               height: 20,
             ),
-            TextFieldInput(
-              textEditingController: _buildingAddressController,
-              hintText: 'Building adress',
-              focusNode: _buildingAddressFocusNode,
-            ),
+            TextField(
+
+                ///fa hint textul sa se duca sus dupa ce e apasat
+                controller: _buildingAddressController,
+                focusNode: _buildingAddressFocusNode,
+                decoration: InputDecoration(
+                  hintText: 'Building adress',
+                  border: inputBorder,
+                  focusedBorder: inputBorder,
+                  enabledBorder: inputBorder,
+                  filled: true,
+                  contentPadding: const EdgeInsets.all(8),
+                ),
+                keyboardType: TextInputType.text,
+                obscureText: false,
+                onEditingComplete: () {
+                  createBuilding();
+                  FocusManager.instance.primaryFocus?.unfocus();
+                }),
             SizedBox(
               height: 20,
             ),

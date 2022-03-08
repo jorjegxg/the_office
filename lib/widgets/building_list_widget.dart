@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 
 class UserListWidget extends StatelessWidget {
-  const UserListWidget({required this.nume, required this.imagine, required this.id,required this.rol});
+  const UserListWidget({required this.nume, required this.imagine, required this.id,required this.adress});
 
-  final String nume, imagine,rol,id;
+  final String nume, imagine,adress,id;
 
   @override
   Widget build(BuildContext context) {
@@ -21,7 +21,7 @@ class UserListWidget extends StatelessWidget {
               ),
             ),
             title: Text(nume),
-            subtitle: Text(rol),
+            subtitle: Text(adress),
           ),
         ),
         SizedBox(

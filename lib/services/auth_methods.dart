@@ -51,6 +51,7 @@ class AuthMethods {
             building : "",
             office : "",
             requestStatus : false,
+            id: _auth.currentUser!.uid,
         );
 
         // adding user in our database
