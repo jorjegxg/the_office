@@ -33,6 +33,18 @@ class BuildingSearchScreen extends StatelessWidget {
               hintText: "Search buildings",
             ),
           ),
+          Expanded(
+            child: Padding(
+              padding: const EdgeInsets.only(
+                  left: 20, right: 20, top: 20, bottom: 30),
+              child: ListView.builder(
+                itemCount: building_list.length,
+                itemBuilder: (BuildContext context, int index) {
+                  return building_list[index];
+                },
+              ),
+            ),
+          ),
         ],
       ),
     );
