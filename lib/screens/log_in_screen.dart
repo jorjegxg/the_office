@@ -47,7 +47,6 @@ class _LogInScreenState extends State<LogInScreen> {
     String statusMessage =
         await AuthMethods().loginUser(email: email, password: password);
 
-
     if (statusMessage != "success") {
       showSnackBar(context, statusMessage);
     }
@@ -123,7 +122,7 @@ class _LogInScreenState extends State<LogInScreen> {
                 //buton login
 
                 MaterialButton(
-                  color: Colors.white38,
+                  color: Theme.of(context).primaryColor,
                   shape: RoundedRectangleBorder(
                     borderRadius: BorderRadius.circular(12),
                   ),
@@ -132,11 +131,14 @@ class _LogInScreenState extends State<LogInScreen> {
                         horizontal: 40, vertical: 10),
                     child: isLoading
                         ? CircularProgressIndicator(
-                            color: Colors.black,
+                            color: Colors.white,
                           )
                         : Text(
                             'Login',
-                            style: TextStyle(fontSize: 19),
+                            style: TextStyle(
+                              fontSize: 19,
+                              color: Colors.white,
+                            ),
                           ),
                   ),
                   onPressed: () {

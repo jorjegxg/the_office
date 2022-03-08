@@ -40,6 +40,7 @@ dependencies:
   firebase_storage: ^10.2.9
   font_awesome_flutter: ^9.2.0
   flutter_holo_date_picker: ^1.0.1+2
+  image_picker: ^0.8.4+10
 
 dev_dependencies:
   flutter_test:
@@ -65,8 +66,7 @@ flutter:
 
   # To add imagini to your application, add an imagini section, like this:
   assets:
-    - imagini/profile.jpeg
-    - imagini/office.jpeg
+    - imagini/
 
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/assets-and-images/#resolution-aware.

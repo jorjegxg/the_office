@@ -46,7 +46,12 @@ class AuthMethods {
             birthDate: birthDate ?? "",
             nationality: nationality ?? "",
             role: role,
-            pictureUrl: "");
+            pictureUrl: "",
+            remoteProcentage : '0',
+            building : "",
+            office : "",
+            requestStatus : false,
+        );
 
         // adding user in our database
         await _firestore

@@ -1,5 +1,4 @@
-import 'dart:typed_data';
-
+import 'dart:io';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 
@@ -8,16 +7,16 @@ class StorageMethods{
   final FirebaseStorage _storage = FirebaseStorage.instance;
   final FirebaseAuth _auth = FirebaseAuth.instance;
 
-  ///da upload la poza unde vrei tu
+  ///TODO da upload la poza unde vrei tu
 
   Future<String> uploadFile({
   required String name,
-  required Uint8List file,
+  required File file,
   }) async{
     //name = user sau building sau office
     Reference ref = _storage.ref().child(name).child(_auth.currentUser!.uid);
 
-    TaskSnapshot uploadData = await ref.putData(file);
+    TaskSnapshot uploadData = await ref.putFile(file);
 
     String downloadUrl = await uploadData.ref.getDownloadURL();
 

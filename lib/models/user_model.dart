@@ -1,5 +1,9 @@
 class UserModel {
   UserModel({
+    required this.requestStatus,
+    required this.remoteProcentage,
+    required this.building,
+    required this.office,
     required this.name,
     required this.lastName,
     required this.email,
@@ -17,6 +21,12 @@ class UserModel {
   final String birthDate;
   final String nationality;
   final String role;
+
+  final String remoteProcentage;
+  final String building;
+  final String office;
+  final bool requestStatus;
+
   final String pictureUrl;
 
   Map<String, dynamic> toJson() {
@@ -28,7 +38,12 @@ class UserModel {
       'birthDate': birthDate,
       'nationality': nationality,
       'role' : role,
-      'pictureUrl' : pictureUrl
+      'pictureUrl' : pictureUrl,
+
+      'remoteProcentage' : remoteProcentage,
+      'building' : building,
+      'office' : office,
+      'requestStatus' : requestStatus,
     };
   }
 }

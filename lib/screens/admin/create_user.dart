@@ -39,9 +39,12 @@ class _CreateUserState extends State<CreateUser> {
       _emailController.clear();
       _passwordController.clear();
       _nationalityController.clear();
-    } else {
-      showSnackBar(context, statusMessage);
+      setState(() {
+        _date = null;
+      });
     }
+      showSnackBar(context, statusMessage);
+
   }
 
   DateTime? _date;
