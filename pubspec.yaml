@@ -40,7 +40,8 @@ dependencies:
   firebase_storage: ^10.2.9
   font_awesome_flutter: ^9.2.0
   flutter_holo_date_picker: ^1.0.1+2
-
+  pie_chart: ^5.1.0
+  readmore: ^2.1.0
 dev_dependencies:
   flutter_test:
     sdk: flutter

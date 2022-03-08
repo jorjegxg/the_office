@@ -1,25 +1,78 @@
 import 'package:flutter/material.dart';
-import 'package:the_office/screens/log_in_screen.dart';
-import 'user_list_widget.dart';
 
 class RemoteRequestWidget extends StatelessWidget {
-  const RemoteRequestWidget({required this.nume, required this.imagine});
+  RemoteRequestWidget({required this.nume, required this.imagine});
 
-  void onPressed() {}
+  final VoidCallback onPressed = () {};
 
   final String nume, imagine;
   @override
   Widget build(BuildContext context) {
     return MaterialButton(
-      color: Colors.grey[300],
+      shape: RoundedRectangleBorder(
+        borderRadius: BorderRadius.circular(18.0),
+      ),
+      color: Theme.of(context).primaryColor,
       child: ListTile(
-        leading: CircleAvatar(
-          backgroundImage: AssetImage(
-            imagine,
-          ),
+        title: Row(
+          children: [
+            CircleAvatar(
+              backgroundImage: AssetImage(
+                imagine,
+              ),
+              radius: 30,
+            ),
+            SizedBox(
+              width: 10,
+            ),
+            Text(
+              nume,
+              style: TextStyle(
+                  fontWeight: FontWeight.bold,
+                  fontSize: 20,
+                  color: Colors.white),
+            ),
+          ],
         ),
-        title: Text(nume),
-        subtitle: const Text("Reason" "asdasd"),
+        subtitle: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            const SizedBox(
+              height: 5,
+            ),
+            Container(
+              child: Text(
+                "Remote work procentage: 200%",
+                style: TextStyle(fontSize: 15),
+              ),
+              width: MediaQuery.of(context).size.width,
+              padding: EdgeInsets.all(10),
+              decoration: BoxDecoration(
+                borderRadius: BorderRadius.circular(10),
+                color: Colors.white,
+              ),
+            ),
+            const SizedBox(
+              height: 10,
+            ),
+            Container(
+              width: MediaQuery.of(context).size.width,
+              child: const Text(
+                "Remote work procentage: 20%",
+                style: TextStyle(fontSize: 15),
+                maxLines: 3,
+              ),
+              padding: EdgeInsets.all(10),
+              decoration: BoxDecoration(
+                borderRadius: BorderRadius.circular(10),
+                color: Colors.white,
+              ),
+            ),
+            const SizedBox(
+              height: 5,
+            ),
+          ],
+        ),
       ),
       onPressed: onPressed,
     );

@@ -8,13 +8,13 @@ class RemoteRequestScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Center(child: Text("Buildings")),
+        title: const Center(child: Text("Remote Requests")),
       ),
       body: ListView(
         padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 30),
         children: [
           RemoteRequestWidget(
-            nume: 'nume',
+            nume: 'Popescu Ions',
             imagine: "imagini/profile.jpeg",
           ),
         ],
