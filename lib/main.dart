@@ -21,7 +21,11 @@ class MyApp extends StatelessWidget {
       debugShowCheckedModeBanner: false,
       title: 'The office',
       theme: ThemeData(
-        primarySwatch: Colors.indigo,
+        colorScheme: ColorScheme.fromSwatch().copyWith(
+          primary: Color(0xFF398AB9),
+          secondary: Color(0xFF398AB9),
+        ),
+         primaryColor: Color(0xFF398AB9),
       ),
       //verific daca userul a fost logat deja
       home: StreamBuilder(
