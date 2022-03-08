@@ -46,7 +46,7 @@ class AuthMethods {
             birthDate: birthDate ?? "",
             nationality: nationality ?? "",
             role: role,
-            pictureUrl: "",
+            pictureUrl: "https://firebasestorage.googleapis.com/v0/b/the-office-ef23a.appspot.com/o/no-profile-picture-icon.png?alt=media&token=d409142b-3d04-4567-97cb-8e498a21a9f9",
             remoteProcentage : '0',
             building : "",
             office : "",
@@ -55,7 +55,7 @@ class AuthMethods {
 
         // adding user in our database
         await _firestore
-            .collection(role)
+            .collection("Users")
             .doc(cred.user!.uid)
             .set(_user.toJson());
 

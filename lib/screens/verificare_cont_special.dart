@@ -18,15 +18,30 @@ class _VerificareContSpecialState extends State<VerificareContSpecial> {
   FirebaseAuth _firebaseAuth = FirebaseAuth.instance;
 
   Future<bool> esteAdmin() async {
+    // bool isAdmin = false;
+    // var colectieAdmini =
+    //     await _firebaseFirestore.collection('Administrator').get();
+    // colectieAdmini.docs.forEach((element) {
+    //   if (element['email'] == _firebaseAuth.currentUser!.email) {
+    //     isAdmin = true;
+    //     print("$isAdmin");
+    //   }
+    // });
+    // return isAdmin;
+
     bool isAdmin = false;
-    var colectieAdmini =
-        await _firebaseFirestore.collection('Administrator').get();
-    colectieAdmini.docs.forEach((element) {
-      if (element['email'] == _firebaseAuth.currentUser!.email) {
-        isAdmin = true;
-        print("$isAdmin");
-      }
-    });
+
+    var refUser = await _firebaseFirestore
+        .collection('Users')
+        .doc(_firebaseAuth.currentUser!.uid)
+        .get();
+
+    if (refUser['role'] == "Administrator" ||
+        refUser['role'] == "Office Administrator") {
+      isAdmin = true;
+      print('$isAdmin');
+    }
+
     return isAdmin;
   }
 

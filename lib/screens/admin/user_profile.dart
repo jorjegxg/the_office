@@ -38,7 +38,7 @@ class _UserProfileState extends State<UserProfile> {
           await StorageMethods().uploadFile(name: 'Users', file: imageFile!);
 
       _firebaseFirestore
-          .collection('Administrator')
+          .collection('Users')
           .doc(_firebaseAuth.currentUser!.uid)
           .update({'pictureUrl': photoLink});
       setState(() {
@@ -99,7 +99,7 @@ class _UserProfileState extends State<UserProfile> {
       ),
       body: StreamBuilder(
           stream: _firebaseFirestore
-              .collection("Administrator")
+              .collection("Users")
               .doc(_firebaseAuth.currentUser!.uid)
               .snapshots(),
           builder: (BuildContext context, AsyncSnapshot snapshot) {
@@ -118,18 +118,17 @@ class _UserProfileState extends State<UserProfile> {
                             ///TODO pick image
                             Stack(
                               children: [
+                                CircleAvatar(
+                                  backgroundImage: AssetImage('imagini/no-profile-picture-icon.png'),
+                                  radius: 40,
+                                ),
                                 _picIsLoading
                                     ? CircleAvatar(
                                         radius: 40,
                                         backgroundColor: Colors.transparent,
                                         child: CircularProgressIndicator())
                                     : (CircleAvatar(
-                                        backgroundImage: snapshot
-                                                    .data['pictureUrl'] ==
-                                                ""
-                                            ? NetworkImage(
-                                                'https://firebasestorage.googleapis.com/v0/b/the-office-ef23a.appspot.com/o/no-profile-picture-icon.png?alt=media&token=d409142b-3d04-4567-97cb-8e498a21a9f9')
-                                            : NetworkImage(
+                                       backgroundImage : NetworkImage(
                                                 snapshot.data['pictureUrl']),
                                         radius: 40,
                                         backgroundColor: Colors.transparent,
@@ -142,6 +141,7 @@ class _UserProfileState extends State<UserProfile> {
                                     child: Icon(Icons.add_a_photo),
                                   ),
                                 ),
+
                               ],
                             ),
                             const SizedBox(

@@ -16,7 +16,7 @@ class UserListWidget extends StatelessWidget {
           onPressed: () {},
           child: ListTile(
             leading: CircleAvatar(
-              backgroundImage: AssetImage(
+              backgroundImage: NetworkImage(
                 imagine,
               ),
             ),
