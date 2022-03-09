@@ -7,6 +7,7 @@ import 'package:the_office/screens/admin/office_search_screen.dart';
 import 'package:the_office/screens/employee/employee_user_search_screen.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:the_office/screens/admin/office_view_screen.dart';
+import 'package:the_office/screens/admin/switch_user_building_screen.dart';
 
 class VerificareContSpecial extends StatefulWidget {
   @override

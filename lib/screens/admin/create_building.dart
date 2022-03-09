@@ -71,7 +71,9 @@ class _CreateBuildingState extends State<CreateBuilding> {
 
     return Scaffold(
       appBar: AppBar(
-        title: Text(
+        shape: const RoundedRectangleBorder(
+            borderRadius: BorderRadius.vertical(bottom: Radius.circular(20))),
+        title: const Text(
           "Create building",
           style: TextStyle(fontSize: 23),
         ),
@@ -87,7 +89,7 @@ class _CreateBuildingState extends State<CreateBuilding> {
               focusNode: _buildingNameFocusNode,
               nextNode: _floorsCountFocusNode,
             ),
-            SizedBox(
+            const SizedBox(
               height: 20,
             ),
             TextFieldInput(
@@ -97,7 +99,7 @@ class _CreateBuildingState extends State<CreateBuilding> {
               nextNode: _buildingAddressFocusNode,
               textInputType: TextInputType.number,
             ),
-            SizedBox(
+            const SizedBox(
               height: 20,
             ),
             TextField(
@@ -131,10 +133,10 @@ class _CreateBuildingState extends State<CreateBuilding> {
                 padding:
                     const EdgeInsets.symmetric(horizontal: 40, vertical: 15),
                 child: _isLoading == true
-                    ? CircularProgressIndicator(
+                    ? const CircularProgressIndicator(
                         color: Colors.white,
                       )
-                    : Text(
+                    : const Text(
                         'Create',
                         style: TextStyle(
                           fontSize: 14,

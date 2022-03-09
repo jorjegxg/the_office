@@ -18,17 +18,13 @@ class _UserSearchScreenState extends State<UserSearchScreen> {
   final TextEditingController _textController = TextEditingController();
   final List<Widget> user_list = [];
 
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
         title: const Center(child: Text("Users")),
-        // shape: const RoundedRectangleBorder(
-        //     borderRadius: BorderRadius.only(
-        //         bottomRight: Radius.circular(30),
-        //         bottomLeft: Radius.circular(30),
-        //     ),),
+        shape: const RoundedRectangleBorder(
+            borderRadius: BorderRadius.vertical(bottom: Radius.circular(20))),
       ),
       floatingActionButton: FloatingActionButton(
         child: const Icon(Icons.person_add),

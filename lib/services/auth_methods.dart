@@ -24,7 +24,7 @@ class AuthMethods {
 
     final FirebaseAuth _auth = FirebaseAuth.instanceFor(app: app);
     final FirebaseFirestore _firestore = FirebaseFirestore.instance;
-    
+
     try {
       if (name.isNotEmpty &&
           lastName.isNotEmpty &&
@@ -32,29 +32,30 @@ class AuthMethods {
           password.isNotEmpty &&
           gender.isNotEmpty &&
           role.isNotEmpty) {
-        // registering user in auth with email and password
+        // registering office_admin in auth with email and password
         UserCredential cred = await _auth.createUserWithEmailAndPassword(
           email: email,
           password: password,
         );
 
         UserModel _user = UserModel(
-            name: name,
-            lastName: lastName,
-            email: email,
-            gender: gender,
-            birthDate: birthDate ?? "",
-            nationality: nationality ?? "",
-            role: role,
-            pictureUrl: "https://firebasestorage.googleapis.com/v0/b/the-office-ef23a.appspot.com/o/no-profile-picture-icon.png?alt=media&token=d409142b-3d04-4567-97cb-8e498a21a9f9",
-            remoteProcentage : '0',
-            building : "",
-            office : "",
-            requestStatus : false,
-            id: _auth.currentUser!.uid,
+          name: name,
+          lastName: lastName,
+          email: email,
+          gender: gender,
+          birthDate: birthDate ?? "",
+          nationality: nationality ?? "",
+          role: role,
+          pictureUrl:
+              "https://firebasestorage.googleapis.com/v0/b/the-office-ef23a.appspot.com/o/no-profile-picture-icon.png?alt=media&token=d409142b-3d04-4567-97cb-8e498a21a9f9",
+          remoteProcentage: '0',
+          building: "",
+          office: "",
+          requestStatus: false,
+          id: _auth.currentUser!.uid,
         );
 
-        // adding user in our database
+        // adding office_admin in our database
         await _firestore
             .collection("Users")
             .doc(cred.user!.uid)
@@ -75,10 +76,9 @@ class AuthMethods {
     required String email,
     required String password,
   }) async {
-
     final FirebaseAuth _auth = FirebaseAuth.instance;
     final FirebaseFirestore _firestore = FirebaseFirestore.instance;
-    
+
     String res = "Some error Occurred";
     try {
       if (email.isNotEmpty || password.isNotEmpty) {
@@ -96,7 +96,7 @@ class AuthMethods {
     return res;
   }
 
-  void logout(){
+  void logout() {
     FirebaseAuth.instance.signOut();
   }
 }

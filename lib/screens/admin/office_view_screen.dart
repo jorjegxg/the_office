@@ -20,7 +20,6 @@ class _OfficeViewScreenState extends State<OfficeViewScreen>
       nume: "1gg",
       imagine: "imagini/office.jpeg",
       id: 'sdrhgsrh',
-
       rol: "Amdin",
     ),
     UserListWidget(
@@ -77,7 +76,7 @@ class _OfficeViewScreenState extends State<OfficeViewScreen>
       body: TabBarView(
         controller: _tabController,
         children: [
-          Text("mama"),
+          const Text("mama"),
           Column(
             children: [
               const SizedBox(

@@ -5,20 +5,15 @@ import 'package:the_office/widgets/building_list_widget.dart';
 import 'package:the_office/widgets/text_field_input.dart';
 
 class BuildingSearchScreen extends StatelessWidget {
-  BuildingSearchScreen({required this.next});
   final TextEditingController _textController = TextEditingController();
-
-  // final List<Widget> building_list = [
-  //   BuildingListWidget(nume: "swergsaerg", imagine: 'https://firebasestorage.googleapis.com/v0/b/the-office-ef23a.appspot.com/o/default_building.jpg?alt=media&token=59cfa57f-7b88-4363-abfc-2e526bdd17b3', id: 'id', adress: "adresa"),
-  //   BuildingListWidget(nume: "swergsaerg", imagine: 'https://firebasestorage.googleapis.com/v0/b/the-office-ef23a.appspot.com/o/default_building.jpg?alt=media&token=59cfa57f-7b88-4363-abfc-2e526bdd17b3', id: 'id', adress: "adresa"),
-  //   BuildingListWidget(nume: "swergsaerg", imagine: 'https://firebasestorage.googleapis.com/v0/b/the-office-ef23a.appspot.com/o/default_building.jpg?alt=media&token=59cfa57f-7b88-4363-abfc-2e526bdd17b3', id: 'id', adress: "adresa"),
-  // ];
-  final VoidCallback next;
   FirebaseFirestore _firebaseFirestore = FirebaseFirestore.instance;
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
+        shape: const RoundedRectangleBorder(
+            borderRadius: BorderRadius.vertical(bottom: Radius.circular(20))),
         title: const Center(child: Text("Buildings")),
       ),
       floatingActionButton: FloatingActionButton(
@@ -26,7 +21,7 @@ class BuildingSearchScreen extends StatelessWidget {
         child: const Icon(Icons.domain_add),
         onPressed: () {
           Navigator.of(context).push(
-            MaterialPageRoute(builder: (context) => CreateBuilding()),
+            MaterialPageRoute(builder: (context) => const CreateBuilding()),
           );
         },
       ),
