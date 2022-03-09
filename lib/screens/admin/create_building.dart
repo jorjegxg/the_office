@@ -42,7 +42,7 @@ class _CreateBuildingState extends State<CreateBuilding> {
     _buildingAddressFocusNode.dispose();
   }
 
-  void createBuilding() async{
+  void createBuilding() async {
     setState(() {
       _isLoading = true;
     });
@@ -54,7 +54,7 @@ class _CreateBuildingState extends State<CreateBuilding> {
     setState(() {
       _isLoading = false;
     });
-    if(statusMessage == 'success'){
+    if (statusMessage == 'success') {
       _buildingNameController.clear();
       _floorsCountController.clear();
       _buildingAddressController.clear();
@@ -66,7 +66,9 @@ class _CreateBuildingState extends State<CreateBuilding> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text(
+        shape: const RoundedRectangleBorder(
+            borderRadius: BorderRadius.vertical(bottom: Radius.circular(20))),
+        title: const Text(
           "Create building",
           style: TextStyle(fontSize: 23),
         ),
@@ -82,7 +84,7 @@ class _CreateBuildingState extends State<CreateBuilding> {
               focusNode: _buildingNameFocusNode,
               nextNode: _floorsCountFocusNode,
             ),
-            SizedBox(
+            const SizedBox(
               height: 20,
             ),
             TextFieldInput(
@@ -92,7 +94,7 @@ class _CreateBuildingState extends State<CreateBuilding> {
               nextNode: _buildingAddressFocusNode,
               textInputType: TextInputType.number,
             ),
-            SizedBox(
+            const SizedBox(
               height: 20,
             ),
             TextFieldInput(
@@ -100,7 +102,7 @@ class _CreateBuildingState extends State<CreateBuilding> {
               hintText: 'Building adress',
               focusNode: _buildingAddressFocusNode,
             ),
-            SizedBox(
+            const SizedBox(
               height: 20,
             ),
             MaterialButton(
@@ -112,10 +114,10 @@ class _CreateBuildingState extends State<CreateBuilding> {
                 padding:
                     const EdgeInsets.symmetric(horizontal: 40, vertical: 15),
                 child: _isLoading == true
-                    ? CircularProgressIndicator(
+                    ? const CircularProgressIndicator(
                         color: Colors.white,
                       )
-                    : Text(
+                    : const Text(
                         'Create',
                         style: TextStyle(
                           fontSize: 14,

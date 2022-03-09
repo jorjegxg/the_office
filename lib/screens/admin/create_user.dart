@@ -43,22 +43,22 @@ class _CreateUserState extends State<CreateUser> {
         _date = null;
       });
     }
-      showSnackBar(context, statusMessage);
-
+    showSnackBar(context, statusMessage);
   }
 
   DateTime? _date;
   String selectedRole = "User";
   List<DropdownMenuItem<String>> roleItems = [
-    DropdownMenuItem(child: Text("User"), value: "User"),
-    DropdownMenuItem(
+    const DropdownMenuItem(child: Text("User"), value: "User"),
+    const DropdownMenuItem(
         child: Text("Office Administrator"), value: "Office Administrator"),
-    DropdownMenuItem(child: Text("Administrator"), value: "Administrator"),
+    const DropdownMenuItem(
+        child: Text("Administrator"), value: "Administrator"),
   ];
   String selectedGender = "Male";
   List<DropdownMenuItem<String>> genderItems = [
-    DropdownMenuItem(child: Text("Male"), value: "Male"),
-    DropdownMenuItem(child: Text("Female"), value: "Female"),
+    const DropdownMenuItem(child: Text("Male"), value: "Male"),
+    const DropdownMenuItem(child: Text("Female"), value: "Female"),
   ];
 
   final TextEditingController _nameController = TextEditingController();
@@ -104,8 +104,10 @@ class _CreateUserState extends State<CreateUser> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text(
-          "Create user",
+        shape: const RoundedRectangleBorder(
+            borderRadius: BorderRadius.vertical(bottom: Radius.circular(20))),
+        title: const Text(
+          "Create office_admin",
           style: TextStyle(fontSize: 23),
         ),
         centerTitle: true,
@@ -120,7 +122,7 @@ class _CreateUserState extends State<CreateUser> {
               focusNode: _nameFocusNode,
               nextNode: _lastNameFocusNode,
             ),
-            SizedBox(
+            const SizedBox(
               height: 20,
             ),
             TextFieldInput(
@@ -129,7 +131,7 @@ class _CreateUserState extends State<CreateUser> {
               focusNode: _lastNameFocusNode,
               nextNode: _emailFocusNode,
             ),
-            SizedBox(
+            const SizedBox(
               height: 20,
             ),
             TextFieldInput(
@@ -139,7 +141,7 @@ class _CreateUserState extends State<CreateUser> {
               nextNode: _passwordFocusNode,
               textInputType: TextInputType.emailAddress,
             ),
-            SizedBox(
+            const SizedBox(
               height: 20,
             ),
             TextFieldInput(
@@ -149,7 +151,7 @@ class _CreateUserState extends State<CreateUser> {
               focusNode: _passwordFocusNode,
               nextNode: _nationalityFocusNode,
             ),
-            SizedBox(
+            const SizedBox(
               height: 20,
             ),
             TextFieldInput(
@@ -157,7 +159,7 @@ class _CreateUserState extends State<CreateUser> {
               hintText: 'Nationality (optional)',
               focusNode: _nationalityFocusNode,
             ),
-            SizedBox(
+            const SizedBox(
               height: 20,
             ),
             CustomButton(
@@ -221,7 +223,7 @@ class _CreateUserState extends State<CreateUser> {
                 ),
               ),
             ),
-            SizedBox(
+            const SizedBox(
               height: 20,
             ),
 
@@ -234,10 +236,10 @@ class _CreateUserState extends State<CreateUser> {
                 padding:
                     const EdgeInsets.symmetric(horizontal: 40, vertical: 15),
                 child: _isLoading == true
-                    ? CircularProgressIndicator(
+                    ? const CircularProgressIndicator(
                         color: Colors.white,
                       )
-                    : Text(
+                    : const Text(
                         'Submit',
                         style: TextStyle(
                           fontSize: 14,

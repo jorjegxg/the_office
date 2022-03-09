@@ -16,8 +16,8 @@ class _OfficeViewScreenState extends State<OfficeViewScreen>
   late TabController _tabController;
 
   final List<Widget> office_list = [
-    UserListWidget(nume: "1gg", imagine: "imagini/office.jpeg"),
-    UserListWidget(nume: "TACE", imagine: "imagini/office.jpeg"),
+    const UserListWidget(nume: "1gg", imagine: "imagini/office.jpeg"),
+    const UserListWidget(nume: "TACE", imagine: "imagini/office.jpeg"),
   ];
 
   late Map<String, double> deskInfo = {
@@ -65,7 +65,7 @@ class _OfficeViewScreenState extends State<OfficeViewScreen>
       body: TabBarView(
         controller: _tabController,
         children: [
-          Text("mama"),
+          const Text("mama"),
           Column(
             children: [
               const SizedBox(

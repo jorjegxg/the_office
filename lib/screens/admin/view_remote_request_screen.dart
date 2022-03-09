@@ -1,6 +1,5 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:the_office/widgets/text_field_input.dart';
 
 class ViewRemoteRequest extends StatelessWidget {
   ViewRemoteRequest({
@@ -9,83 +8,127 @@ class ViewRemoteRequest extends StatelessWidget {
   });
   final String nume, imagine;
   final TextEditingController textEditingController = TextEditingController();
-  //Casuta pop-up
+  //Casuta pop-up bottom sheet
   Widget bottomSheet(BuildContext context) {
-    return Container(
-      child: Column(
-        children: [
-          const SizedBox(
-            height: 20,
+    return Column(
+      children: [
+        Padding(
+          padding: const EdgeInsets.only(
+            left: 20.0,
+            right: 20,
+            top: 25,
           ),
-          Row(
-            children: [
-              const SizedBox(
-                width: 10,
+          child: ListTile(
+            tileColor: const Color(0xffDFDFDF),
+            shape: RoundedRectangleBorder(
+              borderRadius: BorderRadius.circular(20),
+            ),
+            leading: CircleAvatar(
+              backgroundImage: NetworkImage(
+                imagine,
               ),
-              Icon(Icons.arrow_back),
-              const SizedBox(
-                width: 10,
+            ),
+            title: Text(nume),
+          ),
+        ),
+        Expanded(
+          child: Padding(
+            padding: const EdgeInsets.all(20),
+            child: Container(
+              decoration: BoxDecoration(
+                color: const Color(0xffDFDFDF),
+                borderRadius: BorderRadius.circular(20),
               ),
-              Expanded(
-                child: ListTile(
-                  tileColor: Color(0xffDFDFDF),
-                  shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(20),
-                  ),
-                  leading: CircleAvatar(
-                    backgroundImage: NetworkImage(
-                      imagine,
+              child: Padding(
+                padding: const EdgeInsets.all(20.0),
+                child: TextField(
+                  maxLines: double.maxFinite.floor(),
+                  controller: textEditingController,
+                  decoration: InputDecoration(
+                    border: OutlineInputBorder(
+                      borderRadius: BorderRadius.circular(20),
+                      borderSide:
+                          const BorderSide(width: 0, color: Colors.white),
                     ),
-                  ),
-                  title: Text(nume),
-                ),
-              ),
-              const SizedBox(
-                width: 25,
-              ),
-            ],
-          ),
-          SizedBox(
-            height: 10,
-          ),
-          Expanded(
-            child: Padding(
-              padding: const EdgeInsets.all(20),
-              child: Container(
-                decoration: BoxDecoration(
-                  color: Color(0xffDFDFDF),
-                  borderRadius: BorderRadius.circular(20),
-                ),
-                child: Padding(
-                  padding: const EdgeInsets.all(30.0),
-                  child: TextField(
-                    maxLines: double.maxFinite.floor(),
-                    controller: textEditingController,
-                    decoration: InputDecoration(
-                      border: OutlineInputBorder(
-                        borderRadius: BorderRadius.circular(20),
-                        borderSide: BorderSide(width: 0, color: Colors.white),
-                      ),
-                      enabled: true,
-                      enabledBorder: OutlineInputBorder(
-                        borderRadius: BorderRadius.circular(20),
-                        borderSide: BorderSide(width: 0, color: Colors.white),
-                      ),
-                      focusedBorder: OutlineInputBorder(
-                        borderRadius: BorderRadius.circular(20),
-                        borderSide: BorderSide(width: 0, color: Colors.white),
-                      ),
-                      filled: true,
-                      fillColor: Colors.white,
-                      hintText: "Text",
+                    enabled: true,
+                    enabledBorder: OutlineInputBorder(
+                      borderRadius: BorderRadius.circular(20),
+                      borderSide: BorderSide(width: 0, color: Colors.white),
                     ),
+                    focusedBorder: OutlineInputBorder(
+                      borderRadius: BorderRadius.circular(20),
+                      borderSide: BorderSide(width: 0, color: Colors.white),
+                    ),
+                    filled: true,
+                    fillColor: Colors.white,
+                    hintText: "Text",
                   ),
                 ),
               ),
             ),
           ),
-        ],
-      ),
+        ),
+        Row(
+          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+          children: [
+            const SizedBox(
+              width: 10,
+            ),
+            //refuse button
+            Expanded(
+              child: MaterialButton(
+                shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(20)),
+                padding: const EdgeInsets.symmetric(vertical: 10),
+                child: const Text(
+                  "Refuse",
+                  style: TextStyle(
+                      fontSize: 20,
+                      fontWeight: FontWeight.bold,
+                      color: Colors.white),
+                ),
+                onPressed: () {
+                  showModalBottomSheet(
+                      shape: const RoundedRectangleBorder(
+                          borderRadius:
+                              BorderRadius.vertical(top: Radius.circular(20))),
+                      context: context,
+                      builder: bottomSheet);
+                },
+                color: Colors.red,
+              ),
+            ),
+            const SizedBox(
+              width: 10,
+            ),
+            //accept button
+            Expanded(
+              child: MaterialButton(
+                shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(20)),
+                padding: const EdgeInsets.symmetric(vertical: 10),
+                child: const Text(
+                  "Cancel",
+                  style: TextStyle(
+                      fontSize: 20,
+                      fontWeight: FontWeight.bold,
+                      color: Colors.white),
+                ),
+                onPressed: () {
+                  Navigator.pop(context);
+                },
+                color: Colors.grey[400],
+              ),
+            ),
+            const SizedBox(
+              width: 10,
+            ),
+          ],
+        ),
+        const SizedBox(
+          height: 10,
+        ),
+      ],
     );
   }
 
@@ -104,7 +147,7 @@ class ViewRemoteRequest extends StatelessWidget {
             Navigator.pop(context);
           },
         ),
-        title: Text("popescu gheorghe"),
+        title: Text(nume),
       ),
       body: Padding(
         padding: const EdgeInsets.all(20.0),

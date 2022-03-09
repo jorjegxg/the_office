@@ -33,6 +33,13 @@ class _OfficeSearchScreenState extends State<OfficeSearchScreen>
     _tabController.addListener(_handleTabChange);
   }
 
+  @override
+  void dispose() {
+    super.dispose();
+    _tabController = TabController(length: 2, vsync: this);
+    _tabController.addListener(_handleTabChange);
+  }
+
   _handleTabChange() {
     setState(() {});
   }

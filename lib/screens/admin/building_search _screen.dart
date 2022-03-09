@@ -13,6 +13,8 @@ class BuildingSearchScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
+        shape: const RoundedRectangleBorder(
+            borderRadius: BorderRadius.vertical(bottom: Radius.circular(20))),
         title: const Center(child: Text("Buildings")),
       ),
       floatingActionButton: FloatingActionButton(
@@ -20,7 +22,7 @@ class BuildingSearchScreen extends StatelessWidget {
         child: const Icon(Icons.domain_add),
         onPressed: () {
           Navigator.of(context).push(
-            MaterialPageRoute(builder: (context) => CreateBuilding()),
+            MaterialPageRoute(builder: (context) => const CreateBuilding()),
           );
         },
       ),

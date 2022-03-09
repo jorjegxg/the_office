@@ -3,8 +3,6 @@ import 'package:flutter/material.dart';
 import 'package:the_office/screens/log_in_screen.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:the_office/screens/verificare_cont_special.dart';
-import 'screens/admin/user_search _screen.dart';
-import 'screens/admin/building_search _screen.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -22,10 +20,10 @@ class MyApp extends StatelessWidget {
       title: 'The office',
       theme: ThemeData(
         colorScheme: ColorScheme.fromSwatch().copyWith(
-          primary: Color(0xFF398AB9),
-          secondary: Color(0xFF398AB9),
+          primary: const Color(0xFF398AB9),
+          secondary: const Color(0xFF398AB9),
         ),
-         primaryColor: Color(0xFF398AB9),
+        primaryColor: const Color(0xFF398AB9),
       ),
       //verific daca userul a fost logat deja
       home: StreamBuilder(
@@ -45,7 +43,7 @@ class MyApp extends StatelessWidget {
                 child: CircularProgressIndicator(),
               );
             }
-            return LogInScreen();
+            return const LogInScreen();
           }),
     );
   }

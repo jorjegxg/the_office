@@ -5,14 +5,14 @@ import 'package:the_office/widgets/user_list_widget.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:the_office/widgets/text_field_input.dart';
 
-class UserSearchScreen extends StatefulWidget {
-  const UserSearchScreen({Key? key}) : super(key: key);
+class SwitchUsersOffice extends StatefulWidget {
+  const SwitchUsersOffice({Key? key}) : super(key: key);
 
   @override
-  State<UserSearchScreen> createState() => _UserSearchScreenState();
+  State<SwitchUsersOffice> createState() => _SwitchUsersOfficeState();
 }
 
-class _UserSearchScreenState extends State<UserSearchScreen> {
+class _SwitchUsersOfficeState extends State<SwitchUsersOffice> {
   FirebaseFirestore _firebaseFirestore = FirebaseFirestore.instance;
 
   final TextEditingController _textController = TextEditingController();
@@ -24,18 +24,9 @@ class _UserSearchScreenState extends State<UserSearchScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Center(child: Text("Users")),
+        title: const Center(child: Text("Select building")),
         shape: const RoundedRectangleBorder(
             borderRadius: BorderRadius.vertical(bottom: Radius.circular(20))),
-      ),
-      floatingActionButton: FloatingActionButton(
-        child: const Icon(Icons.person_add),
-        onPressed: () {
-          Navigator.push(
-            context,
-            MaterialPageRoute(builder: (context) => const CreateUser()),
-          );
-        },
       ),
       body: StreamBuilder(
           stream: _firebaseFirestore.collection('User').snapshots(),
@@ -46,11 +37,6 @@ class _UserSearchScreenState extends State<UserSearchScreen> {
               padding: const EdgeInsets.all(20.0),
               child: Column(
                 children: [
-                  TextFieldInput(
-                    textEditingController: _textController,
-                    hintText: "Search users",
-                  ),
-
                   ///TODO fa lista de useri
                   // Expanded(
                   //   child: ListView(

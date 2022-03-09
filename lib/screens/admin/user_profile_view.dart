@@ -18,7 +18,7 @@ class UserProfileView extends StatelessWidget {
       appBar: AppBar(
         centerTitle: true,
         shape: const RoundedRectangleBorder(
-            borderRadius: BorderRadius.vertical(bottom: Radius.circular(15))),
+            borderRadius: BorderRadius.vertical(bottom: Radius.circular(20))),
         title: const Text(
           "Profile",
         ),
@@ -142,7 +142,77 @@ class UserProfileView extends StatelessWidget {
                   padding: const EdgeInsets.symmetric(vertical: 30),
                   child: const Text("Deactivate account"),
                   onPressed: () {
-                    ///TODO deactivate acount
+                    showDialog(
+                        barrierDismissible: false,
+                        context: context,
+                        builder: (BuildContext context) {
+                          return AlertDialog(
+                            shape: RoundedRectangleBorder(
+                                borderRadius: BorderRadius.circular(30)),
+                            backgroundColor: Theme.of(context).primaryColor,
+                            title: const Center(
+                                child: Text(
+                              "Are you sure?",
+                              style:
+                                  TextStyle(color: Colors.white, fontSize: 30),
+                            )),
+                            actions: [
+                              Row(
+                                children: [
+                                  Expanded(
+                                    child: TextButton(
+                                      onPressed: () {
+                                        Navigator.pop(context);
+                                      },
+                                      child: const Text(
+                                        "Deactivate account",
+                                        style: TextStyle(color: Colors.black),
+                                      ),
+                                      style: ButtonStyle(
+                                        backgroundColor:
+                                            MaterialStateProperty.resolveWith(
+                                                (state) => Colors.white),
+                                        shape: MaterialStateProperty.all<
+                                            RoundedRectangleBorder>(
+                                          RoundedRectangleBorder(
+                                            borderRadius:
+                                                BorderRadius.circular(18.0),
+                                          ),
+                                        ),
+                                      ),
+                                    ),
+                                  ),
+                                  const SizedBox(
+                                    width: 5,
+                                  ),
+                                  Expanded(
+                                    child: TextButton(
+                                      onPressed: () {
+                                        Navigator.pop(context);
+                                      },
+                                      child: const Text(
+                                        "Cancel",
+                                        style: TextStyle(color: Colors.black),
+                                      ),
+                                      style: ButtonStyle(
+                                        backgroundColor:
+                                            MaterialStateProperty.resolveWith(
+                                                (state) => Colors.white),
+                                        shape: MaterialStateProperty.all<
+                                            RoundedRectangleBorder>(
+                                          RoundedRectangleBorder(
+                                            borderRadius:
+                                                BorderRadius.circular(18.0),
+                                          ),
+                                        ),
+                                      ),
+                                    ),
+                                  ),
+                                ],
+                              ),
+                            ],
+                          );
+                        });
                   },
                   color: Colors.grey[400],
                 ),
