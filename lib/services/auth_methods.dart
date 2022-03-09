@@ -52,6 +52,7 @@ class AuthMethods {
           building: "",
           office: "",
           requestStatus: false,
+          id: _auth.currentUser!.uid,
         );
 
         // adding office_admin in our database

@@ -16,8 +16,18 @@ class _OfficeViewScreenState extends State<OfficeViewScreen>
   late TabController _tabController;
 
   final List<Widget> office_list = [
-    const UserListWidget(nume: "1gg", imagine: "imagini/office.jpeg"),
-    const UserListWidget(nume: "TACE", imagine: "imagini/office.jpeg"),
+    UserListWidget(
+      nume: "1gg",
+      imagine: "imagini/office.jpeg",
+      id: 'sdrhgsrh',
+      rol: "Amdin",
+    ),
+    UserListWidget(
+      nume: "TACE",
+      imagine: "imagini/office.jpeg",
+      id: 'sdrhgsrh',
+      rol: "Amdin",
+    ),
   ];
 
   late Map<String, double> deskInfo = {
@@ -29,6 +39,7 @@ class _OfficeViewScreenState extends State<OfficeViewScreen>
   final double birouriUtilizabile = 100;
   final double birouriOcupate = 90;
   final int numarEtaj = 3;
+
   @override
   void initState() {
     super.initState();
@@ -80,7 +91,11 @@ class _OfficeViewScreenState extends State<OfficeViewScreen>
               const Padding(
                 padding: EdgeInsets.all(20.0),
                 child: UserListWidget(
-                    nume: "1gg", imagine: "imagini/imagine.jpeg"),
+                  nume: "1gg",
+                  imagine: "imagini/imagine.jpeg",
+                  rol: "Amdin",
+                  id: 'sdrhgsrh',
+                ),
               ),
               const Text(
                 "Employees",

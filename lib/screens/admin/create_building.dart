@@ -64,6 +64,11 @@ class _CreateBuildingState extends State<CreateBuilding> {
 
   @override
   Widget build(BuildContext context) {
+    final inputBorder = OutlineInputBorder(
+      borderRadius: BorderRadius.circular(12),
+      borderSide: Divider.createBorderSide(context),
+    );
+
     return Scaffold(
       appBar: AppBar(
         shape: const RoundedRectangleBorder(
@@ -97,12 +102,26 @@ class _CreateBuildingState extends State<CreateBuilding> {
             const SizedBox(
               height: 20,
             ),
-            TextFieldInput(
-              textEditingController: _buildingAddressController,
-              hintText: 'Building adress',
-              focusNode: _buildingAddressFocusNode,
-            ),
-            const SizedBox(
+            TextField(
+
+                ///fa hint textul sa se duca sus dupa ce e apasat
+                controller: _buildingAddressController,
+                focusNode: _buildingAddressFocusNode,
+                decoration: InputDecoration(
+                  hintText: 'Building adress',
+                  border: inputBorder,
+                  focusedBorder: inputBorder,
+                  enabledBorder: inputBorder,
+                  filled: true,
+                  contentPadding: const EdgeInsets.all(8),
+                ),
+                keyboardType: TextInputType.text,
+                obscureText: false,
+                onEditingComplete: () {
+                  createBuilding();
+                  FocusManager.instance.primaryFocus?.unfocus();
+                }),
+            SizedBox(
               height: 20,
             ),
             MaterialButton(

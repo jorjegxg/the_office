@@ -17,8 +17,18 @@ class _OfficeSearchScreenState extends State<OfficeSearchScreen>
   late TabController _tabController;
 
   final List<Widget> office_list = [
-    UserListWidget(nume: "1gg", imagine: "imagini/office.jpeg"),
-    UserListWidget(nume: "TACE", imagine: "imagini/office.jpeg"),
+    UserListWidget(
+      nume: "1gg",
+      imagine: "imagini/office.jpeg",
+      id: 'sdrhgsrh',
+      rol: "Amdin",
+    ),
+    UserListWidget(
+      nume: "TACE",
+      imagine: "imagini/office.jpeg",
+      id: 'sdrhgsrh',
+      rol: "Amdin",
+    ),
   ];
 
   final int numarSali = 30;
