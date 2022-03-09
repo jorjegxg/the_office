@@ -48,9 +48,9 @@ class _CreateUserState extends State<CreateUser> {
   }
 
   DateTime? _date;
-  String selectedRole = "User";
+  String selectedRole = "Employee";
   List<DropdownMenuItem<String>> roleItems = [
-    DropdownMenuItem(child: Text("User"), value: "User"),
+    DropdownMenuItem(child: Text("Employee"), value: "Employee"),
     DropdownMenuItem(
         child: Text("Office Administrator"), value: "Office Administrator"),
     DropdownMenuItem(child: Text("Administrator"), value: "Administrator"),

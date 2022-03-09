@@ -119,7 +119,8 @@ class _UserProfileState extends State<UserProfile> {
                             Stack(
                               children: [
                                 CircleAvatar(
-                                  backgroundImage: AssetImage('imagini/no-profile-picture-icon.png'),
+                                  backgroundImage: AssetImage(
+                                      'imagini/no-profile-picture-icon.png'),
                                   radius: 40,
                                 ),
                                 _picIsLoading
@@ -128,8 +129,8 @@ class _UserProfileState extends State<UserProfile> {
                                         backgroundColor: Colors.transparent,
                                         child: CircularProgressIndicator())
                                     : (CircleAvatar(
-                                       backgroundImage : NetworkImage(
-                                                snapshot.data['pictureUrl']),
+                                        backgroundImage: NetworkImage(
+                                            snapshot.data['pictureUrl']),
                                         radius: 40,
                                         backgroundColor: Colors.transparent,
                                       )),
@@ -138,10 +139,12 @@ class _UserProfileState extends State<UserProfile> {
                                   right: 0,
                                   child: GestureDetector(
                                     onTap: () => pickYourImageDialog(),
-                                    child: Icon(Icons.add_a_photo),
+                                    child: Icon(
+                                      Icons.add_a_photo,
+                                      color: Colors.grey,
+                                    ),
                                   ),
                                 ),
-
                               ],
                             ),
                             const SizedBox(
@@ -208,10 +211,12 @@ class _UserProfileState extends State<UserProfile> {
                       const SizedBox(
                         height: 20,
                       ),
-                      Text(
-                        "Birth date: ${snapshot.data['birthDate']}",
-                        style: const TextStyle(fontSize: 20),
-                      ),
+                      snapshot.data['birthDate'] != ""
+                          ? Text(
+                              "Birth date: ${snapshot.data['birthDate']}",
+                              style: const TextStyle(fontSize: 20),
+                            )
+                          : Container(),
                     ],
                   ),
                 );

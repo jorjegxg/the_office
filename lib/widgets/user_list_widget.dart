@@ -17,7 +17,7 @@ class UserListWidget extends StatelessWidget {
           child: ListTile(
             leading: CircleAvatar(
               backgroundImage: NetworkImage(
-                imagine,
+                imagine
               ),
             ),
             title: Text(nume),

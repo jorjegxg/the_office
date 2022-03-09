@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
-class UserListWidget extends StatelessWidget {
-  const UserListWidget({required this.nume, required this.imagine, required this.id,required this.adress});
+class BuildingListWidget extends StatelessWidget {
+  const BuildingListWidget({required this.nume, required this.imagine, required this.id,required this.adress});
 
   final String nume, imagine,adress,id;
 
