@@ -24,7 +24,8 @@ class _SwitchUsersBuildingState extends State<SwitchUsersBuilding> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Center(child: Text("Select building")),
+        centerTitle: true,
+        title: Text("Select building"),
         shape: const RoundedRectangleBorder(
             borderRadius: BorderRadius.vertical(bottom: Radius.circular(20))),
       ),

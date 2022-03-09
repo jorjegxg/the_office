@@ -113,13 +113,6 @@ class TabNavigator extends StatefulWidget {
 }
 
 class _TabNavigatorState extends State<TabNavigator> {
-  void _next() {
-    setState(() {
-      Navigator.push(
-          context, MaterialPageRoute(builder: (context) => UserProfile()));
-    });
-  }
-
   @override
   Widget build(BuildContext context) {
     Widget child = const UserSearchScreen();
@@ -129,13 +122,13 @@ class _TabNavigatorState extends State<TabNavigator> {
         child = const UserSearchScreen();
         break;
       case "Page2":
-        child = BuildingSearchScreen(next: _next);
+        child = BuildingSearchScreen();
         break;
       case "Page3":
         child = const RemoteRequestScreen();
         break;
       case "Page4":
-        child =  UserProfile();
+        child = UserProfile();
         break;
     }
     return Navigator(

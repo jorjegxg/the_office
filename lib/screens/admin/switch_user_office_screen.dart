@@ -28,37 +28,32 @@ class _SwitchUsersOfficeState extends State<SwitchUsersOffice> {
         shape: const RoundedRectangleBorder(
             borderRadius: BorderRadius.vertical(bottom: Radius.circular(20))),
       ),
-      body: StreamBuilder(
-          stream: _firebaseFirestore.collection('User').snapshots(),
-
-          ///ToDO sdrfhdrsfdsrfhsdr
-          builder: (context, snapshot) {
-            return Padding(
-              padding: const EdgeInsets.all(20.0),
-              child: Column(
-                children: [
-                  ///TODO fa lista de useri
-                  // Expanded(
-                  //   child: ListView(
-                  //       children:snapshot.data.,
-                  //   ),
-                  // ),
-
-                  // Expanded(
-                  //   child: Padding(
-                  //     padding: const EdgeInsets.only(
-                  //         left: 20, right: 20, top: 20, bottom: 30),
-                  //     child: ListView.builder(
-                  //       itemCount: user_list.length,
-                  //       itemBuilder: (BuildContext context, int index) {
-                  //         return user_list[index];
-                  //       },
-                  //     ),
-                  //   ),
-                  // ),
-                ],
-              ),
-            );
+      body: StreamBuilder<QuerySnapshot>(
+          stream: _firebaseFirestore.collection('Users').snapshots(),
+          builder:
+              (BuildContext context, AsyncSnapshot<QuerySnapshot> snapshot) {
+            if (snapshot.connectionState == ConnectionState.active) {
+              if (snapshot.hasData) {
+                return Expanded(
+                  child: ListView(
+                    children: snapshot.data!.docs.map((doc) {
+                      return UserListWidget(
+                        nume: '${doc['name']} ${doc['lastName']}',
+                        imagine: doc['pictureUrl'],
+                        rol: doc['role'],
+                        id: doc['id'],
+                      );
+                    }).toList(),
+                  ),
+                );
+              } else if (snapshot.hasError) {
+                return Text("Error");
+              }
+            }
+            if (snapshot.connectionState == ConnectionState.waiting) {
+              return Center(child: CircularProgressIndicator());
+            }
+            return Text("Wtf");
           }),
     );
   }

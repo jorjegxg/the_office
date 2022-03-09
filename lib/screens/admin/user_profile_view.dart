@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:the_office/screens/admin/switch_user_building_screen.dart';
 
 class UserProfileView extends StatelessWidget {
-  const UserProfileView({Key? key}) : super(key: key);
-  final String titlu = "Profil";
+  const UserProfileView({required this.id});
+  final String id;
+  final String titlu = "dadasda";
   final String nume = "Admin adin";
   final String statut = "Administrator";
   final String email = "admin@gmail.com";
@@ -21,6 +23,7 @@ class UserProfileView extends StatelessWidget {
             borderRadius: BorderRadius.vertical(bottom: Radius.circular(20))),
         title: const Text(
           "Profile",
+          style: TextStyle(fontSize: 25),
         ),
       ),
       body: Column(
@@ -112,7 +115,12 @@ class UserProfileView extends StatelessWidget {
                   padding: const EdgeInsets.symmetric(vertical: 30),
                   child: const Text("Assign office"),
                   onPressed: () {
-                    ///TODO assign office
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder: (context) => SwitchUsersBuilding(),
+                      ),
+                    );
                   },
                   color: Colors.grey[400],
                 ),
@@ -126,9 +134,7 @@ class UserProfileView extends StatelessWidget {
                       borderRadius: BorderRadius.circular(20)),
                   padding: const EdgeInsets.symmetric(vertical: 30),
                   child: const Text("De-assign office"),
-                  onPressed: () {
-                    ///TODO deassign office
-                  },
+                  onPressed: () {},
                   color: Colors.grey[400],
                 ),
               ),

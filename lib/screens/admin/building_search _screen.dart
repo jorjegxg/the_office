@@ -3,11 +3,9 @@ import 'package:the_office/screens/admin/create_building.dart';
 import 'package:the_office/widgets/text_field_input.dart';
 
 class BuildingSearchScreen extends StatelessWidget {
-  BuildingSearchScreen({required this.next});
   final TextEditingController _textController = TextEditingController();
 
   final List<Widget> building_list = [];
-  final VoidCallback next;
 
   @override
   Widget build(BuildContext context) {

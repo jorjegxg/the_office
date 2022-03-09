@@ -53,7 +53,7 @@ class _VerificareContSpecialState extends State<VerificareContSpecial> {
         builder: (context, snapshot) {
           if (snapshot.hasData) {
             if (snapshot.data == true) {
-              return SwitchUsersBuilding();
+              return NavigationScreen();
             } else {
               return const EmployeeUserSearchScreen();
             }
