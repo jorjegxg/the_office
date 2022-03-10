@@ -168,7 +168,9 @@ class UserProfileView extends StatelessWidget {
                                   Expanded(
                                     child: TextButton(
                                       onPressed: () {
-                                        Navigator.pop(context);
+                                        Navigator.of(context,
+                                                rootNavigator: true)
+                                            .pop();
                                       },
                                       child: const Text(
                                         "Deactivate",

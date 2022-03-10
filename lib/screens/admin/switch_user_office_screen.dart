@@ -1,13 +1,10 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
-import 'package:the_office/screens/admin/create_user.dart';
-import 'package:the_office/widgets/user_list_widget.dart';
-import 'package:font_awesome_flutter/font_awesome_flutter.dart';
-import 'package:the_office/widgets/text_field_input.dart';
+import 'package:the_office/widgets/office_list_widget.dart';
 
 class SwitchUsersOffice extends StatefulWidget {
-  const SwitchUsersOffice({Key? key}) : super(key: key);
-
+  const SwitchUsersOffice({required this.id});
+  final String id;
   @override
   State<SwitchUsersOffice> createState() => _SwitchUsersOfficeState();
 }
@@ -16,7 +13,7 @@ class _SwitchUsersOfficeState extends State<SwitchUsersOffice> {
   FirebaseFirestore _firebaseFirestore = FirebaseFirestore.instance;
 
   final TextEditingController _textController = TextEditingController();
-  final List<Widget> user_list = [];
+  final List<Widget> office_list = [];
 
   ///TODO fa lista aia cu useri
 
@@ -29,7 +26,11 @@ class _SwitchUsersOfficeState extends State<SwitchUsersOffice> {
             borderRadius: BorderRadius.vertical(bottom: Radius.circular(20))),
       ),
       body: StreamBuilder<QuerySnapshot>(
-          stream: _firebaseFirestore.collection('Users').snapshots(),
+          stream: _firebaseFirestore
+              .collection('buildings')
+              .doc(widget.id)
+              .collection("Offices")
+              .snapshots(),
           builder:
               (BuildContext context, AsyncSnapshot<QuerySnapshot> snapshot) {
             if (snapshot.connectionState == ConnectionState.active) {
@@ -37,11 +38,11 @@ class _SwitchUsersOfficeState extends State<SwitchUsersOffice> {
                 return Expanded(
                   child: ListView(
                     children: snapshot.data!.docs.map((doc) {
-                      return UserListWidget(
-                        nume: '${doc['name']} ${doc['lastName']}',
+                      return OfficeListWidget(
+                        nume: '${doc['name']}',
                         imagine: doc['pictureUrl'],
-                        rol: doc['role'],
                         id: doc['id'],
+                        floorNumber: doc['floorNumber'],
                       );
                     }).toList(),
                   ),
