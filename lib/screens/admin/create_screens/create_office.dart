@@ -8,8 +8,9 @@ import 'package:the_office/widgets/show_snack_bar.dart';
 import 'package:the_office/widgets/text_field_input.dart';
 
 class CreateOffice extends StatefulWidget {
-  const CreateOffice({Key? key}) : super(key: key);
+  const CreateOffice({Key? key,required this.id}) : super(key: key);
 
+  final String id;
   @override
   _CreateOfficeState createState() => _CreateOfficeState();
 }
@@ -17,6 +18,7 @@ class CreateOffice extends StatefulWidget {
 class _CreateOfficeState extends State<CreateOffice> {
   bool _isLoading = false;
   var idAdmin = 'oWDoBLh1S9PoZX9n9y1S8t2LWn23';
+  FirebaseFirestore _firebaseFirestore = FirebaseFirestore.instance;
 
   // Future<void> createUser() async {
   //   setState(() {
@@ -60,6 +62,7 @@ class _CreateOfficeState extends State<CreateOffice> {
       totalDeskCount: _totalDesksController.text,
       usableDeskCount: _usableDesksController.text,
       idAdmin: idAdmin,
+      idBuilding: widget.id
     );
     setState(() {
       _isLoading = false;
@@ -129,9 +132,21 @@ class _CreateOfficeState extends State<CreateOffice> {
       appBar: AppBar(
         shape: const RoundedRectangleBorder(
             borderRadius: BorderRadius.vertical(bottom: Radius.circular(20))),
-        title: const Text(
-          "Create office",
-          style: TextStyle(fontSize: 23),
+        title:  FutureBuilder(
+            future : _firebaseFirestore.collection('Buildings').doc(widget.id).get(),
+            builder: (BuildContext context,AsyncSnapshot snapshot) {
+              if(snapshot.connectionState == ConnectionState.done){
+                if(snapshot.hasData){
+                  return Text("Create office in ${snapshot.data['name']}");
+                }else if(snapshot.hasError){
+                  return Text("Create office");
+                }
+              }
+              if(snapshot.connectionState == ConnectionState.waiting){
+                return CircularProgressIndicator();
+              }
+              return Text("Office");
+            }
         ),
         centerTitle: true,
       ),

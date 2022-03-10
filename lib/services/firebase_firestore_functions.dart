@@ -21,8 +21,7 @@ class FirebaseFirestoreFunctions {
             name: buildingName,
             floorsCount: floorsCount,
             buildingAdress: buildingAddress,
-            id: uuid
-        );
+            id: uuid);
 
         var reff = await _firebaseFirestore
             .collection('Buildings')
@@ -39,12 +38,14 @@ class FirebaseFirestoreFunctions {
     return statusMessage;
   }
 
-  Future<String> createOffice(
-      {required String name,
-      required String floorNumber,
-      required String totalDeskCount,
-      required String usableDeskCount,
-      required String idAdmin}) async {
+  Future<String> createOffice({
+    required String name,
+    required String floorNumber,
+    required String totalDeskCount,
+    required String usableDeskCount,
+    required String idAdmin,
+    required String idBuilding,
+  }) async {
     String statusMessage = 'Some error occured';
     try {
       if (name.isNotEmpty &&
@@ -58,15 +59,17 @@ class FirebaseFirestoreFunctions {
         String uuid = Uuid().v1();
 
         OfficeModel _office = OfficeModel(
-          name: name,
-          floorNumber: floorNumber,
-          totalDeskCount: totalDeskCount,
-          usableDeskCount: usableDeskCount,
-          id: uuid,
-          idAdmin: idAdmin,
-        );
+            name: name,
+            floorNumber: floorNumber,
+            totalDeskCount: totalDeskCount,
+            usableDeskCount: usableDeskCount,
+            id: uuid,
+            idAdmin: idAdmin,
+            idBuilding: idBuilding);
 
         var reff = await _firebaseFirestore
+            .collection('Building')
+            .doc(idBuilding)
             .collection('Offices')
             .doc(uuid)
             .set(_office.toJson());
