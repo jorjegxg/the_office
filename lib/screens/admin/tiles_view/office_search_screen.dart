@@ -1,11 +1,20 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
+import 'package:the_office/screens/admin/create_screens/create_office.dart';
 import 'package:the_office/screens/admin/create_screens/create_user.dart';
-import 'package:the_office/widgets/user_list_widget.dart';
+import 'package:the_office/widgets/tiles/office_list_widget.dart';
+import 'package:the_office/widgets/tiles/user_list_widget.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:the_office/widgets/text_field_input.dart';
+import '../../../widgets/tiles/building_list_widget.dart';
 
 class OfficeSearchScreen extends StatefulWidget {
-  const OfficeSearchScreen({Key? key}) : super(key: key);
+  const OfficeSearchScreen(
+      {Key? key, required this.id, required this.numeBulding})
+      : super(key: key);
+
+  final String id;
+  final String numeBulding;
 
   @override
   State<OfficeSearchScreen> createState() => _OfficeSearchScreenState();
@@ -13,31 +22,27 @@ class OfficeSearchScreen extends StatefulWidget {
 
 class _OfficeSearchScreenState extends State<OfficeSearchScreen>
     with TickerProviderStateMixin {
+  FirebaseFirestore _firebaseFirestore = FirebaseFirestore.instance;
+
   final TextEditingController _textController = TextEditingController();
   late TabController _tabController;
+
+  // ListView(
+  // children: snapshot.data!.docs.map((doc) {
+  // return UserListWidget(
+  // nume: '${doc['name']} ${doc['lastName']}',
+  // imagine: doc['pictureUrl'],
+  // rol: doc['role'],
+  // id: doc['id'],
+  // );
+  // }).toList(),
+  // ),
   String selectedFree = ">";
   final List<DropdownMenuItem<String>> freeOffices = [
-    const DropdownMenuItem(
-      child: Text(">"),
-      value: ">",
-    ),
+    const DropdownMenuItem(child: Text(">"), value: ">"),
     const DropdownMenuItem(
       child: Text("<"),
       value: "<",
-    ),
-  ];
-  final List<Widget> office_list = [
-    const UserListWidget(
-      nume: "1gg",
-      imagine: "imagini/office.jpeg",
-      id: 'sdrhgsrh',
-      rol: "Amdin",
-    ),
-    const UserListWidget(
-      nume: "TACE",
-      imagine: "imagini/office.jpeg",
-      id: 'sdrhgsrh',
-      rol: "Amdin",
     ),
   ];
 
@@ -68,8 +73,10 @@ class _OfficeSearchScreenState extends State<OfficeSearchScreen>
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Center(child: Text("Offices")),
+        centerTitle: true,
+        title: Text("Offices from ${widget.numeBulding}"),
         bottom: TabBar(
+          indicatorColor: Colors.white,
           controller: _tabController,
           tabs: const <Widget>[
             Tab(
@@ -83,11 +90,13 @@ class _OfficeSearchScreenState extends State<OfficeSearchScreen>
       ),
       floatingActionButton: _tabController.index == 0
           ? FloatingActionButton(
-              child: const Icon(Icons.person_add),
+              child: const Icon(Icons.add),
               onPressed: () {
                 Navigator.push(
                   context,
-                  MaterialPageRoute(builder: (context) => const CreateUser()),
+                  MaterialPageRoute(
+                    builder: (context) => CreateOffice(id: widget.id),
+                  ),
                 );
               },
             )
@@ -110,33 +119,65 @@ class _OfficeSearchScreenState extends State<OfficeSearchScreen>
                     Padding(
                       padding: const EdgeInsets.only(left: 10),
                       child: GestureDetector(
-                        child: const Icon(
+                        child: Icon(
                           Icons.filter_list,
                         ),
                         onTap: () {
                           showDialog(
                             barrierDismissible: false,
                             context: context,
-                            builder: (BuildContext context) {
-                              return OfficeSearchFilters(context);
-                            },
+                            builder: OfficeSearchFilters,
                           );
                         },
                       ),
                     ),
                   ],
                 ),
-                Expanded(
-                  child: Padding(
-                    padding: const EdgeInsets.only(top: 20, bottom: 30),
-                    child: ListView.builder(
-                      itemCount: office_list.length,
-                      itemBuilder: (BuildContext context, int index) {
-                        return office_list[index];
-                      },
-                    ),
-                  ),
-                ),
+                StreamBuilder<QuerySnapshot>(
+                    stream:
+                        _firebaseFirestore.collection('Buildings').snapshots(),
+                    builder: (context, snapshot) {
+                      if (snapshot.connectionState == ConnectionState.active) {
+                        if (snapshot.hasData) {
+                          return Expanded(
+                            child: Padding(
+                              padding:
+                                  const EdgeInsets.only(top: 20, bottom: 30),
+                              child: ListView(
+                                children: [
+                                  OfficeListWidget(
+                                      nume: "nume",
+                                      imagine:
+                                          "https://firebasestorage.googleapis.com/v0/b/the-office-ef23a.appspot.com/o/istockphoto-1177487069-612x612.jpg?alt=media&token=dd5bdcae-ca21-4dd3-81fc-8ffe90dfe2c8",
+                                      id: 'id',
+                                      building: 'building'),
+                                  OfficeListWidget(
+                                      nume: "nume",
+                                      imagine:
+                                          "https://firebasestorage.googleapis.com/v0/b/the-office-ef23a.appspot.com/o/istockphoto-1177487069-612x612.jpg?alt=media&token=dd5bdcae-ca21-4dd3-81fc-8ffe90dfe2c8",
+                                      id: 'id',
+                                      building: 'building'),
+                                  OfficeListWidget(
+                                      nume: "nume",
+                                      imagine:
+                                          "https://firebasestorage.googleapis.com/v0/b/the-office-ef23a.appspot.com/o/istockphoto-1177487069-612x612.jpg?alt=media&token=dd5bdcae-ca21-4dd3-81fc-8ffe90dfe2c8",
+                                      id: 'id',
+                                      building: 'building'),
+
+                                  ///TODO Fa un widget tile pentru office
+                                ],
+                              ),
+                            ),
+                          );
+                        } else if (snapshot.hasError) {
+                          return CircularProgressIndicator();
+                        }
+                      }
+                      if (snapshot.connectionState == ConnectionState.waiting) {
+                        return Center(child: CircularProgressIndicator());
+                      }
+                      return CircularProgressIndicator();
+                    }),
               ],
             ),
           ),

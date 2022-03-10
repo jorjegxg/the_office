@@ -2,6 +2,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:the_office/widgets/office_list_widget.dart';
 
+
 class SwitchUsersOffice extends StatefulWidget {
   const SwitchUsersOffice({required this.id});
   final String id;

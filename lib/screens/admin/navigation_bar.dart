@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
-import 'package:the_office/screens/admin/main_screens/user_profile.dart';
 import 'main_screens/building_search _screen.dart';
 import 'main_screens/user_search _screen.dart';
-import 'main_screens/remote_requests_screen.dart';
+import 'remote_requests_screen.dart';
+import 'package:the_office/screens/admin/main_screens/user_profile_screen.dart';
 
 class NavigationScreen extends StatefulWidget {
   NavigationScreen({Key? key}) : super(key: key);

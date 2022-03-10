@@ -28,8 +28,17 @@ class UserListWidget extends StatelessWidget {
             );
           },
           child: ListTile(
-            leading: CircleAvatar(
-              backgroundImage: NetworkImage(imagine),
+            leading: Stack(
+              children: [
+                CircleAvatar(
+                  backgroundImage:
+                      AssetImage("imagini/no-profile-picture-icon.png"),
+                ),
+                CircleAvatar(
+                  backgroundColor: Colors.transparent,
+                  backgroundImage: NetworkImage(imagine),
+                ),
+              ],
             ),
             title: Text(nume),
             subtitle: Text(rol),

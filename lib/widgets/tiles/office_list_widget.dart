@@ -1,14 +1,15 @@
 import 'package:flutter/material.dart';
-import 'package:the_office/screens/admin/tiles_view/office_search_screen.dart';
+import 'package:the_office/screens/admin/tiles_view/office_view_screen.dart';
+import 'package:the_office/screens/admin/tiles_view/user_profile_view.dart';
 
-class BuildingListWidget extends StatelessWidget {
-  const BuildingListWidget(
+class OfficeListWidget extends StatelessWidget {
+  const OfficeListWidget(
       {required this.nume,
       required this.imagine,
       required this.id,
-      required this.adress});
+      required this.building});
 
-  final String nume, imagine, adress, id;
+  final String nume, imagine, building, id;
 
   @override
   Widget build(BuildContext context) {
@@ -22,18 +23,18 @@ class BuildingListWidget extends StatelessWidget {
             Navigator.push(
               context,
               MaterialPageRoute(
-                builder: (context) => OfficeSearchScreen(),
-              ),
+                  builder: (context) => OfficeViewScreen()),
             );
           },
           child: ListTile(
             leading: CircleAvatar(
+              backgroundColor: Colors.white,
               backgroundImage: NetworkImage(
-                imagine,
+                imagine
               ),
             ),
             title: Text(nume),
-            subtitle: Text(adress),
+            subtitle: Text(building),
           ),
         ),
         SizedBox(

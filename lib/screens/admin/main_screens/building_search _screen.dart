@@ -1,7 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:the_office/screens/admin/create_screens/create_building.dart';
-import 'package:the_office/widgets/building_list_widget.dart';
+import 'package:the_office/widgets/tiles/building_list_widget.dart';
 import 'package:the_office/widgets/text_field_input.dart';
 
 class BuildingSearchScreen extends StatelessWidget {
@@ -149,7 +149,7 @@ class BuildingSearchScreen extends StatelessWidget {
               height: 30,
             ),
             StreamBuilder<QuerySnapshot>(
-                stream: _firebaseFirestore.collection('buildings').snapshots(),
+                stream: _firebaseFirestore.collection('Buildings').snapshots(),
                 builder: (BuildContext context,
                     AsyncSnapshot<QuerySnapshot> snapshot) {
                   if (snapshot.connectionState == ConnectionState.active) {
