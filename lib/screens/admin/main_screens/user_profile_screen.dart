@@ -174,7 +174,7 @@ class _UserProfileState extends State<UserProfile> {
                       Text(
                         snapshot.data['email'],
                         style: const TextStyle(
-                            fontWeight: FontWeight.bold, fontSize: 25),
+                            fontWeight: FontWeight.bold, fontSize: 23),
                       ),
                       const SizedBox(
                         height: 20,

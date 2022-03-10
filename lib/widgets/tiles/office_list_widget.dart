@@ -28,6 +28,7 @@ class OfficeListWidget extends StatelessWidget {
           },
           child: ListTile(
             leading: CircleAvatar(
+              backgroundColor: Colors.white,
               backgroundImage: NetworkImage(
                 imagine
               ),

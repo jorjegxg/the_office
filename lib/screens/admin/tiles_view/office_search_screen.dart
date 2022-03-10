@@ -10,9 +10,10 @@ import 'package:the_office/widgets/text_field_input.dart';
 import '../../../widgets/tiles/building_list_widget.dart';
 
 class OfficeSearchScreen extends StatefulWidget {
-  const OfficeSearchScreen({Key? key, required this.id}) : super(key: key);
+  const OfficeSearchScreen({Key? key, required this.id,required this.numeBulding}) : super(key: key);
 
   final String id;
+  final String numeBulding;
 
   @override
   State<OfficeSearchScreen> createState() => _OfficeSearchScreenState();
@@ -64,22 +65,7 @@ class _OfficeSearchScreenState extends State<OfficeSearchScreen>
     return Scaffold(
                 appBar: AppBar(
                   centerTitle: true,
-                  title: FutureBuilder(
-                    future : _firebaseFirestore.collection('Buildings').doc(widget.id).get(),
-                    builder: (BuildContext context,AsyncSnapshot snapshot) {
-                      if(snapshot.connectionState == ConnectionState.done){
-                        if(snapshot.hasData){
-                         return Text("Offices from ${snapshot.data['name']}");
-                        }else if(snapshot.hasError){
-                          return Text("Offices");
-                        }
-                      }
-                      if(snapshot.connectionState == ConnectionState.waiting){
-                        return CircularProgressIndicator();
-                      }
-                      return Text("Offices");
-                    }
-                  ),
+                  title: Text("Offices from ${widget.numeBulding}"),
                   bottom: TabBar(
                     indicatorColor: Colors.white,
                     controller: _tabController,

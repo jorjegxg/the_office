@@ -20,10 +20,11 @@ class BuildingListWidget extends StatelessWidget {
           fillColor: Colors.grey[300],
           onPressed: () =>
               Navigator.push(context, MaterialPageRoute(builder: (context) {
-            return OfficeSearchScreen(id: id);
+            return OfficeSearchScreen(id: id,numeBulding: nume);
           })),
           child: ListTile(
             leading: CircleAvatar(
+              backgroundColor: Colors.white,
               backgroundImage: NetworkImage(
                 imagine,
               ),
