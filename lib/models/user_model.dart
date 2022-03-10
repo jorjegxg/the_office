@@ -28,7 +28,6 @@ class UserModel {
   final String office;
   final bool requestStatus;
   final String id;
-
   final String pictureUrl;
 
   Map<String, dynamic> toJson() {

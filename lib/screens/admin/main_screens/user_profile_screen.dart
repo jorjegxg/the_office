@@ -154,7 +154,7 @@ class _UserProfileState extends State<UserProfile> {
                               crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
                                 Text(
-                                  snapshot.data['name'],
+                                  '${snapshot.data['name']} ${snapshot.data['lastName']}',
                                   style: const TextStyle(
                                       fontWeight: FontWeight.bold,
                                       fontSize: 25),
@@ -174,26 +174,8 @@ class _UserProfileState extends State<UserProfile> {
                       Text(
                         snapshot.data['email'],
                         style: const TextStyle(
-                            fontWeight: FontWeight.bold, fontSize: 25),
+                            fontWeight: FontWeight.bold, fontSize: 23),
                       ),
-                      const SizedBox(
-                        height: 20,
-                      ),
-                      snapshot.data['building'] != ""
-                          ? Text(
-                              "Building: ${snapshot.data['building']}",
-                              style: const TextStyle(fontSize: 20),
-                            )
-                          : Container(),
-                      const SizedBox(
-                        height: 20,
-                      ),
-                      snapshot.data['office'] != ""
-                          ? Text(
-                              "Office: ${snapshot.data['office']}",
-                              style: const TextStyle(fontSize: 20),
-                            )
-                          : Container(),
                       const SizedBox(
                         height: 20,
                       ),
@@ -211,12 +193,30 @@ class _UserProfileState extends State<UserProfile> {
                       const SizedBox(
                         height: 20,
                       ),
-                      snapshot.data['birthDate'] != ""
-                          ? Text(
-                              "Birth date: ${snapshot.data['birthDate']}",
-                              style: const TextStyle(fontSize: 20),
-                            )
-                          : Container(),
+                      Text(
+                        snapshot.data['birthDate'] != ""
+                            ? "Birth date: ${snapshot.data['birthDate']}"
+                            : "Birth date: --------",
+                        style: const TextStyle(fontSize: 20),
+                      ),
+                      const SizedBox(
+                        height: 20,
+                      ),
+                      Text(
+                        snapshot.data['building'] != ""
+                            ? "Building: ${snapshot.data['building']}"
+                            : "Building: --------",
+                        style: const TextStyle(fontSize: 20),
+                      ),
+                      const SizedBox(
+                        height: 20,
+                      ),
+                      Text(
+                        snapshot.data['office'] != ""
+                            ? "Office: ${snapshot.data['office']}"
+                            : "Office: --------",
+                        style: const TextStyle(fontSize: 20),
+                      ),
                     ],
                   ),
                 );

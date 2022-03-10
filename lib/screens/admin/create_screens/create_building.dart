@@ -46,6 +46,7 @@ class _CreateBuildingState extends State<CreateBuilding> {
     setState(() {
       _isLoading = true;
     });
+    FocusManager.instance.primaryFocus?.unfocus();
     String statusMessage = await FirebaseFirestoreFunctions().createBuilding(
       buildingName: _buildingNameController.text,
       floorsCount: _floorsCountController.text,

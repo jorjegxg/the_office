@@ -1,37 +1,27 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
-import 'package:the_office/screens/admin/create_user.dart';
-import 'package:the_office/widgets/user_list_widget.dart';
-import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:the_office/screens/admin/create_screens/create_building.dart';
+import 'package:the_office/widgets/tiles/building_list_widget.dart';
 import 'package:the_office/widgets/text_field_input.dart';
 
-class UserSearchScreen extends StatefulWidget {
-  const UserSearchScreen({Key? key}) : super(key: key);
-
-  @override
-  State<UserSearchScreen> createState() => _UserSearchScreenState();
-}
-
-class _UserSearchScreenState extends State<UserSearchScreen> {
-  FirebaseFirestore _firebaseFirestore = FirebaseFirestore.instance;
-
+class BuildingSearchScreen extends StatelessWidget {
   final TextEditingController _textController = TextEditingController();
-  final List<Widget> user_list = [];
+  FirebaseFirestore _firebaseFirestore = FirebaseFirestore.instance;
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Center(child: Text("Users")),
         shape: const RoundedRectangleBorder(
             borderRadius: BorderRadius.vertical(bottom: Radius.circular(20))),
+        title: const Center(child: Text("Buildings")),
       ),
       floatingActionButton: FloatingActionButton(
-        child: const Icon(Icons.person_add),
+        heroTag: "btnBuilding",
+        child: const Icon(Icons.domain_add),
         onPressed: () {
-          Navigator.push(
-            context,
-            MaterialPageRoute(builder: (context) => const CreateUser()),
+          Navigator.of(context).push(
+            MaterialPageRoute(builder: (context) => const CreateBuilding()),
           );
         },
       ),
@@ -44,7 +34,7 @@ class _UserSearchScreenState extends State<UserSearchScreen> {
                 Expanded(
                   child: TextFieldInput(
                     textEditingController: _textController,
-                    hintText: "Search users",
+                    hintText: "Search buildings",
                   ),
                 ),
                 Padding(
@@ -159,7 +149,7 @@ class _UserSearchScreenState extends State<UserSearchScreen> {
               height: 30,
             ),
             StreamBuilder<QuerySnapshot>(
-                stream: _firebaseFirestore.collection('Users').snapshots(),
+                stream: _firebaseFirestore.collection('Buildings').snapshots(),
                 builder: (BuildContext context,
                     AsyncSnapshot<QuerySnapshot> snapshot) {
                   if (snapshot.connectionState == ConnectionState.active) {
@@ -167,10 +157,10 @@ class _UserSearchScreenState extends State<UserSearchScreen> {
                       return Expanded(
                         child: ListView(
                           children: snapshot.data!.docs.map((doc) {
-                            return UserListWidget(
-                              nume: '${doc['name']} ${doc['lastName']}',
+                            return BuildingListWidget(
+                              nume: doc['name'],
                               imagine: doc['pictureUrl'],
-                              rol: doc['role'],
+                              adress: doc['buildingAdress'],
                               id: doc['id'],
                             );
                           }).toList(),

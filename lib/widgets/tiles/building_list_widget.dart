@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:the_office/screens/admin/office_search_screen.dart';
+import 'package:the_office/screens/admin/tiles_view/office_search_screen.dart';
 
 class BuildingListWidget extends StatelessWidget {
   const BuildingListWidget(
@@ -18,16 +18,15 @@ class BuildingListWidget extends StatelessWidget {
           shape:
               RoundedRectangleBorder(borderRadius: BorderRadius.circular(20)),
           fillColor: Colors.grey[300],
-          onPressed: () {
-            Navigator.push(
-              context,
-              MaterialPageRoute(
-                builder: (context) => OfficeSearchScreen(),
-              ),
-            );
-          },
+
+          onPressed: () =>
+              Navigator.push(context, MaterialPageRoute(builder: (context) {
+            return OfficeSearchScreen(id: id,numeBulding: nume);
+          })),
+
           child: ListTile(
             leading: CircleAvatar(
+              backgroundColor: Colors.white,
               backgroundImage: NetworkImage(
                 imagine,
               ),

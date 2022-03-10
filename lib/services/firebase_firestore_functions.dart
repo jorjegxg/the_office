@@ -1,5 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:the_office/models/building_model.dart';
+import 'package:the_office/models/office_model.dart';
 import 'package:uuid/uuid.dart';
 import 'package:uuid/uuid_util.dart';
 
@@ -11,24 +12,75 @@ class FirebaseFirestoreFunctions {
       required String floorsCount,
       required String buildingAddress}) async {
     String statusMessage = 'Some error occured';
-    try {
-      String uuid = Uuid().v1();
-      BuildingModel _building = BuildingModel(
-          name: buildingName,
-          floorsCount: floorsCount,
-          buildingAdress: buildingAddress,
-          id: uuid
-      );
+    if (buildingName.isNotEmpty &&
+        floorsCount.isNotEmpty &&
+        buildingAddress.isNotEmpty) {
+      try {
+        String uuid = Uuid().v1();
+        BuildingModel _building = BuildingModel(
+            name: buildingName,
+            floorsCount: floorsCount,
+            buildingAdress: buildingAddress,
+            id: uuid);
 
-      var reff = await _firebaseFirestore
-          .collection('buildings')
-          .doc(uuid)
-          .set(_building.toJson());
-      statusMessage = 'success';
+        var reff = await _firebaseFirestore
+            .collection('Buildings')
+            .doc(uuid)
+            .set(_building.toJson());
+        statusMessage = 'success';
+      } catch (e) {
+        statusMessage = e.toString();
+      }
+    } else {
+      statusMessage = "Please enter all the fields";
+    }
+
+    return statusMessage;
+  }
+
+  Future<String> createOffice({
+    required String name,
+    required String floorNumber,
+    required String totalDeskCount,
+    required String usableDeskCount,
+    required String idAdmin,
+    required String idBuilding,
+  }) async {
+    String statusMessage = 'Some error occured';
+    try {
+      if (name.isNotEmpty &&
+          floorNumber.isNotEmpty &&
+          totalDeskCount.isNotEmpty &&
+          usableDeskCount.isNotEmpty &&
+          idAdmin.isNotEmpty) {
+        if (int.parse(totalDeskCount) < int.parse(usableDeskCount))
+          return 'Total desk count can\'t be less than total desk count';
+
+        String uuid = Uuid().v1();
+
+        OfficeModel _office = OfficeModel(
+            name: name,
+            floorNumber: floorNumber,
+            totalDeskCount: totalDeskCount,
+            usableDeskCount: usableDeskCount,
+            id: uuid,
+            idAdmin: idAdmin,
+            idBuilding: idBuilding);
+
+        var reff = await _firebaseFirestore
+            .collection('Buildings')
+            .doc(idBuilding)
+            .collection('Offices')
+            .doc(uuid)
+            .set(_office.toJson());
+
+        statusMessage = 'success';
+      } else {
+        statusMessage = "Please enter all the fields";
+      }
     } catch (e) {
       statusMessage = e.toString();
     }
-    ;
 
     return statusMessage;
   }
