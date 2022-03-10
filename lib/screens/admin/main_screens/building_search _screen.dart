@@ -29,9 +29,121 @@ class BuildingSearchScreen extends StatelessWidget {
         padding: const EdgeInsets.all(20.0),
         child: Column(
           children: [
-            TextFieldInput(
-              textEditingController: _textController,
-              hintText: "Search buildings",
+            Row(
+              children: [
+                Expanded(
+                  child: TextFieldInput(
+                    textEditingController: _textController,
+                    hintText: "Search buildings",
+                  ),
+                ),
+                Padding(
+                  padding: const EdgeInsets.only(left: 10),
+                  child: GestureDetector(
+                    child: Icon(
+                      Icons.filter_list,
+                    ),
+                    onTap: () {
+                      // showDialog(
+                      //     barrierDismissible: false,
+                      //     context: context,
+                      //     builder: (BuildContext context) {
+                      //       return AlertDialog(
+                      //         shape: RoundedRectangleBorder(
+                      //             borderRadius: BorderRadius.circular(30)),
+                      //         backgroundColor: Theme.of(context).primaryColor,
+                      //         title: const Center(
+                      //             child: Text(
+                      //           "Search filters",
+                      //           style: TextStyle(
+                      //               color: Colors.white, fontSize: 30),
+                      //         )),
+                      //         actions: [
+                      //           Column(
+                      //             children: [
+                      //               DropdownButton(
+                      //                 isExpanded: true,
+                      //                 focusColor: Colors.grey,
+                      //                 value: selectedGender,
+                      //                 items: genderItems,
+                      //                 onChanged: (String? value) {
+                      //                   setState(() {
+                      //                     selectedGender = value!;
+                      //                   });
+                      //                 },
+                      //               ),
+                      //               DropdownButton(
+                      //                 isExpanded: true,
+                      //                 focusColor: Colors.grey,
+                      //                 value: selectedGender,
+                      //                 items: genderItems,
+                      //                 onChanged: (String? value) {
+                      //                   setState(() {
+                      //                     selectedGender = value!;
+                      //                   });
+                      //                 },
+                      //               ),
+                      //             ],
+                      //           ),
+                      //           Row(
+                      //             children: [
+                      //               Expanded(
+                      //                 child: TextButton(
+                      //                   onPressed: () {
+                      //                     Navigator.pop(context);
+                      //                   },
+                      //                   child: const Text(
+                      //                     "Deactivate account",
+                      //                     style: TextStyle(color: Colors.black),
+                      //                   ),
+                      //                   style: ButtonStyle(
+                      //                     backgroundColor:
+                      //                         MaterialStateProperty.resolveWith(
+                      //                             (state) => Colors.white),
+                      //                     shape: MaterialStateProperty.all<
+                      //                         RoundedRectangleBorder>(
+                      //                       RoundedRectangleBorder(
+                      //                         borderRadius:
+                      //                             BorderRadius.circular(18.0),
+                      //                       ),
+                      //                     ),
+                      //                   ),
+                      //                 ),
+                      //               ),
+                      //               const SizedBox(
+                      //                 width: 5,
+                      //               ),
+                      //               Expanded(
+                      //                 child: TextButton(
+                      //                   onPressed: () {
+                      //                     Navigator.pop(context);
+                      //                   },
+                      //                   child: const Text(
+                      //                     "Cancel",
+                      //                     style: TextStyle(color: Colors.black),
+                      //                   ),
+                      //                   style: ButtonStyle(
+                      //                     backgroundColor:
+                      //                         MaterialStateProperty.resolveWith(
+                      //                             (state) => Colors.white),
+                      //                     shape: MaterialStateProperty.all<
+                      //                         RoundedRectangleBorder>(
+                      //                       RoundedRectangleBorder(
+                      //                         borderRadius:
+                      //                             BorderRadius.circular(18.0),
+                      //                       ),
+                      //                     ),
+                      //                   ),
+                      //                 ),
+                      //               ),
+                      //             ],
+                      //           ),
+                      //         ],
+                      //       );)};
+                    },
+                  ),
+                ),
+              ],
             ),
             SizedBox(
               height: 30,
@@ -63,7 +175,6 @@ class BuildingSearchScreen extends StatelessWidget {
                   }
                   return Text("Wtf");
                 }),
-
           ],
         ),
       ),
