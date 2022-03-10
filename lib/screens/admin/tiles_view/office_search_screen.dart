@@ -123,11 +123,104 @@ class _OfficeSearchScreenState extends State<OfficeSearchScreen>
                           Icons.filter_list,
                         ),
                         onTap: () {
-                          showDialog(
-                            barrierDismissible: false,
-                            context: context,
-                            builder: OfficeSearchFilters,
-                          );
+
+                          // showDialog(
+                          //     barrierDismissible: false,
+                          //     context: context,
+                          //     builder: (BuildContext context) {
+                          //       return AlertDialog(
+                          //         shape: RoundedRectangleBorder(
+                          //             borderRadius: BorderRadius.circular(30)),
+                          //         backgroundColor: Theme.of(context).primaryColor,
+                          //         title: const Center(
+                          //             child: Text(
+                          //           "Search filters",
+                          //           style: TextStyle(
+                          //               color: Colors.white, fontSize: 30),
+                          //         )),
+                          //         actions: [
+                          //           Column(
+                          //             children: [
+                          //               DropdownButton(
+                          //                 isExpanded: true,
+                          //                 focusColor: Colors.grey,
+                          //                 value: selectedGender,
+                          //                 items: genderItems,
+                          //                 onChanged: (String? value) {
+                          //                   setState(() {
+                          //                     selectedGender = value!;
+                          //                   });
+                          //                 },
+                          //               ),
+                          //               DropdownButton(
+                          //                 isExpanded: true,
+                          //                 focusColor: Colors.grey,
+                          //                 value: selectedGender,
+                          //                 items: genderItems,
+                          //                 onChanged: (String? value) {
+                          //                   setState(() {
+                          //                     selectedGender = value!;
+                          //                   });
+                          //                 },
+                          //               ),
+                          //             ],
+                          //           ),
+                          //           Row(
+                          //             children: [
+                          //               Expanded(
+                          //                 child: TextButton(
+                          //                   onPressed: () {
+                          //                     Navigator.pop(context);
+                          //                   },
+                          //                   child: const Text(
+                          //                     "Deactivate account",
+                          //                     style: TextStyle(color: Colors.black),
+                          //                   ),
+                          //                   style: ButtonStyle(
+                          //                     backgroundColor:
+                          //                         MaterialStateProperty.resolveWith(
+                          //                             (state) => Colors.white),
+                          //                     shape: MaterialStateProperty.all<
+                          //                         RoundedRectangleBorder>(
+                          //                       RoundedRectangleBorder(
+                          //                         borderRadius:
+                          //                             BorderRadius.circular(18.0),
+                          //                       ),
+                          //                     ),
+                          //                   ),
+                          //                 ),
+                          //               ),
+                          //               const SizedBox(
+                          //                 width: 5,
+                          //               ),
+                          //               Expanded(
+                          //                 child: TextButton(
+                          //                   onPressed: () {
+                          //                     Navigator.pop(context);
+                          //                   },
+                          //                   child: const Text(
+                          //                     "Cancel",
+                          //                     style: TextStyle(color: Colors.black),
+                          //                   ),
+                          //                   style: ButtonStyle(
+                          //                     backgroundColor:
+                          //                         MaterialStateProperty.resolveWith(
+                          //                             (state) => Colors.white),
+                          //                     shape: MaterialStateProperty.all<
+                          //                         RoundedRectangleBorder>(
+                          //                       RoundedRectangleBorder(
+                          //                         borderRadius:
+                          //                             BorderRadius.circular(18.0),
+                          //                       ),
+                          //                     ),
+                          //                   ),
+                          //                 ),
+                          //               ),
+                          //             ],
+                          //           ),
+                          //         ],
+                          //       );)};
+
                         },
                       ),
                     ),
@@ -135,7 +228,8 @@ class _OfficeSearchScreenState extends State<OfficeSearchScreen>
                 ),
                 StreamBuilder<QuerySnapshot>(
                     stream:
-                        _firebaseFirestore.collection('Buildings').snapshots(),
+
+                        _firebaseFirestore.collection('Buildings').doc(widget.id).collection("Offices").snapshots(),
                     builder: (context, snapshot) {
                       if (snapshot.connectionState == ConnectionState.active) {
                         if (snapshot.hasData) {
@@ -144,28 +238,16 @@ class _OfficeSearchScreenState extends State<OfficeSearchScreen>
                               padding:
                                   const EdgeInsets.only(top: 20, bottom: 30),
                               child: ListView(
-                                children: [
-                                  OfficeListWidget(
-                                      nume: "nume",
-                                      imagine:
-                                          "https://firebasestorage.googleapis.com/v0/b/the-office-ef23a.appspot.com/o/istockphoto-1177487069-612x612.jpg?alt=media&token=dd5bdcae-ca21-4dd3-81fc-8ffe90dfe2c8",
-                                      id: 'id',
-                                      building: 'building'),
-                                  OfficeListWidget(
-                                      nume: "nume",
-                                      imagine:
-                                          "https://firebasestorage.googleapis.com/v0/b/the-office-ef23a.appspot.com/o/istockphoto-1177487069-612x612.jpg?alt=media&token=dd5bdcae-ca21-4dd3-81fc-8ffe90dfe2c8",
-                                      id: 'id',
-                                      building: 'building'),
-                                  OfficeListWidget(
-                                      nume: "nume",
-                                      imagine:
-                                          "https://firebasestorage.googleapis.com/v0/b/the-office-ef23a.appspot.com/o/istockphoto-1177487069-612x612.jpg?alt=media&token=dd5bdcae-ca21-4dd3-81fc-8ffe90dfe2c8",
-                                      id: 'id',
-                                      building: 'building'),
 
-                                  ///TODO Fa un widget tile pentru office
-                                ],
+                                children: snapshot.data!.docs.map(
+                                  (element) => OfficeListWidget(
+                                    nume: element['name'],
+                                    imagine: element['pictureUrl'],
+                                    id: element['id'],
+                                    building: widget.numeBulding,
+                                  ),
+                                ).toList(),
+
                               ),
                             ),
                           );
@@ -271,6 +353,7 @@ class _OfficeSearchScreenState extends State<OfficeSearchScreen>
     );
   }
 
+
   AlertDialog OfficeSearchFilters(BuildContext context) {
     return AlertDialog(
       shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(30)),
@@ -350,4 +433,5 @@ class _OfficeSearchScreenState extends State<OfficeSearchScreen>
       ],
     );
   }
+
 }

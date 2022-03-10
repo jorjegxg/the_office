@@ -28,9 +28,9 @@ class UserListWidget extends StatelessWidget {
             );
           },
           child: ListTile(
-            tileColor: Colors.blue,
-            shape:
-                RoundedRectangleBorder(borderRadius: BorderRadius.circular(15)),
+
+            shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(15)),
+            //tileColor: Color(0xFF398AB9),
             leading: Stack(
               children: [
                 CircleAvatar(
@@ -43,16 +43,8 @@ class UserListWidget extends StatelessWidget {
                 ),
               ],
             ),
-            title: Text(
-              nume,
-              style:
-                  TextStyle(color: Colors.white, fontWeight: FontWeight.bold),
-            ),
-            subtitle: Text(
-              rol,
-              style:
-                  TextStyle(color: Colors.white, fontWeight: FontWeight.bold),
-            ),
+            title: Text(nume),//,style: TextStyle(color: Colors.white,fontWeight: FontWeight.bold,fontSize: 18),),
+            subtitle: Text(rol)//,style: TextStyle(color: Colors.white),),
           ),
         ),
         SizedBox(

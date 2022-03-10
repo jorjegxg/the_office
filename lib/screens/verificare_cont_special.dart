@@ -1,5 +1,7 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
+import 'package:the_office/providers/role_provider.dart';
 import 'package:the_office/screens/admin/main_screens/view_remote_request_screen.dart';
 import 'admin/navigation_bar.dart';
 import 'package:the_office/screens/admin/tiles_view/office_search_screen.dart';
@@ -17,7 +19,7 @@ class _VerificareContSpecialState extends State<VerificareContSpecial> {
   FirebaseFirestore _firebaseFirestore = FirebaseFirestore.instance;
   FirebaseAuth _firebaseAuth = FirebaseAuth.instance;
 
-  Future<bool> esteAdmin() async {
+  Future<String> ceRolAre() async {
     // bool isAdmin = false;
     // var colectieAdmini =
     //     await _firebaseFirestore.collection('Administrator').get();
@@ -29,33 +31,27 @@ class _VerificareContSpecialState extends State<VerificareContSpecial> {
     // });
     // return isAdmin;
 
-    bool isAdmin = false;
+    String role;
 
     var refUser = await _firebaseFirestore
         .collection('Users')
         .doc(_firebaseAuth.currentUser!.uid)
         .get();
 
-    if (refUser['role'] == "Administrator" ||
-        refUser['role'] == "Office Administrator") {
-      isAdmin = true;
-      print('$isAdmin');
-    }
+      role = refUser['role'];
+      print('$role');
+      Provider.of<RoleProvider>(context, listen: false).changeRole(role);
 
-    return isAdmin;
+    return role;
   }
 
   @override
   Widget build(BuildContext context) {
     return FutureBuilder(
-        future: esteAdmin(),
+        future: ceRolAre(),
         builder: (context, snapshot) {
           if (snapshot.hasData) {
-            if (snapshot.data == true) {
               return NavigationScreen();
-            } else {
-              return const EmployeeUserSearchScreen();
-            }
           } else if (snapshot.hasError) {
             return Center(
               child: Text("Eroare"),
