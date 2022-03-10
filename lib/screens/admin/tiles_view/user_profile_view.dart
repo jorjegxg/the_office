@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:the_office/screens/admin/switch_user_building_screen.dart';
 
 class UserProfileView extends StatelessWidget {
-  const UserProfileView({required this.id});
+  UserProfileView({required this.id});
   final String id;
   final String titlu = "dadasda";
   final String nume = "Admin adin";
@@ -13,10 +13,11 @@ class UserProfileView extends StatelessWidget {
   final int remote = 38;
   final String gen = "Male";
   final String data = "01/21/2020";
-
+  final GlobalKey _scaffold = GlobalKey();
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      key: _scaffold,
       appBar: AppBar(
         centerTitle: true,
         shape: const RoundedRectangleBorder(
@@ -150,7 +151,7 @@ class UserProfileView extends StatelessWidget {
                   onPressed: () {
                     showDialog(
                         barrierDismissible: false,
-                        context: context,
+                        context: _scaffold.currentContext!,
                         builder: (BuildContext context) {
                           return AlertDialog(
                             shape: RoundedRectangleBorder(

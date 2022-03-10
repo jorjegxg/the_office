@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:the_office/screens/admin/user_profile_view.dart';
+import 'package:the_office/screens/admin/tiles_view/user_profile_view.dart';
 
 class UserListWidget extends StatelessWidget {
   const UserListWidget(
@@ -29,9 +29,7 @@ class UserListWidget extends StatelessWidget {
           },
           child: ListTile(
             leading: CircleAvatar(
-              backgroundImage: NetworkImage(
-                imagine
-              ),
+              backgroundImage: NetworkImage(imagine),
             ),
             title: Text(nume),
             subtitle: Text(rol),

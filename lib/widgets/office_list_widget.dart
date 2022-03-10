@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:the_office/screens/admin/office_search_screen.dart';
+import 'package:the_office/screens/admin/tiles_view/office_view_screen.dart';
 
 class OfficeListWidget extends StatelessWidget {
   const OfficeListWidget(
@@ -22,7 +22,7 @@ class OfficeListWidget extends StatelessWidget {
             Navigator.push(
               context,
               MaterialPageRoute(
-                builder: (context) => OfficeSearchScreen(),
+                builder: (context) => OfficeViewScreen(),
               ),
             );
           },

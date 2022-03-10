@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:the_office/screens/admin/office_search_screen.dart';
+import 'package:the_office/screens/admin/tiles_view/office_search_screen.dart';
 
 class BuildingListWidget extends StatelessWidget {
   const BuildingListWidget(

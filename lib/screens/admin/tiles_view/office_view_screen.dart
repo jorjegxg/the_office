@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:the_office/screens/admin/create_user.dart';
+import 'package:the_office/screens/admin/create_screens/create_user.dart';
 import 'package:the_office/widgets/user_list_widget.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:pie_chart/pie_chart.dart';
