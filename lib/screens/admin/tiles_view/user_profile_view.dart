@@ -6,15 +6,6 @@ import 'package:the_office/screens/admin/switch_user_building_screen.dart';
 class UserProfileView extends StatelessWidget {
   UserProfileView({required this.id});
   final String id;
-  final String titlu = "dadasda";
-  final String nume = "Admin adin";
-  final String statut = "Administrator";
-  final String email = "admin@gmail.com";
-  final String cladire = "Corp A";
-  final String birou = "301";
-  final int remote = 38;
-  final String gen = "Male";
-  final String data = "01/21/2020";
   final GlobalKey _scaffold = GlobalKey();
 
   FirebaseFirestore _firebaseFirestore = FirebaseFirestore.instance;
