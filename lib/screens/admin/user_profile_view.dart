@@ -106,7 +106,7 @@ class UserProfileView extends StatelessWidget {
             mainAxisAlignment: MainAxisAlignment.spaceEvenly,
             children: [
               const SizedBox(
-                width: 10,
+                width: 5,
               ),
               Expanded(
                 child: MaterialButton(
@@ -126,7 +126,7 @@ class UserProfileView extends StatelessWidget {
                 ),
               ),
               const SizedBox(
-                width: 10,
+                width: 5,
               ),
               Expanded(
                 child: MaterialButton(
@@ -139,14 +139,14 @@ class UserProfileView extends StatelessWidget {
                 ),
               ),
               const SizedBox(
-                width: 10,
+                width: 5,
               ),
               Expanded(
                 child: MaterialButton(
                   shape: RoundedRectangleBorder(
                       borderRadius: BorderRadius.circular(20)),
                   padding: const EdgeInsets.symmetric(vertical: 30),
-                  child: const Text("Deactivate account"),
+                  child: const Text("Deactivate"),
                   onPressed: () {
                     showDialog(
                         barrierDismissible: false,
@@ -171,7 +171,7 @@ class UserProfileView extends StatelessWidget {
                                         Navigator.pop(context);
                                       },
                                       child: const Text(
-                                        "Deactivate account",
+                                        "Deactivate",
                                         style: TextStyle(color: Colors.black),
                                       ),
                                       style: ButtonStyle(
@@ -224,12 +224,12 @@ class UserProfileView extends StatelessWidget {
                 ),
               ),
               const SizedBox(
-                width: 10,
+                width: 5,
               ),
             ],
           ),
-          const SizedBox(
-            height: 20,
+          const Expanded(
+            child: SizedBox(),
           )
         ],
       ),
