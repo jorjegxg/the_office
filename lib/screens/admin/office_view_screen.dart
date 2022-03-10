@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:the_office/screens/admin/create_user.dart';
-import 'package:the_office/widgets/user_list_widget.dart';
+import 'package:the_office/screens/admin/create_screens/create_user.dart';
+import 'package:the_office/widgets/tiles/user_list_widget.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:pie_chart/pie_chart.dart';
 
@@ -18,13 +18,13 @@ class _OfficeViewScreenState extends State<OfficeViewScreen>
   final List<Widget> office_list = [
     UserListWidget(
       nume: "1gg",
-      imagine: "imagini/office.jpeg",
+      imagine: "https://firebasestorage.googleapis.com/v0/b/the-office-ef23a.appspot.com/o/istockphoto-1177487069-612x612.jpg?alt=media&token=dd5bdcae-ca21-4dd3-81fc-8ffe90dfe2c8",
       id: 'sdrhgsrh',
       rol: "Amdin",
     ),
     UserListWidget(
       nume: "TACE",
-      imagine: "imagini/office.jpeg",
+      imagine: "https://firebasestorage.googleapis.com/v0/b/the-office-ef23a.appspot.com/o/istockphoto-1177487069-612x612.jpg?alt=media&token=dd5bdcae-ca21-4dd3-81fc-8ffe90dfe2c8",
       id: 'sdrhgsrh',
       rol: "Amdin",
     ),
@@ -57,6 +57,7 @@ class _OfficeViewScreenState extends State<OfficeViewScreen>
       appBar: AppBar(
         title: const Center(child: Text("Offices")),
         bottom: TabBar(
+          indicatorColor: Colors.white,
           controller: _tabController,
           tabs: const <Widget>[
             Tab(
@@ -92,7 +93,7 @@ class _OfficeViewScreenState extends State<OfficeViewScreen>
                 padding: EdgeInsets.all(20.0),
                 child: UserListWidget(
                   nume: "1gg",
-                  imagine: "imagini/imagine.jpeg",
+                  imagine: "https://firebasestorage.googleapis.com/v0/b/the-office-ef23a.appspot.com/o/istockphoto-1177487069-612x612.jpg?alt=media&token=dd5bdcae-ca21-4dd3-81fc-8ffe90dfe2c8",
                   rol: "Amdin",
                   id: 'sdrhgsrh',
                 ),

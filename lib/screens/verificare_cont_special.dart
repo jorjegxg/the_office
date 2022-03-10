@@ -1,9 +1,7 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:the_office/screens/admin/view_remote_request_screen.dart';
-
+import 'package:the_office/screens/admin/main_screens/view_remote_request_screen.dart';
 import 'admin/navigation_bar.dart';
-import 'package:the_office/screens/admin/office_search_screen.dart';
 import 'package:the_office/screens/employee/employee_user_search_screen.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:the_office/screens/admin/office_view_screen.dart';

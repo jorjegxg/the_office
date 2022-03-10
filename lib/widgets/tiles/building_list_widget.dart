@@ -1,9 +1,14 @@
 import 'package:flutter/material.dart';
+import 'package:the_office/screens/admin/tiles_view/office_search_screen.dart';
 
 class BuildingListWidget extends StatelessWidget {
-  const BuildingListWidget({required this.nume, required this.imagine, required this.id,required this.adress});
+  const BuildingListWidget(
+      {required this.nume,
+      required this.imagine,
+      required this.id,
+      required this.adress});
 
-  final String nume, imagine,adress,id;
+  final String nume, imagine, adress, id;
 
   @override
   Widget build(BuildContext context) {
@@ -13,7 +18,10 @@ class BuildingListWidget extends StatelessWidget {
           shape:
               RoundedRectangleBorder(borderRadius: BorderRadius.circular(20)),
           fillColor: Colors.grey[300],
-          onPressed: () {},
+          onPressed: () =>
+              Navigator.push(context, MaterialPageRoute(builder: (context) {
+            return OfficeSearchScreen(id: id);
+          })),
           child: ListTile(
             leading: CircleAvatar(
               backgroundImage: NetworkImage(

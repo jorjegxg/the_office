@@ -107,7 +107,7 @@ class _CreateUserState extends State<CreateUser> {
         shape: const RoundedRectangleBorder(
             borderRadius: BorderRadius.vertical(bottom: Radius.circular(20))),
         title: const Text(
-          "Create office_admin",
+          "Create user",
           style: TextStyle(fontSize: 23),
         ),
         centerTitle: true,
