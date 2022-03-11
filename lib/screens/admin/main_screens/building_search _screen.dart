@@ -167,13 +167,13 @@ class BuildingSearchScreen extends StatelessWidget {
                         ),
                       );
                     } else if (snapshot.hasError) {
-                      return Text("Error");
+                      return Center(child: CircularProgressIndicator());
                     }
                   }
                   if (snapshot.connectionState == ConnectionState.waiting) {
                     return Center(child: CircularProgressIndicator());
                   }
-                  return Text("Wtf");
+                  return Center(child: CircularProgressIndicator());
                 }),
           ],
         ),

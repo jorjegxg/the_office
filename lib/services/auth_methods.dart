@@ -48,7 +48,7 @@ class AuthMethods {
           role: role,
           pictureUrl:
               "https://firebasestorage.googleapis.com/v0/b/the-office-ef23a.appspot.com/o/no-profile-picture-icon.png?alt=media&token=d409142b-3d04-4567-97cb-8e498a21a9f9",
-          remoteProcentage: '0',
+          remoteProcentage: 0,
           building: "",
           office: "",
           requestStatus: false,

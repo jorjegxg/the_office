@@ -69,6 +69,34 @@ class _OfficeSearchScreenState extends State<OfficeSearchScreen>
     setState(() {});
   }
 
+  // Future<int> getNumberOfDesks() async{
+  //   int nr = 0, nr2;
+  //   var ref = await _firebaseFirestore.collection("Buildings").doc(widget.id).collection("Offices").get();
+  //   ref.docs.forEach((element) async{
+  //      nr2 = await int.parse(element['totalDeskCount']);
+  //      nr += nr2;
+  //
+  //      print(nr);
+  //   });
+  //   return nr;
+  // }
+
+  // Future<int> getTotalDesks(AsyncSnapshot snapshot) async{
+  //
+  //     int nr = 0, nr2;
+  //
+  //     snapshot.data.docs.forEach((element) async{
+  //        nr2 = await int.parse(element['totalDeskCount']);
+  //        nr += nr2;
+  //
+  //        print(nr);
+  //     });
+  //     return nr;
+  //
+  //
+  // }
+  ///TODO DETALII OFFICE
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -123,7 +151,6 @@ class _OfficeSearchScreenState extends State<OfficeSearchScreen>
                           Icons.filter_list,
                         ),
                         onTap: () {
-
                           // showDialog(
                           //     barrierDismissible: false,
                           //     context: context,
@@ -220,16 +247,17 @@ class _OfficeSearchScreenState extends State<OfficeSearchScreen>
                           //           ),
                           //         ],
                           //       );)};
-
                         },
                       ),
                     ),
                   ],
                 ),
                 StreamBuilder<QuerySnapshot>(
-                    stream:
-
-                        _firebaseFirestore.collection('Buildings').doc(widget.id).collection("Offices").snapshots(),
+                    stream: _firebaseFirestore
+                        .collection('Buildings')
+                        .doc(widget.id)
+                        .collection("Offices")
+                        .snapshots(),
                     builder: (context, snapshot) {
                       if (snapshot.connectionState == ConnectionState.active) {
                         if (snapshot.hasData) {
@@ -238,27 +266,27 @@ class _OfficeSearchScreenState extends State<OfficeSearchScreen>
                               padding:
                                   const EdgeInsets.only(top: 20, bottom: 30),
                               child: ListView(
-
-                                children: snapshot.data!.docs.map(
-                                  (element) => OfficeListWidget(
-                                    nume: element['name'],
-                                    imagine: element['pictureUrl'],
-                                    id: element['id'],
-                                    building: widget.numeBulding,
-                                  ),
-                                ).toList(),
-
+                                children: snapshot.data!.docs
+                                    .map(
+                                      (element) => OfficeListWidget(
+                                        nume: element['name'],
+                                        imagine: element['pictureUrl'],
+                                        id: element['id'],
+                                        building: widget.numeBulding,
+                                      ),
+                                    )
+                                    .toList(),
                               ),
                             ),
                           );
                         } else if (snapshot.hasError) {
-                          return CircularProgressIndicator();
+                          return Center(child: CircularProgressIndicator());
                         }
                       }
                       if (snapshot.connectionState == ConnectionState.waiting) {
                         return Center(child: CircularProgressIndicator());
                       }
-                      return CircularProgressIndicator();
+                      return Center(child: CircularProgressIndicator());
                     }),
               ],
             ),
@@ -268,41 +296,64 @@ class _OfficeSearchScreenState extends State<OfficeSearchScreen>
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                Text(
-                  "Number of offices: $numarSali",
-                  style: const TextStyle(fontSize: 20),
-                ),
-                const SizedBox(
-                  height: 20,
-                ),
-                Text(
-                  "Number of desks: $numarBirouri",
-                  style: const TextStyle(fontSize: 20),
-                ),
-                const SizedBox(
-                  height: 20,
-                ),
-                Text(
-                  "Number of usable desks: $birouriLibere",
-                  style: const TextStyle(fontSize: 20),
-                ),
-                const SizedBox(
-                  height: 20,
-                ),
-                Text(
-                  "Number of ocupied desks: $birouriOcupate",
-                  style: const TextStyle(fontSize: 20),
-                ),
-                const SizedBox(
-                  height: 20,
-                ),
-                Text(
-                  "Total free desks: ${birouriLibere - birouriOcupate}",
-                  style: const TextStyle(fontSize: 20),
-                ),
-                const SizedBox(
-                  height: 20,
-                ),
+                StreamBuilder<QuerySnapshot>(
+                    stream: _firebaseFirestore
+                        .collection('Buildings')
+                        .doc(widget.id)
+                        .collection("Offices")
+                        .snapshots(),
+                    builder: (BuildContext context, AsyncSnapshot snapshot) {
+                      if (snapshot.connectionState == ConnectionState.active) {
+                        if (snapshot.hasData) {
+                          return Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              Text(
+                                "Number of offices: ${snapshot.data!.docs.length}",
+                                style: const TextStyle(fontSize: 20),
+                              ),
+                              const SizedBox(
+                                height: 20,
+                              ),
+                              Text(
+                                "Number of desks:",
+                                style: const TextStyle(fontSize: 20),
+                              ),
+                              const SizedBox(
+                                height: 20,
+                              ),
+                              Text(
+                                "Number of usable desks: $birouriLibere",
+                                style: const TextStyle(fontSize: 20),
+                              ),
+                              const SizedBox(
+                                height: 20,
+                              ),
+                              Text(
+                                "Number of ocupied desks: $birouriOcupate",
+                                style: const TextStyle(fontSize: 20),
+                              ),
+                              const SizedBox(
+                                height: 20,
+                              ),
+                              Text(
+                                "Total free desks: ${birouriLibere - birouriOcupate}",
+                                style: const TextStyle(fontSize: 20),
+                              ),
+                              const SizedBox(
+                                height: 20,
+                              ),
+                            ],
+                          );
+                        } else if (snapshot.hasError) {
+                          return Center(child: CircularProgressIndicator());
+                        }
+                      }
+                      if (snapshot.connectionState == ConnectionState.waiting) {
+                        return Center(child: CircularProgressIndicator());
+                      }
+                      return Center(child: CircularProgressIndicator());
+                    }),
                 const Expanded(child: SizedBox()),
                 Row(
                   mainAxisAlignment: MainAxisAlignment.spaceEvenly,
@@ -352,7 +403,6 @@ class _OfficeSearchScreenState extends State<OfficeSearchScreen>
       ),
     );
   }
-
 
   AlertDialog OfficeSearchFilters(BuildContext context) {
     return AlertDialog(
@@ -433,5 +483,4 @@ class _OfficeSearchScreenState extends State<OfficeSearchScreen>
       ],
     );
   }
-
 }

@@ -8,7 +8,7 @@ class BuildingModel {
   });
 
   String name;
-  String floorsCount;
+  int floorsCount;
   String buildingAdress;
   String pictureUrl;
   String id;

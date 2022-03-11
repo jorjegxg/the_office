@@ -2,13 +2,9 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:the_office/providers/role_provider.dart';
-import 'package:the_office/screens/admin/main_screens/view_remote_request_screen.dart';
 import 'admin/navigation_bar.dart';
-import 'package:the_office/screens/admin/tiles_view/office_search_screen.dart';
-import 'package:the_office/screens/employee/employee_user_search_screen.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:the_office/screens/admin/tiles_view/office_view_screen.dart';
-import 'package:the_office/screens/admin/switch_user_building_screen.dart';
+
 
 class VerificareContSpecial extends StatefulWidget {
   @override
@@ -39,7 +35,6 @@ class _VerificareContSpecialState extends State<VerificareContSpecial> {
         .get();
 
       role = refUser['role'];
-      print('$role');
       Provider.of<RoleProvider>(context, listen: false).changeRole(role);
 
     return role;

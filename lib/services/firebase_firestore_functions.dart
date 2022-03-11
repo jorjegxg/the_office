@@ -9,11 +9,11 @@ class FirebaseFirestoreFunctions {
 
   Future<String> createBuilding(
       {required String buildingName,
-      required String floorsCount,
+      required int floorsCount,
       required String buildingAddress}) async {
     String statusMessage = 'Some error occured';
     if (buildingName.isNotEmpty &&
-        floorsCount.isNotEmpty &&
+        floorsCount != "" &&
         buildingAddress.isNotEmpty) {
       try {
         String uuid = Uuid().v1();
@@ -40,20 +40,20 @@ class FirebaseFirestoreFunctions {
 
   Future<String> createOffice({
     required String name,
-    required String floorNumber,
-    required String totalDeskCount,
-    required String usableDeskCount,
+    required int floorNumber,
+    required int totalDeskCount,
+    required int usableDeskCount,
     required String idAdmin,
     required String idBuilding,
   }) async {
     String statusMessage = 'Some error occured';
     try {
       if (name.isNotEmpty &&
-          floorNumber.isNotEmpty &&
-          totalDeskCount.isNotEmpty &&
-          usableDeskCount.isNotEmpty &&
+          floorNumber != "" &&
+          totalDeskCount != "" &&
+          usableDeskCount != "" &&
           idAdmin.isNotEmpty) {
-        if (int.parse(totalDeskCount) < int.parse(usableDeskCount))
+        if (totalDeskCount < usableDeskCount)
           return 'Total desk count can\'t be less than total desk count';
 
         String uuid = Uuid().v1();

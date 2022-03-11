@@ -1,8 +1,8 @@
 class OfficeModel {
   final String name;
-  final String floorNumber;
-  final String totalDeskCount;
-  final String usableDeskCount;
+  final int floorNumber;
+  final int totalDeskCount;
+  final int usableDeskCount;
   final String id;
   final String pictureUrl;
   final String idAdmin;
