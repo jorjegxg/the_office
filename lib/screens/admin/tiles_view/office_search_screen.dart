@@ -46,19 +46,20 @@ class _OfficeSearchScreenState extends State<OfficeSearchScreen>
     ),
   ];
 
-  @override
-  void initState() {
-    super.initState();
-    _tabController = TabController(length: 2, vsync: this);
-    _tabController.addListener(_handleTabChange);
-  }
 
+ @override
+ void didChangeDependencies() {
+   _tabController = TabController(length: 2, vsync: this);
+   _tabController.addListener(_handleTabChange);
+   super.didChangeDependencies();
+ }
   @override
   void dispose() {
+    _tabController.dispose();
     super.dispose();
-    _tabController = TabController(length: 2, vsync: this);
-    _tabController.addListener(_handleTabChange);
+
   }
+
 
   _handleTabChange() {
     setState(() {});
@@ -293,7 +294,6 @@ class _OfficeSearchScreenState extends State<OfficeSearchScreen>
                             numberOfUsableDesks +=
                             element['usableDeskCount'];
                           });
-
 
                           return  Column(
                             crossAxisAlignment: CrossAxisAlignment.start,

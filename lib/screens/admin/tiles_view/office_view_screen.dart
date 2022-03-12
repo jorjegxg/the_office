@@ -59,6 +59,12 @@ class _OfficeViewScreenState extends State<OfficeViewScreen>
     _tabController = TabController(length: 3, vsync: this);
     _tabController.addListener(_handleTabChange);
   }
+  @override
+  void dispose() {
+    super.dispose();
+    _tabController.dispose();
+  }
+
 
   _handleTabChange() {
     setState(() {});

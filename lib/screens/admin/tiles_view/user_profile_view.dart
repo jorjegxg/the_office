@@ -72,9 +72,12 @@ class UserProfileView extends StatelessWidget {
                                             fontSize: 25),
                                       ),
                                     ),
-                                    Text(
-                                      snapshot.data['role'],
-                                      style: const TextStyle(fontSize: 25),
+                                    Container(
+                                      width: 180,
+                                      child: Text(
+                                        snapshot.data['role'],
+                                        style: const TextStyle(fontSize: 25),
+                                      ),
                                     ),
                                   ],
                                 ),

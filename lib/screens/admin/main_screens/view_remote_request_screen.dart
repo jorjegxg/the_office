@@ -24,7 +24,7 @@ class ViewRemoteRequest extends StatelessWidget {
               borderRadius: BorderRadius.circular(20),
             ),
             leading: CircleAvatar(
-              backgroundImage: NetworkImage(
+              backgroundImage: AssetImage(
                 imagine,
               ),
             ),
@@ -88,12 +88,7 @@ class ViewRemoteRequest extends StatelessWidget {
                       color: Colors.white),
                 ),
                 onPressed: () {
-                  showModalBottomSheet(
-                      shape: const RoundedRectangleBorder(
-                          borderRadius:
-                              BorderRadius.vertical(top: Radius.circular(20))),
-                      context: context,
-                      builder: bottomSheet);
+                 Navigator.pop(context);
                 },
                 color: Colors.red,
               ),
