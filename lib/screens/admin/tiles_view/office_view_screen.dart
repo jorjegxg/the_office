@@ -42,10 +42,8 @@ class _OfficeViewScreenState extends State<OfficeViewScreen>
     ),
   ];
 
-  late Map<String, double> deskInfo = {
-    "Free desks": 5,
-    "Ocupied desks": 8,
-  };
+
+
 
   final String cladire = "A";
   final double numarBirouri = 300;
@@ -184,21 +182,24 @@ class _OfficeViewScreenState extends State<OfficeViewScreen>
                             height: 20,
                           ),
                           Text(
-                            "Number of ocupied desks : 34 ",
+                            "Number of ocupied desks : ${snapshot.data['numberOfOccupiedDesks']} ",
                             style: const TextStyle(fontSize: 20),
                           ),
                           const SizedBox(
                             height: 20,
                           ),
                           Text(
-                            "Total free desks: birouriUtilizabile",
+                            "Total free desks: ${snapshot.data['usableDeskCount'] - snapshot.data['numberOfOccupiedDesks']}",
                             style: const TextStyle(fontSize: 20),
                           ),
                           const SizedBox(
                             height: 20,
                           ),
                           PieChart(
-                            dataMap: deskInfo,
+                            dataMap: {
+                          "Free desks": (snapshot.data['usableDeskCount'] - snapshot.data['numberOfOccupiedDesks']).toDouble(),
+                          "Ocupied desks": (snapshot.data['numberOfOccupiedDesks']).toDouble(),
+                          },
                             chartRadius: MediaQuery.of(context).size.width / 2,
                             chartValuesOptions: const ChartValuesOptions(
                               showChartValueBackground: true,
@@ -207,6 +208,7 @@ class _OfficeViewScreenState extends State<OfficeViewScreen>
                               showChartValuesOutside: false,
                               decimalPlaces: 0,
                             ),
+                            animationDuration: Duration(seconds: 0),
                           ),
                           const Expanded(child: SizedBox()),
                         ],
@@ -267,17 +269,22 @@ class _OfficeViewScreenState extends State<OfficeViewScreen>
                         const SizedBox(
                           height: 20,
                         ),
-                        PieChart(
-                          dataMap: deskInfo,
-                          chartRadius: MediaQuery.of(context).size.width / 2,
-                          chartValuesOptions: const ChartValuesOptions(
-                            showChartValueBackground: true,
-                            showChartValues: true,
-                            showChartValuesInPercentage: true,
-                            showChartValuesOutside: false,
-                            decimalPlaces: 0,
-                          ),
-                        ),
+                        // PieChart(
+                        //   dataMap:{
+                        //       "Free desks": 3.0,
+                        //       "Ocupied desks": 10.0 ,
+                        //     },
+                        //
+                        //   chartRadius: MediaQuery.of(context).size.width / 2,
+                        //   chartValuesOptions: const ChartValuesOptions(
+                        //     showChartValueBackground: true,
+                        //     showChartValues: true,
+                        //     showChartValuesInPercentage: true,
+                        //     showChartValuesOutside: false,
+                        //     decimalPlaces: 0,
+                        //   ),
+                        //   animationDuration: Duration(seconds: 0),
+                        // ),
                         const Expanded(child: SizedBox()),
                       ],
                     ),

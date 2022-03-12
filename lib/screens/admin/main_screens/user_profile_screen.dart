@@ -114,7 +114,6 @@ class _UserProfileState extends State<UserProfile> {
                         padding: const EdgeInsets.symmetric(vertical: 40.0),
                         child: Row(
                           children: [
-                            ///TODO pick image
                             Stack(
                               children: [
                                 CircleAvatar(

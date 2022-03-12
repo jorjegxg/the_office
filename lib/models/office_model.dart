@@ -3,12 +3,16 @@ class OfficeModel {
   final int floorNumber;
   final int totalDeskCount;
   final int usableDeskCount;
+  final int numberOfOccupiedDesks;
   final String id;
   final String pictureUrl;
   final String idAdmin;
   final String idBuilding;
+  final List<String> usersId;
 
-  OfficeModel({
+  OfficeModel( {
+    required this.usersId,
+    required this.numberOfOccupiedDesks,
     required this.name,
     required this.floorNumber,
     required this.totalDeskCount,
@@ -28,7 +32,9 @@ class OfficeModel {
       'id': id,
       'pictureUrl': pictureUrl,
       'idAdmin': idAdmin,
-      'idBuilding' : idBuilding
+      'idBuilding' : idBuilding,
+      'numberOfOccupiedDesks' : numberOfOccupiedDesks,
+      'usersId' : usersId,
     };
   }
 }

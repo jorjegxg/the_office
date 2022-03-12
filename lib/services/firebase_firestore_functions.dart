@@ -59,13 +59,16 @@ class FirebaseFirestoreFunctions {
         String uuid = Uuid().v1();
 
         OfficeModel _office = OfficeModel(
-            name: name,
-            floorNumber: floorNumber,
-            totalDeskCount: totalDeskCount,
-            usableDeskCount: usableDeskCount,
-            id: uuid,
-            idAdmin: idAdmin,
-            idBuilding: idBuilding);
+          name: name,
+          floorNumber: floorNumber,
+          totalDeskCount: totalDeskCount,
+          usableDeskCount: usableDeskCount,
+          id: uuid,
+          idAdmin: idAdmin,
+          idBuilding: idBuilding,
+          numberOfOccupiedDesks: 0,
+          usersId: []
+        );
 
         var reff = await _firebaseFirestore
             .collection('Buildings')

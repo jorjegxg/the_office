@@ -295,6 +295,16 @@ class _OfficeSearchScreenState extends State<OfficeSearchScreen>
                             element['usableDeskCount'];
                           });
 
+                          snapshot.data!.docs.forEach((element) {
+                            totalNumberOfOcupiedDesks +=
+                            element['numberOfOccupiedDesks'];
+                          });
+
+                          snapshot.data!.docs.forEach((element) {
+                            totalFreeDesks +=
+                            element['usableDeskCount'] - element['numberOfOccupiedDesks'];
+                          });
+
                           return  Column(
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
@@ -320,14 +330,14 @@ class _OfficeSearchScreenState extends State<OfficeSearchScreen>
                                 height: 20,
                               ),
                               Text(
-                                "Number of ocupied desks: REZOLVAAAAAAA",
+                                "Number of ocupied desks:  ${totalNumberOfOcupiedDesks.toInt()}",
                                 style: const TextStyle(fontSize: 20),
                               ),
                               const SizedBox(
                                 height: 20,
                               ),
                               Text(
-                                "Total free desks: birouriLibere - birouriOcupate REZOLVAAAAAAA",
+                                "Total free desks: ${totalFreeDesks.toInt()}",
                                 style: const TextStyle(fontSize: 20),
                               ),
                               const SizedBox(

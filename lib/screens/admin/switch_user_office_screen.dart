@@ -17,7 +17,6 @@ class _SwitchUsersOfficeState extends State<SwitchUsersOffice> {
   final TextEditingController _textController = TextEditingController();
   final List<Widget> office_list = [];
 
-  ///TODO fa lista aia cu useri
 
   @override
   Widget build(BuildContext context) {
@@ -29,7 +28,7 @@ class _SwitchUsersOfficeState extends State<SwitchUsersOffice> {
       ),
       body: StreamBuilder<QuerySnapshot>(
           stream: _firebaseFirestore
-              .collection('buildings')
+              .collection('Buildings')
               .doc(widget.id)
               .collection("Offices")
               .snapshots(),
