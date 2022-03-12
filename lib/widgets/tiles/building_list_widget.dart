@@ -21,7 +21,7 @@ class BuildingListWidget extends StatelessWidget {
 
           onPressed: () =>
               Navigator.push(context, MaterialPageRoute(builder: (context) {
-            return OfficeSearchScreen(id: id,numeBulding: nume);
+            return OfficeSearchScreen(idBuilding: id,buildingName: nume);
           })),
 
           child: ListTile(

@@ -1,6 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
-import 'package:the_office/widgets/office_list_widget.dart';
+
+import '../../widgets/tiles/office_list_widget.dart';
 
 
 class SwitchUsersOffice extends StatefulWidget {
@@ -43,7 +44,9 @@ class _SwitchUsersOfficeState extends State<SwitchUsersOffice> {
                         nume: '${doc['name']}',
                         imagine: doc['pictureUrl'],
                         id: doc['id'],
-                        floorNumber: doc['floorNumber'],
+                        building: doc['building'],
+                        idBuilding: 'ia id de la building',
+                        buildingName: 'ia buildingName',
                       );
                     }).toList(),
                   ),

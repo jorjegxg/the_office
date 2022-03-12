@@ -1,10 +1,20 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:the_office/screens/admin/create_screens/create_user.dart';
 import 'package:the_office/widgets/tiles/user_list_widget.dart';
 import 'package:pie_chart/pie_chart.dart';
 
 class OfficeViewScreen extends StatefulWidget {
-  const OfficeViewScreen({Key? key}) : super(key: key);
+  const OfficeViewScreen(
+      {Key? key,
+      required this.id,
+      required this.idBuilding,
+      required this.buildingName})
+      : super(key: key);
+
+  final String id;
+  final String idBuilding;
+  final String buildingName;
 
   @override
   State<OfficeViewScreen> createState() => _OfficeViewScreenState();
@@ -12,6 +22,7 @@ class OfficeViewScreen extends StatefulWidget {
 
 class _OfficeViewScreenState extends State<OfficeViewScreen>
     with TickerProviderStateMixin {
+  FirebaseFirestore _firestore = FirebaseFirestore.instance;
   late TabController _tabController;
 
   final List<Widget> office_list = [
@@ -32,9 +43,10 @@ class _OfficeViewScreenState extends State<OfficeViewScreen>
   ];
 
   late Map<String, double> deskInfo = {
-    "Free desks": birouriUtilizabile - birouriOcupate,
-    "Ocupied desks": birouriOcupate,
+    "Free desks": 5,
+    "Ocupied desks": 8,
   };
+
   final String cladire = "A";
   final double numarBirouri = 300;
   final double birouriUtilizabile = 100;
@@ -56,7 +68,8 @@ class _OfficeViewScreenState extends State<OfficeViewScreen>
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Center(child: Text("Offices")),
+        title: Text("Offices"),
+        centerTitle: true,
         bottom: TabBar(
           indicatorColor: Colors.white,
           controller: _tabController,
@@ -78,7 +91,7 @@ class _OfficeViewScreenState extends State<OfficeViewScreen>
       body: TabBarView(
         controller: _tabController,
         children: [
-          const Text("mama"),
+          const Text("REZOLVAAAAAAA"),
           Column(
             children: [
               const SizedBox(
@@ -120,68 +133,153 @@ class _OfficeViewScreenState extends State<OfficeViewScreen>
               ),
             ],
           ),
-          Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 30),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Text(
-                  "Building: Corp $cladire",
-                  style: const TextStyle(fontSize: 20),
-                ),
-                const SizedBox(
-                  height: 20,
-                ),
-                Text(
-                  "Floor number: $numarEtaj",
-                  style: const TextStyle(fontSize: 20),
-                ),
-                const SizedBox(
-                  height: 20,
-                ),
-                Text(
-                  "Number of desks: $numarBirouri",
-                  style: const TextStyle(fontSize: 20),
-                ),
-                const SizedBox(
-                  height: 20,
-                ),
-                Text(
-                  "Number of usable desks: $birouriUtilizabile",
-                  style: const TextStyle(fontSize: 20),
-                ),
-                const SizedBox(
-                  height: 20,
-                ),
-                Text(
-                  "Number of ocupied desks: $birouriOcupate",
-                  style: const TextStyle(fontSize: 20),
-                ),
-                const SizedBox(
-                  height: 20,
-                ),
-                Text(
-                  "Total free desks: ${birouriUtilizabile - birouriOcupate}",
-                  style: const TextStyle(fontSize: 20),
-                ),
-                const SizedBox(
-                  height: 20,
-                ),
-                PieChart(
-                  dataMap: deskInfo,
-                  chartRadius: MediaQuery.of(context).size.width / 2,
-                  chartValuesOptions: const ChartValuesOptions(
-                    showChartValueBackground: true,
-                    showChartValues: true,
-                    showChartValuesInPercentage: true,
-                    showChartValuesOutside: false,
-                    decimalPlaces: 0,
-                  ),
-                ),
-                const Expanded(child: SizedBox()),
-              ],
-            ),
-          ),
+          StreamBuilder(
+              stream: _firestore
+                  .collection('Buildings')
+                  .doc(widget.idBuilding)
+                  .collection('Offices')
+                  .doc(widget.id)
+                  .snapshots(),
+              builder: (BuildContext context, AsyncSnapshot snapshot) {
+                if (snapshot.connectionState == ConnectionState.active) {
+                  if (snapshot.hasData) {
+                    return Padding(
+                      padding: const EdgeInsets.symmetric(
+                          horizontal: 20, vertical: 30),
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Text(
+                            "Building: ${widget.buildingName}",
+                            style: const TextStyle(fontSize: 20),
+                          ),
+                          const SizedBox(
+                            height: 20,
+                          ),
+                          Text(
+                            "Floor number: ${snapshot.data['floorsCount']}",
+                            style: const TextStyle(fontSize: 20),
+                          ),
+                          const SizedBox(
+                            height: 20,
+                          ),
+                          Text(
+                            "Number of desks: ${snapshot.data['totalDeskCount']}",
+                            style: const TextStyle(fontSize: 20),
+                          ),
+                          const SizedBox(
+                            height: 20,
+                          ),
+                          Text(
+                            "Number of usable desks: ${snapshot.data['usableDeskCount']}",
+                            style: const TextStyle(fontSize: 20),
+                          ),
+                          const SizedBox(
+                            height: 20,
+                          ),
+                          Text(
+                            "Number of ocupied desks : 34 ",
+                            style: const TextStyle(fontSize: 20),
+                          ),
+                          const SizedBox(
+                            height: 20,
+                          ),
+                          Text(
+                            "Total free desks: birouriUtilizabile",
+                            style: const TextStyle(fontSize: 20),
+                          ),
+                          const SizedBox(
+                            height: 20,
+                          ),
+                          PieChart(
+                            dataMap: deskInfo,
+                            chartRadius: MediaQuery.of(context).size.width / 2,
+                            chartValuesOptions: const ChartValuesOptions(
+                              showChartValueBackground: true,
+                              showChartValues: true,
+                              showChartValuesInPercentage: true,
+                              showChartValuesOutside: false,
+                              decimalPlaces: 0,
+                            ),
+                          ),
+                          const Expanded(child: SizedBox()),
+                        ],
+                      ),
+                    );
+                  } else if (snapshot.hasError) {
+                    return Center(
+                      child: Text("Eroare"),
+                    );
+                  }
+                }
+                if (snapshot.connectionState == ConnectionState.waiting) {
+                  return Padding(
+                    padding: const EdgeInsets.symmetric(
+                        horizontal: 20, vertical: 30),
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Text(
+                          "Building:",
+                          style: const TextStyle(fontSize: 20),
+                        ),
+                        const SizedBox(
+                          height: 20,
+                        ),
+                        Text(
+                          "Floor number:",
+                          style: const TextStyle(fontSize: 20),
+                        ),
+                        const SizedBox(
+                          height: 20,
+                        ),
+                        Text(
+                          "Number of desks:",
+                          style: const TextStyle(fontSize: 20),
+                        ),
+                        const SizedBox(
+                          height: 20,
+                        ),
+                        Text(
+                          "Number of usable desks:",
+                          style: const TextStyle(fontSize: 20),
+                        ),
+                        const SizedBox(
+                          height: 20,
+                        ),
+                        Text(
+                          "Number of ocupied desks :",
+                          style: const TextStyle(fontSize: 20),
+                        ),
+                        const SizedBox(
+                          height: 20,
+                        ),
+                        Text(
+                          "Total free desks:",
+                          style: const TextStyle(fontSize: 20),
+                        ),
+                        const SizedBox(
+                          height: 20,
+                        ),
+                        PieChart(
+                          dataMap: deskInfo,
+                          chartRadius: MediaQuery.of(context).size.width / 2,
+                          chartValuesOptions: const ChartValuesOptions(
+                            showChartValueBackground: true,
+                            showChartValues: true,
+                            showChartValuesInPercentage: true,
+                            showChartValuesOutside: false,
+                            decimalPlaces: 0,
+                          ),
+                        ),
+                        const Expanded(child: SizedBox()),
+                      ],
+                    ),
+                  );
+                }
+
+                return Text('State: ${snapshot.connectionState}');
+              }),
         ],
       ),
     );

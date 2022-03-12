@@ -7,9 +7,12 @@ class OfficeListWidget extends StatelessWidget {
       {required this.nume,
       required this.imagine,
       required this.id,
-      required this.building});
+      required this.building,
+      required this.idBuilding,
+      required this.buildingName
+      });
 
-  final String nume, imagine, building, id;
+  final String nume, imagine, building, id, idBuilding,buildingName;
 
   @override
   Widget build(BuildContext context) {
@@ -23,7 +26,7 @@ class OfficeListWidget extends StatelessWidget {
             Navigator.push(
               context,
               MaterialPageRoute(
-                  builder: (context) => OfficeViewScreen()),
+                  builder: (context) => OfficeViewScreen(id: id,idBuilding: idBuilding,buildingName: buildingName,)),
             );
           },
           child: ListTile(

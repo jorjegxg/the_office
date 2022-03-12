@@ -10,11 +10,11 @@ import '../../../widgets/tiles/building_list_widget.dart';
 
 class OfficeSearchScreen extends StatefulWidget {
   const OfficeSearchScreen(
-      {Key? key, required this.id, required this.numeBulding})
+      {Key? key, required this.idBuilding, required this.buildingName})
       : super(key: key);
 
-  final String id;
-  final String numeBulding;
+  final String idBuilding;
+  final String buildingName;
 
   @override
   State<OfficeSearchScreen> createState() => _OfficeSearchScreenState();
@@ -46,11 +46,6 @@ class _OfficeSearchScreenState extends State<OfficeSearchScreen>
     ),
   ];
 
-  final int numarSali = 30;
-  final int numarBirouri = 300;
-  final int birouriLibere = 100;
-  final int birouriOcupate = 90;
-
   @override
   void initState() {
     super.initState();
@@ -69,40 +64,12 @@ class _OfficeSearchScreenState extends State<OfficeSearchScreen>
     setState(() {});
   }
 
-  // Future<int> getNumberOfDesks() async{
-  //   int nr = 0, nr2;
-  //   var ref = await _firebaseFirestore.collection("Buildings").doc(widget.id).collection("Offices").get();
-  //   ref.docs.forEach((element) async{
-  //      nr2 = await int.parse(element['totalDeskCount']);
-  //      nr += nr2;
-  //
-  //      print(nr);
-  //   });
-  //   return nr;
-  // }
-
-  // Future<int> getTotalDesks(AsyncSnapshot snapshot) async{
-  //
-  //     int nr = 0, nr2;
-  //
-  //     snapshot.data.docs.forEach((element) async{
-  //        nr2 = await int.parse(element['totalDeskCount']);
-  //        nr += nr2;
-  //
-  //        print(nr);
-  //     });
-  //     return nr;
-  //
-  //
-  // }
-  ///TODO DETALII OFFICE
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
         centerTitle: true,
-        title: Text("Offices from ${widget.numeBulding}"),
+        title: Text("Offices from ${widget.buildingName}"),
         bottom: TabBar(
           indicatorColor: Colors.white,
           controller: _tabController,
@@ -123,7 +90,7 @@ class _OfficeSearchScreenState extends State<OfficeSearchScreen>
                 Navigator.push(
                   context,
                   MaterialPageRoute(
-                    builder: (context) => CreateOffice(id: widget.id),
+                    builder: (context) => CreateOffice(id: widget.idBuilding),
                   ),
                 );
               },
@@ -255,7 +222,7 @@ class _OfficeSearchScreenState extends State<OfficeSearchScreen>
                 StreamBuilder<QuerySnapshot>(
                     stream: _firebaseFirestore
                         .collection('Buildings')
-                        .doc(widget.id)
+                        .doc(widget.idBuilding)
                         .collection("Offices")
                         .snapshots(),
                     builder: (context, snapshot) {
@@ -269,10 +236,12 @@ class _OfficeSearchScreenState extends State<OfficeSearchScreen>
                                 children: snapshot.data!.docs
                                     .map(
                                       (element) => OfficeListWidget(
+                                        buildingName: widget.buildingName,
+                                        idBuilding: widget.idBuilding,
                                         nume: element['name'],
                                         imagine: element['pictureUrl'],
                                         id: element['id'],
-                                        building: widget.numeBulding,
+                                        building: widget.buildingName,
                                       ),
                                     )
                                     .toList(),
@@ -296,48 +265,69 @@ class _OfficeSearchScreenState extends State<OfficeSearchScreen>
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                StreamBuilder<QuerySnapshot>(
-                    stream: _firebaseFirestore
-                        .collection('Buildings')
-                        .doc(widget.id)
+                FutureBuilder(
+                    future: _firebaseFirestore
+                        .collection("Buildings")
+                        .doc(widget.idBuilding)
                         .collection("Offices")
-                        .snapshots(),
-                    builder: (BuildContext context, AsyncSnapshot snapshot) {
-                      if (snapshot.connectionState == ConnectionState.active) {
+                        .get(),
+                    builder:
+                        (BuildContext context, AsyncSnapshot snapshot) {
+                      int numberOfOffices = 0;
+                      double totalNumberOfDesks = 0;
+                      double numberOfUsableDesks = 0;
+                      double totalNumberOfOcupiedDesks = 0;
+                      double totalFreeDesks = 0;
+                      if (snapshot.connectionState ==
+                          ConnectionState.done) {
                         if (snapshot.hasData) {
-                          return Column(
+
+                          numberOfOffices = snapshot.data!.docs.length;
+
+                          snapshot.data!.docs.forEach((element) {
+                            totalNumberOfDesks +=
+                            element['totalDeskCount'];
+                          });
+
+                          snapshot.data!.docs.forEach((element) {
+                            numberOfUsableDesks +=
+                            element['usableDeskCount'];
+                          });
+
+
+                          return  Column(
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
                               Text(
-                                "Number of offices: ${snapshot.data!.docs.length}",
+                                "Number of offices: ${numberOfOffices}",
+                                style: const TextStyle(fontSize: 20),
+                              ),
+                              const SizedBox(
+                                height: 20,
+                              ),
+                                Text(
+                                'Number of desks : ${totalNumberOfDesks.toInt()}',
                                 style: const TextStyle(fontSize: 20),
                               ),
                               const SizedBox(
                                 height: 20,
                               ),
                               Text(
-                                "Number of desks:",
+                                "Number of usable desks: ${numberOfUsableDesks.toInt()}",
                                 style: const TextStyle(fontSize: 20),
                               ),
                               const SizedBox(
                                 height: 20,
                               ),
                               Text(
-                                "Number of usable desks: $birouriLibere",
+                                "Number of ocupied desks: REZOLVAAAAAAA",
                                 style: const TextStyle(fontSize: 20),
                               ),
                               const SizedBox(
                                 height: 20,
                               ),
                               Text(
-                                "Number of ocupied desks: $birouriOcupate",
-                                style: const TextStyle(fontSize: 20),
-                              ),
-                              const SizedBox(
-                                height: 20,
-                              ),
-                              Text(
-                                "Total free desks: ${birouriLibere - birouriOcupate}",
+                                "Total free desks: birouriLibere - birouriOcupate REZOLVAAAAAAA",
                                 style: const TextStyle(fontSize: 20),
                               ),
                               const SizedBox(
@@ -345,15 +335,25 @@ class _OfficeSearchScreenState extends State<OfficeSearchScreen>
                               ),
                             ],
                           );
+
                         } else if (snapshot.hasError) {
-                          return Center(child: CircularProgressIndicator());
+                          return Container(
+                            width: double.infinity,
+                            height: 200,
+                            child: Center(
+                              child: Text("Eroare"),
+                            ),
+                          );
                         }
                       }
-                      if (snapshot.connectionState == ConnectionState.waiting) {
+                      if (snapshot.connectionState ==
+                          ConnectionState.waiting) {
                         return Center(child: CircularProgressIndicator());
                       }
+
                       return Center(child: CircularProgressIndicator());
                     }),
+
                 const Expanded(child: SizedBox()),
                 Row(
                   mainAxisAlignment: MainAxisAlignment.spaceEvenly,
