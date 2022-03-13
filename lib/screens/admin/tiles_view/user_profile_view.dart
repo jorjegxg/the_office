@@ -2,14 +2,26 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:the_office/screens/admin/switch_user_building_screen.dart';
+import 'package:the_office/screens/admin/update_profile.dart';
 
 class UserProfileView extends StatelessWidget {
-  UserProfileView({required this.id});
+  UserProfileView({
+    required this.id,
+  });
+
   final String id;
   final GlobalKey _scaffold = GlobalKey();
 
   FirebaseFirestore _firebaseFirestore = FirebaseFirestore.instance;
   FirebaseAuth _firebaseAuth = FirebaseAuth.instance;
+
+  String name = "";
+  String lastName = "";
+  String gender = "";
+  String birthDate = "";
+  String nationality = "";
+  String role = "";
+  String pictureUrl = "";
 
   @override
   Widget build(BuildContext context) {
@@ -23,12 +35,42 @@ class UserProfileView extends StatelessWidget {
           "Profile",
           style: TextStyle(fontSize: 25),
         ),
+        actions: [
+          GestureDetector(
+            child: Icon(Icons.edit),
+            onTap: () => Navigator.push(
+              context,
+              MaterialPageRoute(
+                builder: (context) {
+                  return UpdateProfile(
+                    name: name,
+                    lastName: lastName,
+                    gender: gender,
+                    birthDate: birthDate,
+                    nationality: nationality,
+                    role: role,
+                    pictureUrl: pictureUrl,
+                    id: id,
+                  );
+                },
+              ),
+            ),
+          ),
+        ],
       ),
       body: StreamBuilder(
           stream: _firebaseFirestore.collection("Users").doc(id).snapshots(),
           builder: (BuildContext context, AsyncSnapshot snapshot) {
             if (snapshot.connectionState == ConnectionState.active) {
               if (snapshot.hasData) {
+                name = snapshot.data['name'];
+                lastName = snapshot.data['lastName'];
+                gender = snapshot.data['gender'];
+                birthDate = snapshot.data['birthDate'];
+                nationality = snapshot.data['nationality'];
+                role = snapshot.data['role'];
+                pictureUrl = snapshot.data['pictureUrl'];
+
                 return Column(
                   children: [
                     Padding(
@@ -41,7 +83,7 @@ class UserProfileView extends StatelessWidget {
                             padding: const EdgeInsets.symmetric(vertical: 40.0),
                             child: Row(
                               children: [
-                                ///TODO pick image
+                                ///TODO fa sa poata da pick image adminul
                                 Stack(
                                   children: [
                                     CircleAvatar(
@@ -96,7 +138,7 @@ class UserProfileView extends StatelessWidget {
                             height: 20,
                           ),
                           Text(
-                            "Gender: ${snapshot.data['gender']}",
+                            "Gender: $gender",
                             style: const TextStyle(fontSize: 20),
                           ),
                           const SizedBox(
@@ -110,8 +152,8 @@ class UserProfileView extends StatelessWidget {
                             height: 20,
                           ),
                           Text(
-                            snapshot.data['birthDate'] != ""
-                                ? "Birth date: ${snapshot.data['birthDate']}"
+                            birthDate != ""
+                                ? "Birth date: $birthDate"
                                 : "Birth date: --------",
                             style: const TextStyle(fontSize: 20),
                           ),

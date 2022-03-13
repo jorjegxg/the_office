@@ -99,4 +99,42 @@ class AuthMethods {
   void logout() {
     FirebaseAuth.instance.signOut();
   }
+
+  Future<String> updateUser(
+      {required String name,
+      required String lastName,
+      required String gender,
+      required String role,
+      String? birthDate,
+      String? nationality,
+      required String id,
+      required String pictureUrl}) async {
+    String res = "Some error Occurred";
+    final FirebaseFirestore _firestore = FirebaseFirestore.instance;
+
+    try {
+      if (name.isNotEmpty &&
+          lastName.isNotEmpty &&
+          gender.isNotEmpty &&
+          role.isNotEmpty) {
+        await _firestore.collection("Users").doc(id).update({
+          'name': name,
+          'lastName': lastName,
+          'gender': gender,
+          'birthDate': birthDate ?? "",
+          'nationality': nationality ?? "",
+          'role': role,
+          'pictureUrl': pictureUrl,
+          'id': id,
+        });
+
+        res = "success";
+      } else {
+        res = "Please enter all the fields";
+      }
+    } catch (err) {
+      return err.toString();
+    }
+    return res;
+  }
 }
