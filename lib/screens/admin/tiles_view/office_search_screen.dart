@@ -46,20 +46,18 @@ class _OfficeSearchScreenState extends State<OfficeSearchScreen>
     ),
   ];
 
+  @override
+  void didChangeDependencies() {
+    _tabController = TabController(length: 2, vsync: this);
+    _tabController.addListener(_handleTabChange);
+    super.didChangeDependencies();
+  }
 
- @override
- void didChangeDependencies() {
-   _tabController = TabController(length: 2, vsync: this);
-   _tabController.addListener(_handleTabChange);
-   super.didChangeDependencies();
- }
   @override
   void dispose() {
     _tabController.dispose();
     super.dispose();
-
   }
-
 
   _handleTabChange() {
     setState(() {});
@@ -227,36 +225,29 @@ class _OfficeSearchScreenState extends State<OfficeSearchScreen>
                         .collection("Offices")
                         .snapshots(),
                     builder: (context, snapshot) {
-                      if (snapshot.connectionState == ConnectionState.active) {
-                        if (snapshot.hasData) {
-                          return Expanded(
-                            child: Padding(
-                              padding:
-                                  const EdgeInsets.only(top: 20, bottom: 30),
-                              child: ListView(
-                                children: snapshot.data!.docs
-                                    .map(
-                                      (element) => OfficeListWidget(
-                                        buildingName: widget.buildingName,
-                                        idBuilding: widget.idBuilding,
-                                        nume: element['name'],
-                                        imagine: element['pictureUrl'],
-                                        id: element['id'],
-                                        building: widget.buildingName,
-                                      ),
-                                    )
-                                    .toList(),
-                              ),
+                      if (!snapshot.hasData) {
+                        return Center(child: CircularProgressIndicator(),);
+                      } else {
+                        return Expanded(
+                          child: Padding(
+                            padding: const EdgeInsets.only(top: 20, bottom: 30),
+                            child: ListView(
+                              children: snapshot.data!.docs
+                                  .map(
+                                    (element) => OfficeListWidget(
+                                      buildingName: widget.buildingName,
+                                      idBuilding: widget.idBuilding,
+                                      nume: element['name'],
+                                      imagine: element['pictureUrl'],
+                                      id: element['id'],
+                                      building: widget.buildingName,
+                                    ),
+                                  )
+                                  .toList(),
                             ),
-                          );
-                        } else if (snapshot.hasError) {
-                          return Center(child: CircularProgressIndicator());
-                        }
+                          ),
+                        );
                       }
-                      if (snapshot.connectionState == ConnectionState.waiting) {
-                        return Center(child: CircularProgressIndicator());
-                      }
-                      return Center(child: CircularProgressIndicator());
                     }),
               ],
             ),
@@ -272,98 +263,78 @@ class _OfficeSearchScreenState extends State<OfficeSearchScreen>
                         .doc(widget.idBuilding)
                         .collection("Offices")
                         .get(),
-                    builder:
-                        (BuildContext context, AsyncSnapshot snapshot) {
+                    builder: (BuildContext context, AsyncSnapshot snapshot) {
                       int numberOfOffices = 0;
                       double totalNumberOfDesks = 0;
                       double numberOfUsableDesks = 0;
                       double totalNumberOfOcupiedDesks = 0;
                       double totalFreeDesks = 0;
-                      if (snapshot.connectionState ==
-                          ConnectionState.done) {
-                        if (snapshot.hasData) {
 
-                          numberOfOffices = snapshot.data!.docs.length;
-
-                          snapshot.data!.docs.forEach((element) {
-                            totalNumberOfDesks +=
-                            element['totalDeskCount'];
-                          });
-
-                          snapshot.data!.docs.forEach((element) {
-                            numberOfUsableDesks +=
-                            element['usableDeskCount'];
-                          });
-
-                          snapshot.data!.docs.forEach((element) {
-                            totalNumberOfOcupiedDesks +=
-                            element['numberOfOccupiedDesks'];
-                          });
-
-                          snapshot.data!.docs.forEach((element) {
-                            totalFreeDesks +=
-                            element['usableDeskCount'] - element['numberOfOccupiedDesks'];
-                          });
-
-                          return  Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                              Text(
-                                "Number of offices: ${numberOfOffices}",
-                                style: const TextStyle(fontSize: 20),
-                              ),
-                              const SizedBox(
-                                height: 20,
-                              ),
-                                Text(
-                                'Number of desks : ${totalNumberOfDesks.toInt()}',
-                                style: const TextStyle(fontSize: 20),
-                              ),
-                              const SizedBox(
-                                height: 20,
-                              ),
-                              Text(
-                                "Number of usable desks: ${numberOfUsableDesks.toInt()}",
-                                style: const TextStyle(fontSize: 20),
-                              ),
-                              const SizedBox(
-                                height: 20,
-                              ),
-                              Text(
-                                "Number of ocupied desks:  ${totalNumberOfOcupiedDesks.toInt()}",
-                                style: const TextStyle(fontSize: 20),
-                              ),
-                              const SizedBox(
-                                height: 20,
-                              ),
-                              Text(
-                                "Total free desks: ${totalFreeDesks.toInt()}",
-                                style: const TextStyle(fontSize: 20),
-                              ),
-                              const SizedBox(
-                                height: 20,
-                              ),
-                            ],
-                          );
-
-                        } else if (snapshot.hasError) {
-                          return Container(
-                            width: double.infinity,
-                            height: 200,
-                            child: Center(
-                              child: Text("Eroare"),
-                            ),
-                          );
-                        }
-                      }
-                      if (snapshot.connectionState ==
-                          ConnectionState.waiting) {
+                      if (!snapshot.hasData) {
                         return Center(child: CircularProgressIndicator());
+                      } else {
+                        numberOfOffices = snapshot.data!.docs.length;
+
+                        snapshot.data!.docs.forEach((element) {
+                          totalNumberOfDesks += element['totalDeskCount'];
+                        });
+
+                        snapshot.data!.docs.forEach((element) {
+                          numberOfUsableDesks += element['usableDeskCount'];
+                        });
+
+                        snapshot.data!.docs.forEach((element) {
+                          totalNumberOfOcupiedDesks +=
+                              element['numberOfOccupiedDesks'];
+                        });
+
+                        snapshot.data!.docs.forEach((element) {
+                          totalFreeDesks += element['usableDeskCount'] -
+                              element['numberOfOccupiedDesks'];
+                        });
+
+                        return Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Text(
+                              "Number of offices: ${numberOfOffices}",
+                              style: const TextStyle(fontSize: 20),
+                            ),
+                            const SizedBox(
+                              height: 20,
+                            ),
+                            Text(
+                              'Number of desks : ${totalNumberOfDesks.toInt()}',
+                              style: const TextStyle(fontSize: 20),
+                            ),
+                            const SizedBox(
+                              height: 20,
+                            ),
+                            Text(
+                              "Number of usable desks: ${numberOfUsableDesks.toInt()}",
+                              style: const TextStyle(fontSize: 20),
+                            ),
+                            const SizedBox(
+                              height: 20,
+                            ),
+                            Text(
+                              "Number of ocupied desks:  ${totalNumberOfOcupiedDesks.toInt()}",
+                              style: const TextStyle(fontSize: 20),
+                            ),
+                            const SizedBox(
+                              height: 20,
+                            ),
+                            Text(
+                              "Total free desks: ${totalFreeDesks.toInt()}",
+                              style: const TextStyle(fontSize: 20),
+                            ),
+                            const SizedBox(
+                              height: 20,
+                            ),
+                          ],
+                        );
                       }
-
-                      return Center(child: CircularProgressIndicator());
                     }),
-
                 const Expanded(child: SizedBox()),
                 Row(
                   mainAxisAlignment: MainAxisAlignment.spaceEvenly,

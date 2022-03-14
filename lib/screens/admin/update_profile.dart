@@ -53,8 +53,6 @@ class _UpdateProfileState extends State<UpdateProfile> {
     if (statusMessage == 'success') {
       _nameController.clear();
       _lastNameController.clear();
-      _emailController.clear();
-      _passwordController.clear();
       _nationalityController.clear();
       setState(() {
         _date = null;
@@ -80,15 +78,11 @@ class _UpdateProfileState extends State<UpdateProfile> {
 
   final TextEditingController _nameController = TextEditingController();
   final TextEditingController _lastNameController = TextEditingController();
-  final TextEditingController _emailController = TextEditingController();
-  final TextEditingController _passwordController = TextEditingController();
   final TextEditingController _nationalityController = TextEditingController();
 
 
   late FocusNode _nameFocusNode;
   late FocusNode _lastNameFocusNode;
-  late FocusNode _emailFocusNode;
-  late FocusNode _passwordFocusNode;
   late FocusNode _nationalityFocusNode;
 
   @override
@@ -96,8 +90,6 @@ class _UpdateProfileState extends State<UpdateProfile> {
     super.initState();
     _nameFocusNode = FocusNode();
     _lastNameFocusNode = FocusNode();
-    _emailFocusNode = FocusNode();
-    _passwordFocusNode = FocusNode();
     _nationalityFocusNode = FocusNode();
 
     _nameController.text =  widget.name;
@@ -112,14 +104,10 @@ class _UpdateProfileState extends State<UpdateProfile> {
     super.dispose();
     _nameController.dispose();
     _lastNameController.dispose();
-    _emailController.dispose();
-    _passwordController.dispose();
     _nationalityController.dispose();
 
     _nameFocusNode.dispose();
     _lastNameFocusNode.dispose();
-    _emailFocusNode.dispose();
-    _passwordFocusNode.dispose();
     _nationalityFocusNode.dispose();
   }
 
@@ -153,7 +141,7 @@ class _UpdateProfileState extends State<UpdateProfile> {
               textEditingController: _lastNameController,
               hintText: 'Last name',
               focusNode: _lastNameFocusNode,
-              nextNode: _emailFocusNode,
+              nextNode: _nationalityFocusNode,
             ),
             const SizedBox(
               height: 20,
