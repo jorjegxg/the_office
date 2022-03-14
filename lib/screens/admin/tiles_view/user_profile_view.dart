@@ -191,9 +191,9 @@ class UserProfileView extends StatelessWidget {
                                 borderRadius: BorderRadius.circular(10)),
                             child: Container(
                               width: MediaQuery.of(context).size.width * 0.2,
-                              child: Center(
+                              child: const Center(
                                 child: Text(
-                                  "Assign office",
+                                  "Assign a \n office",
                                   style: TextStyle(color: Colors.white),
                                 ),
                               ),
@@ -221,7 +221,7 @@ class UserProfileView extends StatelessWidget {
                                         MediaQuery.of(context).size.width * 0.2,
                                     child: Center(
                                       child: Text(
-                                        "De-assign office",
+                                        "De-assign a office",
                                         style: TextStyle(color: Colors.white),
                                       ),
                                     ),
