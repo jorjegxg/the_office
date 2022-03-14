@@ -4,9 +4,12 @@ import 'package:the_office/widgets/tiles/office_switch_widget.dart';
 
 class SwitchUsersOffice extends StatelessWidget {
   FirebaseFirestore _firebaseFirestore = FirebaseFirestore.instance;
+
   final String id, userID, buildingName;
+
   SwitchUsersOffice(
       {required this.id, required this.userID, required this.buildingName});
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -26,31 +29,25 @@ class SwitchUsersOffice extends StatelessWidget {
                 .snapshots(),
             builder:
                 (BuildContext context, AsyncSnapshot<QuerySnapshot> snapshot) {
-              if (snapshot.connectionState == ConnectionState.active) {
-                if (snapshot.hasData) {
-                  return Expanded(
-                    child: ListView(
-                      children: snapshot.data!.docs.map((doc) {
-                        return OfficeSwitchWidget(
-                          nume: doc['name'],
-                          imagine: doc['pictureUrl'],
-                          id: doc['id'],
-                          count: doc['usableDeskCount'],
-                          buildingID: id,
-                          userID: userID,
-                          buildingName: buildingName,
-                        );
-                      }).toList(),
-                    ),
-                  );
-                } else if (snapshot.hasError) {
-                  return const Center(child: CircularProgressIndicator());
-                }
-              }
-              if (snapshot.connectionState == ConnectionState.waiting) {
+              if (!snapshot.hasData) {
                 return const Center(child: CircularProgressIndicator());
+              } else {
+                return Expanded(
+                  child: ListView(
+                    children: snapshot.data!.docs.map((doc) {
+                      return OfficeSwitchWidget(
+                        nume: doc['name'],
+                        imagine: doc['pictureUrl'],
+                        id: doc['id'],
+                        count: doc['usableDeskCount'],
+                        buildingID: id,
+                        userID: userID,
+                        buildingName: buildingName,
+                      );
+                    }).toList(),
+                  ),
+                );
               }
-              return const Center(child: CircularProgressIndicator());
             }),
       ),
     );

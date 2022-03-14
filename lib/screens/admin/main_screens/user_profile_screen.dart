@@ -78,8 +78,8 @@ class _UserProfileState extends State<UserProfile> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        shape: const RoundedRectangleBorder(
-            borderRadius: BorderRadius.only(bottomRight: Radius.circular(25))),
+        // shape: const RoundedRectangleBorder(
+        //     borderRadius: BorderRadius.only(bottomRight: Radius.circular(25))),
         title: const Text(
           "Profile",
           style: TextStyle(fontSize: 23),
@@ -102,8 +102,10 @@ class _UserProfileState extends State<UserProfile> {
               .doc(_firebaseAuth.currentUser!.uid)
               .snapshots(),
           builder: (BuildContext context, AsyncSnapshot snapshot) {
-            if (snapshot.connectionState == ConnectionState.active) {
-              if (snapshot.hasData) {
+
+              if (! snapshot.hasData){
+                return Center(child: CircularProgressIndicator());
+              }else {
                 return Padding(
                   padding: const EdgeInsets.symmetric(horizontal: 40.0),
                   child: Column(
@@ -221,16 +223,8 @@ class _UserProfileState extends State<UserProfile> {
                     ],
                   ),
                 );
-              } else if (snapshot.hasError) {
-                return Center(
-                  child: Text('Eroare'),
-                );
               }
-            }
-            if (snapshot.connectionState == ConnectionState.waiting) {
-              return CircularProgressIndicator();
-            }
-            return Text('Ceva a mers rau');
+
           }),
     );
   }

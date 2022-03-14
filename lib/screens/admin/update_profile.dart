@@ -6,7 +6,7 @@ import 'package:the_office/widgets/show_snack_bar.dart';
 import 'package:the_office/widgets/text_field_input.dart';
 
 class UpdateProfile extends StatefulWidget {
-  const UpdateProfile({Key? key ,
+  UpdateProfile({Key? key ,
     required this.name,
     required this.lastName,
     required this.gender,
@@ -18,7 +18,7 @@ class UpdateProfile extends StatefulWidget {
     final String name;
     final String lastName;
     final String gender;
-    final String birthDate;
+    String birthDate;
     final String nationality;
     final String role;
     final String pictureUrl;
@@ -40,8 +40,7 @@ class _UpdateProfileState extends State<UpdateProfile> {
       lastName: _lastNameController.text,
       gender: selectedGender,
       ///todo vezi la data ca poate fi ""
-      birthDate:
-      _date != null ? '${_date!.year}-${_date!.month}-${_date!.day}' : widget.birthDate,
+      birthDate: widget.birthDate,
       nationality: _nationalityController.text,
       role: selectedRole,
       id: widget.id,
@@ -53,8 +52,6 @@ class _UpdateProfileState extends State<UpdateProfile> {
     if (statusMessage == 'success') {
       _nameController.clear();
       _lastNameController.clear();
-      _emailController.clear();
-      _passwordController.clear();
       _nationalityController.clear();
       setState(() {
         _date = null;
@@ -80,15 +77,11 @@ class _UpdateProfileState extends State<UpdateProfile> {
 
   final TextEditingController _nameController = TextEditingController();
   final TextEditingController _lastNameController = TextEditingController();
-  final TextEditingController _emailController = TextEditingController();
-  final TextEditingController _passwordController = TextEditingController();
   final TextEditingController _nationalityController = TextEditingController();
 
 
   late FocusNode _nameFocusNode;
   late FocusNode _lastNameFocusNode;
-  late FocusNode _emailFocusNode;
-  late FocusNode _passwordFocusNode;
   late FocusNode _nationalityFocusNode;
 
   @override
@@ -96,8 +89,6 @@ class _UpdateProfileState extends State<UpdateProfile> {
     super.initState();
     _nameFocusNode = FocusNode();
     _lastNameFocusNode = FocusNode();
-    _emailFocusNode = FocusNode();
-    _passwordFocusNode = FocusNode();
     _nationalityFocusNode = FocusNode();
 
     _nameController.text =  widget.name;
@@ -112,18 +103,13 @@ class _UpdateProfileState extends State<UpdateProfile> {
     super.dispose();
     _nameController.dispose();
     _lastNameController.dispose();
-    _emailController.dispose();
-    _passwordController.dispose();
     _nationalityController.dispose();
 
     _nameFocusNode.dispose();
     _lastNameFocusNode.dispose();
-    _emailFocusNode.dispose();
-    _passwordFocusNode.dispose();
     _nationalityFocusNode.dispose();
   }
 
-  ///birth date picker + role + gender
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -153,7 +139,7 @@ class _UpdateProfileState extends State<UpdateProfile> {
               textEditingController: _lastNameController,
               hintText: 'Last name',
               focusNode: _lastNameFocusNode,
-              nextNode: _emailFocusNode,
+              nextNode: _nationalityFocusNode,
             ),
             const SizedBox(
               height: 20,
@@ -169,9 +155,9 @@ class _UpdateProfileState extends State<UpdateProfile> {
             CustomButton(
               color: Colors.white60,
               circularCorners: 12,
-              text: _date == null
-                  ? widget.birthDate
-                  : 'Date picked : ${_date!.year}-${_date!.month}-${_date!.day}',
+              text: (widget.birthDate.isEmpty)//|| widget.birthDate.isNotEmpty)
+                  ? 'Pick date'
+                  : 'Date picked : ${widget.birthDate}',
               fontSize: 14,
               onPressed: () async {
                 var datePicked = await DatePicker.showSimpleDatePicker(
@@ -185,6 +171,7 @@ class _UpdateProfileState extends State<UpdateProfile> {
                 );
                 setState(() {
                   _date = datePicked;
+                  widget.birthDate = '${_date!.year}-${_date!.month}-${_date!.day}';
                 });
               },
             ),

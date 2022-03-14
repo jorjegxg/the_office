@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:the_office/screens/admin/main_screens/view_remote_request_screen.dart';
+import 'package:the_office/screens/admin/view_remote_request_screen.dart';
 
 class RemoteRequestWidget extends StatelessWidget {
   RemoteRequestWidget({required this.nume, required this.imagine});

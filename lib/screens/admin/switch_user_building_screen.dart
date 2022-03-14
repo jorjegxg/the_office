@@ -21,8 +21,11 @@ class SwitchUsersBuilding extends StatelessWidget {
             stream: _firebaseFirestore.collection('Buildings').snapshots(),
             builder:
                 (BuildContext context, AsyncSnapshot<QuerySnapshot> snapshot) {
-              if (snapshot.connectionState == ConnectionState.active) {
-                if (snapshot.hasData) {
+                if (! snapshot.hasData) {
+                  return Center(child: CircularProgressIndicator());
+                }
+                else
+              {
                   return Expanded(
                     child: ListView(
                       children: snapshot.data!.docs.map((doc) {
@@ -35,14 +38,7 @@ class SwitchUsersBuilding extends StatelessWidget {
                       }).toList(),
                     ),
                   );
-                } else if (snapshot.hasError) {
-                  return const Center(child: CircularProgressIndicator());
                 }
-              }
-              if (snapshot.connectionState == ConnectionState.waiting) {
-                return const Center(child: CircularProgressIndicator());
-              }
-              return const Center(child: CircularProgressIndicator());
             }),
       ),
     );
