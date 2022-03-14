@@ -1,11 +1,11 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
-import 'package:the_office/screens/admin/create_screens/create_building.dart';
 import 'package:the_office/widgets/tiles/building_switch_widget.dart';
 
 class SwitchUsersBuilding extends StatelessWidget {
   FirebaseFirestore _firebaseFirestore = FirebaseFirestore.instance;
-
+  final String userID;
+  SwitchUsersBuilding({required this.userID});
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -27,6 +27,7 @@ class SwitchUsersBuilding extends StatelessWidget {
                     child: ListView(
                       children: snapshot.data!.docs.map((doc) {
                         return BuildingSwitchWidget(
+                          userID: userID,
                           nume: doc['name'],
                           imagine: doc['pictureUrl'],
                           id: doc['id'],

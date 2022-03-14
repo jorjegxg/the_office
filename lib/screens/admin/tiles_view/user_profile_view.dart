@@ -23,6 +23,13 @@ class UserProfileView extends StatelessWidget {
   String role = "";
   String pictureUrl = "";
 
+  void assignUsersOffice() async {
+    await _firebaseFirestore
+        .collection('Users')
+        .doc(id)
+        .update({'building': '', 'office': ''});
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -205,7 +212,9 @@ class UserProfileView extends StatelessWidget {
                               Navigator.push(
                                 context,
                                 MaterialPageRoute(
-                                  builder: (context) => SwitchUsersBuilding(),
+                                  builder: (context) => SwitchUsersBuilding(
+                                    userID: id,
+                                  ),
                                 ),
                               );
                             },
@@ -229,7 +238,7 @@ class UserProfileView extends StatelessWidget {
                                       ),
                                     ),
                                   ),
-                                  onPressed: () {},
+                                  onPressed: assignUsersOffice,
                                   color: Color(0xFF398AB9),
                                 )
                               : Container(),
