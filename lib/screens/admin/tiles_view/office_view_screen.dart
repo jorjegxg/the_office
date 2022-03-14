@@ -145,8 +145,10 @@ class _OfficeViewScreenState extends State<OfficeViewScreen>
                   .doc(widget.id)
                   .snapshots(),
               builder: (BuildContext context, AsyncSnapshot snapshot) {
-                if (snapshot.connectionState == ConnectionState.active) {
-                  if (snapshot.hasData) {
+
+                  if (! snapshot.hasData) {
+                    return Center(child: CircularProgressIndicator(),);
+                  }else{
                     return Padding(
                       padding: const EdgeInsets.symmetric(
                           horizontal: 20, vertical: 30),
@@ -214,82 +216,7 @@ class _OfficeViewScreenState extends State<OfficeViewScreen>
                         ],
                       ),
                     );
-                  } else if (snapshot.hasError) {
-                    return Center(
-                      child: Text("Eroare"),
-                    );
                   }
-                }
-                if (snapshot.connectionState == ConnectionState.waiting) {
-                  return Padding(
-                    padding: const EdgeInsets.symmetric(
-                        horizontal: 20, vertical: 30),
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Text(
-                          "Building:",
-                          style: const TextStyle(fontSize: 20),
-                        ),
-                        const SizedBox(
-                          height: 20,
-                        ),
-                        Text(
-                          "Floor number:",
-                          style: const TextStyle(fontSize: 20),
-                        ),
-                        const SizedBox(
-                          height: 20,
-                        ),
-                        Text(
-                          "Number of desks:",
-                          style: const TextStyle(fontSize: 20),
-                        ),
-                        const SizedBox(
-                          height: 20,
-                        ),
-                        Text(
-                          "Number of usable desks:",
-                          style: const TextStyle(fontSize: 20),
-                        ),
-                        const SizedBox(
-                          height: 20,
-                        ),
-                        Text(
-                          "Number of ocupied desks :",
-                          style: const TextStyle(fontSize: 20),
-                        ),
-                        const SizedBox(
-                          height: 20,
-                        ),
-                        Text(
-                          "Total free desks:",
-                          style: const TextStyle(fontSize: 20),
-                        ),
-                        const SizedBox(
-                          height: 20,
-                        ),
-                        // PieChart(
-                        //   dataMap:{
-                        //       "Free desks": 3.0,
-                        //       "Ocupied desks": 10.0 ,
-                        //     },
-                        //
-                        //   chartRadius: MediaQuery.of(context).size.width / 2,
-                        //   chartValuesOptions: const ChartValuesOptions(
-                        //     showChartValueBackground: true,
-                        //     showChartValues: true,
-                        //     showChartValuesInPercentage: true,
-                        //     showChartValuesOutside: false,
-                        //     decimalPlaces: 0,
-                        //   ),
-                        //   animationDuration: Duration(seconds: 0),
-                        // ),
-                        const Expanded(child: SizedBox()),
-                      ],
-                    ),
-                  );
-                }
 
                 return Text('State: ${snapshot.connectionState}');
               }),
