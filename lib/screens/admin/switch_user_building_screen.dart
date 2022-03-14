@@ -21,24 +21,20 @@ class SwitchUsersBuilding extends StatelessWidget {
             stream: _firebaseFirestore.collection('Buildings').snapshots(),
             builder:
                 (BuildContext context, AsyncSnapshot<QuerySnapshot> snapshot) {
-                if (! snapshot.hasData) {
-                  return Center(child: CircularProgressIndicator());
-                }
-                else
-              {
-                  return Expanded(
-                    child: ListView(
-                      children: snapshot.data!.docs.map((doc) {
-                        return BuildingSwitchWidget(
-                          userID: userID,
-                          nume: doc['name'],
-                          imagine: doc['pictureUrl'],
-                          id: doc['id'],
-                        );
-                      }).toList(),
-                    ),
-                  );
-                }
+              if (!snapshot.hasData) {
+                return Center(child: CircularProgressIndicator());
+              } else {
+                return ListView(
+                  children: snapshot.data!.docs.map((doc) {
+                    return BuildingSwitchWidget(
+                      userID: userID,
+                      nume: doc['name'],
+                      imagine: doc['pictureUrl'],
+                      id: doc['id'],
+                    );
+                  }).toList(),
+                );
+              }
             }),
       ),
     );

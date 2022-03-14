@@ -22,8 +22,21 @@ class UserProfileView extends StatelessWidget {
   String nationality = "";
   String role = "";
   String pictureUrl = "";
+  late DocumentSnapshot refB, refO;
 
   void assignUsersOffice() async {
+    DocumentSnapshot ref =
+        await _firebaseFirestore.collection('Users').doc(id).get();
+    await _firebaseFirestore
+        .collection('Buildings')
+        .doc(ref['building'])
+        .collection('Offices')
+        .doc(ref['office'])
+        .update({
+      'usersId': FieldValue.arrayRemove([id]),
+      'numberOfOccupiedDesks': FieldValue.increment(-1),
+    });
+
     await _firebaseFirestore
         .collection('Users')
         .doc(id)
@@ -73,7 +86,6 @@ class UserProfileView extends StatelessWidget {
           builder: (BuildContext context, AsyncSnapshot snapshot) {
             if (snapshot.connectionState == ConnectionState.active) {
               if (snapshot.hasData) {
-
                 name = snapshot.data['name'];
                 lastName = snapshot.data['lastName'];
                 gender = snapshot.data['gender'];
@@ -239,7 +251,65 @@ class UserProfileView extends StatelessWidget {
                                       ),
                                     ),
                                   ),
-                                  onPressed: assignUsersOffice,
+                                  onPressed: () {
+                                    assignUsersOffice();
+                                    showDialog(
+                                        barrierDismissible: false,
+                                        context: context,
+                                        builder: (BuildContext context) {
+                                          return AlertDialog(
+                                            shape: RoundedRectangleBorder(
+                                                borderRadius:
+                                                    BorderRadius.circular(30)),
+                                            backgroundColor:
+                                                Theme.of(context).primaryColor,
+                                            title: const Center(
+                                                child: Text(
+                                              "Office de-asigned!",
+                                              style: TextStyle(
+                                                  color: Colors.white,
+                                                  fontSize: 30),
+                                            )),
+                                            actions: [
+                                              Center(
+                                                child: TextButton(
+                                                  onPressed: () {
+                                                    Navigator.pop(context);
+                                                  },
+                                                  child: const Text(
+                                                    "Confirm",
+                                                    style: TextStyle(
+                                                        color: Colors.black),
+                                                  ),
+                                                  style: ButtonStyle(
+                                                    backgroundColor:
+                                                        MaterialStateProperty
+                                                            .resolveWith(
+                                                                (state) =>
+                                                                    Colors
+                                                                        .white),
+                                                    shape: MaterialStateProperty
+                                                        .all<
+                                                            RoundedRectangleBorder>(
+                                                      RoundedRectangleBorder(
+                                                        borderRadius:
+                                                            BorderRadius
+                                                                .circular(18.0),
+                                                      ),
+                                                    ),
+                                                    padding:
+                                                        MaterialStateProperty
+                                                            .all(EdgeInsets
+                                                                .symmetric(
+                                                                    horizontal:
+                                                                        20)),
+                                                  ),
+                                                ),
+                                              ),
+                                            ],
+                                          );
+                                        });
+                                  },
                                   color: Color(0xFF398AB9),
                                 )
                               : Container(),
