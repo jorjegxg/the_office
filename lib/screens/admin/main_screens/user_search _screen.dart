@@ -23,8 +23,8 @@ class _UserSearchScreenState extends State<UserSearchScreen> {
     return Scaffold(
       appBar: AppBar(
         title: const Center(child: Text("Users")),
-        shape: const RoundedRectangleBorder(
-            borderRadius: BorderRadius.vertical(bottom: Radius.circular(20))),
+        // shape: const RoundedRectangleBorder(
+        //     borderRadius: BorderRadius.vertical(bottom: Radius.circular(20))),
       ),
       floatingActionButton: FloatingActionButton(
         child: const Icon(Icons.person_add),

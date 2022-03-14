@@ -12,9 +12,9 @@ class BuildingSearchScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        shape: const RoundedRectangleBorder(
-            borderRadius: BorderRadius.vertical(bottom: Radius.circular(20))),
-        title: const Center(child: Text("Buildings")),
+        // shape: const RoundedRectangleBorder(
+        //     borderRadius: BorderRadius.vertical(bottom: Radius.circular(20))),
+         title: const Center(child: Text("Buildings")),
       ),
       floatingActionButton: FloatingActionButton(
         heroTag: "btnBuilding",

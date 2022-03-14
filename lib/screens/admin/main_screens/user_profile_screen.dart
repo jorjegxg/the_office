@@ -78,8 +78,8 @@ class _UserProfileState extends State<UserProfile> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        shape: const RoundedRectangleBorder(
-            borderRadius: BorderRadius.only(bottomRight: Radius.circular(25))),
+        // shape: const RoundedRectangleBorder(
+        //     borderRadius: BorderRadius.only(bottomRight: Radius.circular(25))),
         title: const Text(
           "Profile",
           style: TextStyle(fontSize: 23),
