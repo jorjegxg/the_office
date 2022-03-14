@@ -66,6 +66,7 @@ class UserProfileView extends StatelessWidget {
           builder: (BuildContext context, AsyncSnapshot snapshot) {
             if (snapshot.connectionState == ConnectionState.active) {
               if (snapshot.hasData) {
+
                 name = snapshot.data['name'];
                 lastName = snapshot.data['lastName'];
                 gender = snapshot.data['gender'];
@@ -111,7 +112,7 @@ class UserProfileView extends StatelessWidget {
                                     SizedBox(
                                       width: 150,
                                       child: Text(
-                                        '${snapshot.data['name']} ${snapshot.data['lastName']}',
+                                        '$name $lastName',
                                         style: const TextStyle(
                                             fontWeight: FontWeight.bold,
                                             fontSize: 25),
@@ -120,7 +121,7 @@ class UserProfileView extends StatelessWidget {
                                     Container(
                                       width: 180,
                                       child: Text(
-                                        snapshot.data['role'],
+                                        '$role',
                                         style: const TextStyle(fontSize: 25),
                                       ),
                                     ),
@@ -157,7 +158,7 @@ class UserProfileView extends StatelessWidget {
                           Text(
                             birthDate != ""
                                 ? "Birth date: $birthDate"
-                                : "Birth date: --------",
+                                : "Birth date: unknown",
                             style: const TextStyle(fontSize: 20),
                           ),
                           const SizedBox(
@@ -166,7 +167,7 @@ class UserProfileView extends StatelessWidget {
                           Text(
                             snapshot.data['building'] != ""
                                 ? "Building: ${snapshot.data['building']}"
-                                : "Building: --------",
+                                : "Building: no building",
                             style: const TextStyle(fontSize: 20),
                           ),
                           const SizedBox(
@@ -175,7 +176,7 @@ class UserProfileView extends StatelessWidget {
                           Text(
                             snapshot.data['office'] != ""
                                 ? "Office: ${snapshot.data['office']}"
-                                : "Office: --------",
+                                : "Office: no office",
                             style: const TextStyle(fontSize: 20),
                           ),
                         ],

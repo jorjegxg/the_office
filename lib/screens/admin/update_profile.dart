@@ -6,7 +6,7 @@ import 'package:the_office/widgets/show_snack_bar.dart';
 import 'package:the_office/widgets/text_field_input.dart';
 
 class UpdateProfile extends StatefulWidget {
-  const UpdateProfile({Key? key ,
+  UpdateProfile({Key? key ,
     required this.name,
     required this.lastName,
     required this.gender,
@@ -18,7 +18,7 @@ class UpdateProfile extends StatefulWidget {
     final String name;
     final String lastName;
     final String gender;
-    final String birthDate;
+    String birthDate;
     final String nationality;
     final String role;
     final String pictureUrl;
@@ -40,8 +40,7 @@ class _UpdateProfileState extends State<UpdateProfile> {
       lastName: _lastNameController.text,
       gender: selectedGender,
       ///todo vezi la data ca poate fi ""
-      birthDate:
-      _date != null ? '${_date!.year}-${_date!.month}-${_date!.day}' : widget.birthDate,
+      birthDate: widget.birthDate,
       nationality: _nationalityController.text,
       role: selectedRole,
       id: widget.id,
@@ -111,7 +110,6 @@ class _UpdateProfileState extends State<UpdateProfile> {
     _nationalityFocusNode.dispose();
   }
 
-  ///birth date picker + role + gender
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -157,9 +155,9 @@ class _UpdateProfileState extends State<UpdateProfile> {
             CustomButton(
               color: Colors.white60,
               circularCorners: 12,
-              text: _date == null
-                  ? widget.birthDate
-                  : 'Date picked : ${_date!.year}-${_date!.month}-${_date!.day}',
+              text: (widget.birthDate.isEmpty)//|| widget.birthDate.isNotEmpty)
+                  ? 'Pick date'
+                  : 'Date picked : ${widget.birthDate}',
               fontSize: 14,
               onPressed: () async {
                 var datePicked = await DatePicker.showSimpleDatePicker(
@@ -173,6 +171,7 @@ class _UpdateProfileState extends State<UpdateProfile> {
                 );
                 setState(() {
                   _date = datePicked;
+                  widget.birthDate = '${_date!.year}-${_date!.month}-${_date!.day}';
                 });
               },
             ),
