@@ -56,6 +56,9 @@ class UserProfileView extends StatelessWidget {
               ),
             ),
           ),
+          SizedBox(
+            width: 10,
+          ),
         ],
       ),
       body: StreamBuilder(
