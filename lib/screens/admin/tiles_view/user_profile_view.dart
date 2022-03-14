@@ -36,8 +36,8 @@ class UserProfileView extends StatelessWidget {
       key: _scaffold,
       appBar: AppBar(
         centerTitle: true,
-        shape: const RoundedRectangleBorder(
-            borderRadius: BorderRadius.vertical(bottom: Radius.circular(20))),
+        // shape: const RoundedRectangleBorder(
+        //     borderRadius: BorderRadius.vertical(bottom: Radius.circular(20))),
         title: const Text(
           "Profile",
           style: TextStyle(fontSize: 25),

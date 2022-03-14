@@ -16,7 +16,10 @@ class OfficeSwitchWidget extends StatelessWidget {
   final int count;
   List<String> list = ['userID'];
   FirebaseFirestore _firebaseFirestore = FirebaseFirestore.instance;
-  void assignUsersOffice() async {
+  void assignUsersOffice(BuildContext context) async {
+    int count = 0;
+    Navigator.of(context).popUntil((_) => count++ >= 2);
+
     await _firebaseFirestore
         .collection('Buildings')
         .doc(buildingID)
@@ -29,6 +32,8 @@ class OfficeSwitchWidget extends StatelessWidget {
         .collection('Users')
         .doc(userID)
         .update({'building': buildingName, 'office': nume});
+
+
   }
 
   @override
@@ -42,7 +47,7 @@ class OfficeSwitchWidget extends StatelessWidget {
                   shape: RoundedRectangleBorder(
                       borderRadius: BorderRadius.circular(20)),
                   fillColor: Colors.grey[300],
-                  onPressed: assignUsersOffice,
+                  onPressed:() => assignUsersOffice(context),
                   child: ListTile(
                     leading: CircleAvatar(
                       backgroundColor: Colors.white,
