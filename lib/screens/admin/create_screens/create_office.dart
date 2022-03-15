@@ -59,9 +59,9 @@ class _CreateOfficeState extends State<CreateOffice> {
     String statusMessage;
     statusMessage = await FirebaseFirestoreFunctions().createOffice(
       name: _nameController.text,
-      floorNumber: int.parse(_floorsNumberController.text),
-      totalDeskCount: int.parse(_totalDesksController.text),
-      usableDeskCount: int.parse(_usableDesksController.text),
+      floorNumber: _floorsNumberController.text.isNotEmpty ? int.parse(_floorsNumberController.text) : -1,
+      totalDeskCount:_totalDesksController.text.isNotEmpty ? int.parse(_totalDesksController.text) : -1,
+      usableDeskCount:_usableDesksController.text.isNotEmpty ? int.parse(_usableDesksController.text) : -1,
       idAdmin: idAdmin,
       idBuilding: widget.id
     );
