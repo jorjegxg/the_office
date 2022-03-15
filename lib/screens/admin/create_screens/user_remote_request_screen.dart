@@ -1,16 +1,11 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:the_office/widgets/remote_request_widget.dart';
 
-class RemoteRequestScreen extends StatefulWidget {
-  const RemoteRequestScreen({Key? key}) : super(key: key);
-
-  @override
-  State<RemoteRequestScreen> createState() => _RemoteRequestScreenState();
-}
-
-class _RemoteRequestScreenState extends State<RemoteRequestScreen> {
+class UserRemoteRequestScreen extends StatelessWidget {
+  UserRemoteRequestScreen({Key? key}) : super(key: key);
   FirebaseFirestore _firebaseFirestore = FirebaseFirestore.instance;
 
   @override
@@ -28,13 +23,14 @@ class _RemoteRequestScreenState extends State<RemoteRequestScreen> {
             if (!snapshot.hasData) {
               return Center(child: CircularProgressIndicator());
             } else {
+              var currentUser = FirebaseAuth.instance.currentUser!.uid;
               return Column(
                   children: snapshot.data!.docs.map((doc) {
                 return RemoteRequestWidget(
                   nume: '${doc['name']} ${doc['lastName']}',
                   message: doc['remote_request']['message'],
                   imagine: doc['pictureUrl'],
-                  // remoteProcentage: doc['remote_request']['procentage'],
+                  //  remoteProcentage: doc['remote_request']['procentage'],
                 );
               }).toList());
             }

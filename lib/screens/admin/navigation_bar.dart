@@ -125,7 +125,7 @@ class _TabNavigatorState extends State<TabNavigator> {
         child = BuildingSearchScreen();
         break;
       case "Page3":
-        child = const RemoteRequestScreen();
+        child = RemoteRequestScreen();
         break;
       case "Page4":
         child = UserProfile();
