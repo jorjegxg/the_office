@@ -33,20 +33,18 @@ class SwitchUsersOffice extends StatelessWidget {
               if (!snapshot.hasData) {
                 return const Center(child: CircularProgressIndicator());
               } else {
-                return Expanded(
-                  child: ListView(
-                    children: snapshot.data!.docs.map((doc) {
-                      return OfficeSwitchWidget(
-                        nume: doc['name'],
-                        imagine: doc['pictureUrl'],
-                        id: doc['id'],
-                        count: doc['usableDeskCount'],
-                        buildingID: id,
-                        userID: userID,
-                        buildingName: buildingName,
-                      );
-                    }).toList(),
-                  ),
+                return ListView(
+                  children: snapshot.data!.docs.map((doc) {
+                    return OfficeSwitchWidget(
+                      nume: doc['name'],
+                      imagine: doc['pictureUrl'],
+                      id: doc['id'],
+                      count: doc['usableDeskCount'],
+                      buildingID: id,
+                      userID: userID,
+                      buildingName: buildingName,
+                    );
+                  }).toList(),
                 );
               }
             }),

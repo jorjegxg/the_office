@@ -28,7 +28,7 @@ class UserListWidget extends StatelessWidget {
             );
           },
           child: ListTile(
-            tileColor: Color(0xFF398AB9),
+            tileColor: Colors.grey[300],
             shape:
                 RoundedRectangleBorder(borderRadius: BorderRadius.circular(15)),
             //tileColor: Color(0xFF398AB9),
@@ -51,8 +51,8 @@ class UserListWidget extends StatelessWidget {
             title: Text(
               nume,
               style: TextStyle(
-                color: Colors.white,
-                fontWeight: FontWeight.w600,
+                //color: Colors.white,
+                fontWeight: FontWeight.w400,
                 fontSize: 18,
               ),
             ),
@@ -60,7 +60,7 @@ class UserListWidget extends StatelessWidget {
             subtitle: Text(
               rol,
               style: TextStyle(
-                color: Colors.white,
+                //color: Colors.white,
                 fontSize: 16,
               ),
             ), //,style: TextStyle(color: Colors.white),),

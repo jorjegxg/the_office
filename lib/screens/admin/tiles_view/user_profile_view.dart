@@ -29,7 +29,7 @@ class UserProfileView extends StatelessWidget {
         .doc(id)
         .update({'building': '', 'office': ''});
   }
-
+  ///todo la deasign office intreaba daca e sigur
   @override
   Widget build(BuildContext context) {
     return Scaffold(

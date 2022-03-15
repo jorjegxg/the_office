@@ -17,7 +17,7 @@ class CreateOffice extends StatefulWidget {
 
 class _CreateOfficeState extends State<CreateOffice> {
   bool _isLoading = false;
-  var idAdmin = 'oWDoBLh1S9PoZX9n9y1S8t2LWn23';
+  var idAdmin = 'Z59S34QPTXRxW26XKKYJXRBzvUb2';
   FirebaseFirestore _firebaseFirestore = FirebaseFirestore.instance;
 
   // Future<void> createUser() async {
@@ -74,7 +74,7 @@ class _CreateOfficeState extends State<CreateOffice> {
       _floorsNumberController.clear();
       _totalDesksController.clear();
       _usableDesksController.clear();
-      idAdmin = 'oWDoBLh1S9PoZX9n9y1S8t2LWn23';
+      idAdmin = 'Z59S34QPTXRxW26XKKYJXRBzvUb2';
     }
     showSnackBar(context, statusMessage);
   }
@@ -185,7 +185,6 @@ class _CreateOfficeState extends State<CreateOffice> {
               height: 20,
             ),
             TextField(
-                /// TODO fa hint textul sa se duca sus dupa ce e apasat
                 controller: _usableDesksController,
                 focusNode: _usableDesksFocusNode,
                 decoration: InputDecoration(

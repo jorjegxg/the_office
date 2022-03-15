@@ -26,17 +26,15 @@ class SwitchUsersBuilding extends StatelessWidget {
                 }
                 else
               {
-                  return Expanded(
-                    child: ListView(
-                      children: snapshot.data!.docs.map((doc) {
-                        return BuildingSwitchWidget(
-                          userID: userID,
-                          nume: doc['name'],
-                          imagine: doc['pictureUrl'],
-                          id: doc['id'],
-                        );
-                      }).toList(),
-                    ),
+                  return ListView(
+                    children: snapshot.data!.docs.map((doc) {
+                      return BuildingSwitchWidget(
+                        userID: userID,
+                        nume: doc['name'],
+                        imagine: doc['pictureUrl'],
+                        id: doc['id'],
+                      );
+                    }).toList(),
                   );
                 }
             }),
