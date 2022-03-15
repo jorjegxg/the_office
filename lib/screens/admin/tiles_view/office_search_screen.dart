@@ -68,7 +68,7 @@ class _OfficeSearchScreenState extends State<OfficeSearchScreen>
     return Scaffold(
       appBar: AppBar(
         centerTitle: true,
-        title: Text("Offices from ${widget.buildingName}"),
+        title: Text("${widget.buildingName}"),
         bottom: TabBar(
           indicatorColor: Colors.white,
           controller: _tabController,

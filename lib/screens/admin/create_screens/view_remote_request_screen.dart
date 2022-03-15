@@ -5,8 +5,11 @@ class ViewRemoteRequest extends StatelessWidget {
   ViewRemoteRequest({
     required this.nume,
     required this.imagine,
+    required this.remoteProcentage,
+    required this.message,
   });
-  final String nume, imagine;
+  final String nume, imagine, message;
+  final int remoteProcentage;
   final TextEditingController textEditingController = TextEditingController();
   //Casuta pop-up bottom sheet
   Widget bottomSheet(BuildContext context) {
@@ -88,7 +91,7 @@ class ViewRemoteRequest extends StatelessWidget {
                       color: Colors.white),
                 ),
                 onPressed: () {
-                 Navigator.pop(context);
+                  Navigator.pop(context);
                 },
                 color: Colors.red,
               ),
@@ -173,7 +176,7 @@ class ViewRemoteRequest extends StatelessWidget {
             ),
             Container(
               child: Text(
-                "Remote work procentage: 200%",
+                "Remote work procentage: $remoteProcentage%",
                 style: const TextStyle(fontSize: 15),
               ),
               width: MediaQuery.of(context).size.width,
@@ -190,8 +193,8 @@ class ViewRemoteRequest extends StatelessWidget {
               child: ListView(
                 children: [
                   Container(
-                    child: const Text(
-                      "Remote work procentage: 200%Expanded(child: Padding(padding: const EdgeInsets.only(left: 20, right: 20, top: 20, bottom: 30),child: ListView.builder(: user_list.length,itemBuilder: (BuildContext context, int index) {return user_list[index];},),",
+                    child: Text(
+                      message,
                       style: TextStyle(fontSize: 15),
                       textHeightBehavior: TextHeightBehavior(
                           leadingDistribution: TextLeadingDistribution.even),

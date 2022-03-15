@@ -23,14 +23,13 @@ class UserRemoteRequestScreen extends StatelessWidget {
             if (!snapshot.hasData) {
               return Center(child: CircularProgressIndicator());
             } else {
-              var currentUser = FirebaseAuth.instance.currentUser!.uid;
               return Column(
                   children: snapshot.data!.docs.map((doc) {
                 return RemoteRequestWidget(
                   nume: '${doc['name']} ${doc['lastName']}',
                   message: doc['remote_request']['message'],
                   imagine: doc['pictureUrl'],
-                  //  remoteProcentage: doc['remote_request']['procentage'],
+                  remoteProcentage: doc['remote_request']['procentage'],
                 );
               }).toList());
             }

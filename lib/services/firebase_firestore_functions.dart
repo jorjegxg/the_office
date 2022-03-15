@@ -49,9 +49,9 @@ class FirebaseFirestoreFunctions {
     String statusMessage = 'Some error occured';
     try {
       if (name.isNotEmpty &&
-          floorNumber != "" &&
-          totalDeskCount != "" &&
-          usableDeskCount != "" &&
+          floorNumber != -1 &&
+          totalDeskCount != -1 &&
+          usableDeskCount != -1 &&
           idAdmin.isNotEmpty) {
         if (totalDeskCount < usableDeskCount)
           return 'Total desk count can\'t be less than total desk count';

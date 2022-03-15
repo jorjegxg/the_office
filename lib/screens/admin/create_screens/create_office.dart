@@ -8,7 +8,7 @@ import 'package:the_office/widgets/show_snack_bar.dart';
 import 'package:the_office/widgets/text_field_input.dart';
 
 class CreateOffice extends StatefulWidget {
-  const CreateOffice({Key? key,required this.id}) : super(key: key);
+  const CreateOffice({Key? key, required this.id}) : super(key: key);
 
   final String id;
   @override
@@ -17,7 +17,7 @@ class CreateOffice extends StatefulWidget {
 
 class _CreateOfficeState extends State<CreateOffice> {
   bool _isLoading = false;
-  var idAdmin = 'Z59S34QPTXRxW26XKKYJXRBzvUb2';
+  var idAdmin = 'jSd08lygQOeeMmfufeKg9l1eXtz2';
   FirebaseFirestore _firebaseFirestore = FirebaseFirestore.instance;
 
   // Future<void> createUser() async {
@@ -58,23 +58,28 @@ class _CreateOfficeState extends State<CreateOffice> {
     FocusManager.instance.primaryFocus?.unfocus();
     String statusMessage;
     statusMessage = await FirebaseFirestoreFunctions().createOffice(
-      name: _nameController.text,
-      floorNumber: int.parse(_floorsNumberController.text),
-      totalDeskCount: int.parse(_totalDesksController.text),
-      usableDeskCount: int.parse(_usableDesksController.text),
-      idAdmin: idAdmin,
-      idBuilding: widget.id
-    );
+        name: _nameController.text,
+        floorNumber: _floorsNumberController.text.isNotEmpty
+            ? int.parse(_floorsNumberController.text)
+            : -1,
+        totalDeskCount: _totalDesksController.text.isNotEmpty
+            ? int.parse(_totalDesksController.text)
+            : -1,
+        usableDeskCount: _usableDesksController.text.isNotEmpty
+            ? int.parse(_usableDesksController.text)
+            : -1,
+        idAdmin: idAdmin,
+        idBuilding: widget.id);
     setState(() {
       _isLoading = false;
     });
 
-    if(statusMessage == 'success'){
+    if (statusMessage == 'success') {
       _nameController.clear();
       _floorsNumberController.clear();
       _totalDesksController.clear();
       _usableDesksController.clear();
-      idAdmin = 'Z59S34QPTXRxW26XKKYJXRBzvUb2';
+      idAdmin = 'jSd08lygQOeeMmfufeKg9l1eXtz2';
     }
     showSnackBar(context, statusMessage);
   }
@@ -133,22 +138,22 @@ class _CreateOfficeState extends State<CreateOffice> {
       appBar: AppBar(
         shape: const RoundedRectangleBorder(
             borderRadius: BorderRadius.vertical(bottom: Radius.circular(20))),
-        title:  FutureBuilder(
-            future : _firebaseFirestore.collection('Buildings').doc(widget.id).get(),
-            builder: (BuildContext context,AsyncSnapshot snapshot) {
-              if(snapshot.connectionState == ConnectionState.done){
-                if(snapshot.hasData){
+        title: FutureBuilder(
+            future:
+                _firebaseFirestore.collection('Buildings').doc(widget.id).get(),
+            builder: (BuildContext context, AsyncSnapshot snapshot) {
+              if (snapshot.connectionState == ConnectionState.done) {
+                if (snapshot.hasData) {
                   return Text("Create office in ${snapshot.data['name']}");
-                }else if(snapshot.hasError){
+                } else if (snapshot.hasError) {
                   return Text("Create office");
                 }
               }
-              if(snapshot.connectionState == ConnectionState.waiting){
+              if (snapshot.connectionState == ConnectionState.waiting) {
                 return CircularProgressIndicator();
               }
               return Text("Office");
-            }
-        ),
+            }),
         centerTitle: true,
       ),
       body: Padding(
@@ -185,19 +190,19 @@ class _CreateOfficeState extends State<CreateOffice> {
               height: 20,
             ),
             TextField(
-                controller: _usableDesksController,
-                focusNode: _usableDesksFocusNode,
-                decoration: InputDecoration(
-                  hintText: 'Usable desks count',
-                  border: inputBorder,
-                  focusedBorder: inputBorder,
-                  enabledBorder: inputBorder,
-                  filled: true,
-                  contentPadding: const EdgeInsets.all(8),
-                ),
-                keyboardType: TextInputType.number,
-                obscureText: false,
-                ),
+              controller: _usableDesksController,
+              focusNode: _usableDesksFocusNode,
+              decoration: InputDecoration(
+                hintText: 'Usable desks count',
+                border: inputBorder,
+                focusedBorder: inputBorder,
+                enabledBorder: inputBorder,
+                filled: true,
+                contentPadding: const EdgeInsets.all(8),
+              ),
+              keyboardType: TextInputType.number,
+              obscureText: false,
+            ),
             const SizedBox(
               height: 20,
             ),
@@ -238,8 +243,10 @@ class _CreateOfficeState extends State<CreateOffice> {
                               });
                             },
                           );
-                        } else if (snapshot.hasError) {
-                          return Text("Error");
+                        } else {
+                          if (snapshot.hasError) {
+                            return const Text("Error");
+                          }
                         }
 
                         if (snapshot.connectionState ==

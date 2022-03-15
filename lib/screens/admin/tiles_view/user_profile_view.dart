@@ -45,7 +45,6 @@ class UserProfileView extends StatelessWidget {
         .update({'building': '', 'office': ''});
   }
 
-  ///todo la deasign office intreaba daca e sigur
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -98,12 +97,6 @@ class UserProfileView extends StatelessWidget {
                 pictureUrl = snapshot.data['pictureUrl'];
                 buildingId = snapshot.data['building'];
                 officeId = snapshot.data['office'];
-
-                print("_________");
-                print(buildingId);
-                print(officeId);
-                print("_________");
-
 
                 return Column(
                   children: [
@@ -194,68 +187,77 @@ class UserProfileView extends StatelessWidget {
                           const SizedBox(
                             height: 20,
                           ),
-                          buildingId.isNotEmpty ?
-                          StreamBuilder(
-                              stream: _firebaseFirestore
-                                  .collection('Buildings')
-                                  .doc(buildingId)
-                                  .snapshots(),
-                              builder: (BuildContext context,
-                                  AsyncSnapshot snapshot2) {
-                                if (!snapshot2.hasData) {
-                                  return Center(
-                                    child: CircularProgressIndicator(),
-                                  );
-                                } else {
-                                  return Column(
-                                    crossAxisAlignment: CrossAxisAlignment.start,
-                                    children: [
-                                      Text(
-                                        snapshot2.data['name'] != ""
-                                            ? "Building: ${snapshot2.data['name']}"
-                                            : "Building: no building",
-                                        style: const TextStyle(fontSize: 20),
-                                      ),
-                                      const SizedBox(
-                                        height: 20,
-                                      ),
-                                      StreamBuilder(
-                                        stream: _firebaseFirestore
-                                            .collection('Buildings')
-                                            .doc(buildingId)
-                                            .collection("Offices")
-                                            .doc(officeId)
-                                            .snapshots(),
-                                        builder: (BuildContext context,AsyncSnapshot snapshot3) {
-                                          if(!snapshot3.hasData){
-                                            return Center(child: CircularProgressIndicator(),);
-                                          }else{
-                                            return Text(
-                                              snapshot3.data['name'] != ""
-                                                  ? "Office: ${snapshot3.data['name']}"
-                                                  : "Office: no office",
-                                              style: const TextStyle(fontSize: 20),
-                                            );
-                                          }
-
-                                        }
-                                      ),
-                                    ],
-                                  );
-                                }
-                              })
-                          : Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                              const Text("Building: no building",
-                              style: const TextStyle(fontSize: 20),),
-                              const SizedBox(
-                                height: 20,
-                              ),
-                              const Text("Office: no office",
-                                style: const TextStyle(fontSize: 20),),
-                            ],
-                          ),
+                          buildingId.isNotEmpty
+                              ? StreamBuilder(
+                                  stream: _firebaseFirestore
+                                      .collection('Buildings')
+                                      .doc(buildingId)
+                                      .snapshots(),
+                                  builder: (BuildContext context,
+                                      AsyncSnapshot snapshot2) {
+                                    if (!snapshot2.hasData) {
+                                      return Center(
+                                        child: CircularProgressIndicator(),
+                                      );
+                                    } else {
+                                      return Column(
+                                        crossAxisAlignment:
+                                            CrossAxisAlignment.start,
+                                        children: [
+                                          Text(
+                                            snapshot2.data['name'] != ""
+                                                ? "Building: ${snapshot2.data['name']}"
+                                                : "Building: no building",
+                                            style:
+                                                const TextStyle(fontSize: 20),
+                                          ),
+                                          const SizedBox(
+                                            height: 20,
+                                          ),
+                                          StreamBuilder(
+                                              stream: _firebaseFirestore
+                                                  .collection('Buildings')
+                                                  .doc(buildingId)
+                                                  .collection("Offices")
+                                                  .doc(officeId)
+                                                  .snapshots(),
+                                              builder: (BuildContext context,
+                                                  AsyncSnapshot snapshot3) {
+                                                if (!snapshot3.hasData) {
+                                                  return Center(
+                                                    child:
+                                                        CircularProgressIndicator(),
+                                                  );
+                                                } else {
+                                                  return Text(
+                                                    snapshot3.data['name'] != ""
+                                                        ? "Office: ${snapshot3.data['name']}"
+                                                        : "Office: no office",
+                                                    style: const TextStyle(
+                                                        fontSize: 20),
+                                                  );
+                                                }
+                                              }),
+                                        ],
+                                      );
+                                    }
+                                  })
+                              : Column(
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  children: [
+                                    const Text(
+                                      "Building: no building",
+                                      style: const TextStyle(fontSize: 20),
+                                    ),
+                                    const SizedBox(
+                                      height: 20,
+                                    ),
+                                    const Text(
+                                      "Office: no office",
+                                      style: const TextStyle(fontSize: 20),
+                                    ),
+                                  ],
+                                ),
                         ],
                       ),
                     ),

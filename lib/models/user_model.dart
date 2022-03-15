@@ -1,19 +1,19 @@
 class UserModel {
-  UserModel({
-    required this.id,
-    required this.requestStatus,
-    required this.remoteProcentage,
-    required this.building,
-    required this.office,
-    required this.name,
-    required this.lastName,
-    required this.email,
-    required this.gender,
-    required this.birthDate,
-    required this.nationality,
-    required this.role,
-    required this.pictureUrl
-  });
+  UserModel(
+      {required this.id,
+      required this.requestStatus,
+      required this.remoteProcentage,
+      required this.building,
+      required this.office,
+      required this.name,
+      required this.lastName,
+      required this.email,
+      required this.gender,
+      required this.birthDate,
+      required this.nationality,
+      required this.role,
+      required this.pictureUrl,
+      required this.remote_request});
 
   final String name;
   final String lastName;
@@ -29,6 +29,7 @@ class UserModel {
   final bool requestStatus;
   final String id;
   final String pictureUrl;
+  final Map<String, dynamic> remote_request;
 
   Map<String, dynamic> toJson() {
     return {
@@ -38,13 +39,14 @@ class UserModel {
       'gender': gender,
       'birthDate': birthDate,
       'nationality': nationality,
-      'role' : role,
-      'pictureUrl' : pictureUrl,
-      'remoteProcentage' : remoteProcentage,
-      'building' : building,
-      'office' : office,
-      'requestStatus' : requestStatus,
-      'id' : id,
+      'role': role,
+      'pictureUrl': pictureUrl,
+      'remoteProcentage': remoteProcentage,
+      'building': building,
+      'office': office,
+      'requestStatus': requestStatus,
+      'id': id,
+      'remote_request': remote_request,
     };
   }
 }

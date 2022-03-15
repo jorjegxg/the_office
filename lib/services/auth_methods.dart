@@ -39,21 +39,24 @@ class AuthMethods {
         );
 
         UserModel _user = UserModel(
-          name: name,
-          lastName: lastName,
-          email: email,
-          gender: gender,
-          birthDate: birthDate ?? "",
-          nationality: nationality ?? "",
-          role: role,
-          pictureUrl:
-              "https://firebasestorage.googleapis.com/v0/b/the-office-ef23a.appspot.com/o/no-profile-picture-icon.png?alt=media&token=d409142b-3d04-4567-97cb-8e498a21a9f9",
-          remoteProcentage: 0,
-          building: "",
-          office: "",
-          requestStatus: false,
-          id: _auth.currentUser!.uid,
-        );
+            name: name,
+            lastName: lastName,
+            email: email,
+            gender: gender,
+            birthDate: birthDate ?? "",
+            nationality: nationality ?? "",
+            role: role,
+            pictureUrl:
+                "https://firebasestorage.googleapis.com/v0/b/the-office-ef23a.appspot.com/o/no-profile-picture-icon.png?alt=media&token=d409142b-3d04-4567-97cb-8e498a21a9f9",
+            remoteProcentage: 0,
+            building: "",
+            office: "",
+            requestStatus: false,
+            id: _auth.currentUser!.uid,
+            remote_request: {
+              'message': "",
+              'procentage': 0,
+            });
 
         // adding office_admin in our database
         await _firestore
