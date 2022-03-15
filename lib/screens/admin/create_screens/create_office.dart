@@ -17,7 +17,7 @@ class CreateOffice extends StatefulWidget {
 
 class _CreateOfficeState extends State<CreateOffice> {
   bool _isLoading = false;
-  var idAdmin = 'Z59S34QPTXRxW26XKKYJXRBzvUb2';
+  var idAdmin = 'jSd08lygQOeeMmfufeKg9l1eXtz2';
   FirebaseFirestore _firebaseFirestore = FirebaseFirestore.instance;
 
   // Future<void> createUser() async {
@@ -74,7 +74,7 @@ class _CreateOfficeState extends State<CreateOffice> {
       _floorsNumberController.clear();
       _totalDesksController.clear();
       _usableDesksController.clear();
-      idAdmin = 'Z59S34QPTXRxW26XKKYJXRBzvUb2';
+      idAdmin = 'jSd08lygQOeeMmfufeKg9l1eXtz2';
     }
     showSnackBar(context, statusMessage);
   }

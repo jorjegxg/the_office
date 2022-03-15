@@ -99,12 +99,6 @@ class UserProfileView extends StatelessWidget {
                 buildingId = snapshot.data['building'];
                 officeId = snapshot.data['office'];
 
-                print("_________");
-                print(buildingId);
-                print(officeId);
-                print("_________");
-
-
                 return Column(
                   children: [
                     Padding(
