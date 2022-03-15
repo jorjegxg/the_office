@@ -26,14 +26,14 @@ class OfficeSwitchWidget extends StatelessWidget {
         .collection('Offices')
         .doc(id)
         .update({
-      'usersId': FieldValue.arrayUnion([userID])
+      'usersId': FieldValue.arrayUnion([userID]),
+      'usableDeskCount': FieldValue.increment(-1),
+      'numberOfOccupiedDesks': FieldValue.increment(1),
     });
     await _firebaseFirestore
         .collection('Users')
         .doc(userID)
-        .update({'building': buildingName, 'office': nume});
-
-
+        .update({'building': buildingID, 'office': id});
   }
 
   @override
