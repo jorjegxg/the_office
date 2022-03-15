@@ -14,6 +14,9 @@ class UserProfile extends StatefulWidget {
 }
 
 class _UserProfileState extends State<UserProfile> {
+
+  String buildingId = "";
+  String officeId = "";
   bool _picIsLoading = false;
 
   FirebaseFirestore _firebaseFirestore = FirebaseFirestore.instance;
@@ -102,10 +105,13 @@ class _UserProfileState extends State<UserProfile> {
               .doc(_firebaseAuth.currentUser!.uid)
               .snapshots(),
           builder: (BuildContext context, AsyncSnapshot snapshot) {
-
               if (! snapshot.hasData){
                 return Center(child: CircularProgressIndicator());
               }else {
+
+                buildingId = snapshot.data['building'];
+                officeId = snapshot.data['office'];
+
                 return Padding(
                   padding: const EdgeInsets.symmetric(horizontal: 40.0),
                   child: Column(
@@ -199,27 +205,75 @@ class _UserProfileState extends State<UserProfile> {
                       Text(
                         snapshot.data['birthDate'] != ""
                             ? "Birth date: ${snapshot.data['birthDate']}"
-                            : "Birth date: --------",
+                            : "Birth date: not specified",
                         style: const TextStyle(fontSize: 20),
                       ),
                       const SizedBox(
                         height: 20,
                       ),
-                      Text(
-                        snapshot.data['building'] != ""
-                            ? "Building: ${snapshot.data['building']}"
-                            : "Building: --------",
-                        style: const TextStyle(fontSize: 20),
+                      buildingId.isNotEmpty ?
+                      StreamBuilder(
+                          stream: _firebaseFirestore
+                              .collection('Buildings')
+                              .doc(buildingId)
+                              .snapshots(),
+                          builder: (BuildContext context,
+                              AsyncSnapshot snapshot2) {
+                            if (!snapshot2.hasData) {
+                              return Center(
+                                child: CircularProgressIndicator(),
+                              );
+                            } else {
+                              return Column(
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: [
+                                  Text(
+                                    snapshot2.data['name'] != ""
+                                        ? "Building: ${snapshot2.data['name']}"
+                                        : "Building: no building",
+                                    style: const TextStyle(fontSize: 20),
+                                  ),
+                                  const SizedBox(
+                                    height: 20,
+                                  ),
+                                  StreamBuilder(
+                                      stream: _firebaseFirestore
+                                          .collection('Buildings')
+                                          .doc(buildingId)
+                                          .collection("Offices")
+                                          .doc(officeId)
+                                          .snapshots(),
+                                      builder: (BuildContext context,AsyncSnapshot snapshot3) {
+                                        if(!snapshot3.hasData){
+                                          return Center(child: CircularProgressIndicator(),);
+                                        }else{
+                                          return Text(
+                                            snapshot3.data['name'] != ""
+                                                ? "Office: ${snapshot3.data['name']}"
+                                                : "Office: no office",
+                                            style: const TextStyle(fontSize: 20),
+                                          );
+                                        }
+
+                                      }
+                                  ),
+                                ],
+                              );
+                            }
+                          })
+                          : Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          const Text("Building: no building",
+                            style: const TextStyle(fontSize: 20),),
+                          const SizedBox(
+                            height: 20,
+                          ),
+                          const Text("Office: no office",
+                            style: const TextStyle(fontSize: 20),),
+                        ],
                       ),
-                      const SizedBox(
-                        height: 20,
-                      ),
-                      Text(
-                        snapshot.data['office'] != ""
-                            ? "Office: ${snapshot.data['office']}"
-                            : "Office: --------",
-                        style: const TextStyle(fontSize: 20),
-                      ),
+
                     ],
                   ),
                 );

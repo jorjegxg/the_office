@@ -17,7 +17,7 @@ class CreateOffice extends StatefulWidget {
 
 class _CreateOfficeState extends State<CreateOffice> {
   bool _isLoading = false;
-  var idAdmin = 'oWDoBLh1S9PoZX9n9y1S8t2LWn23';
+  var idAdmin = 'jSd08lygQOeeMmfufeKg9l1eXtz2';
   FirebaseFirestore _firebaseFirestore = FirebaseFirestore.instance;
 
   // Future<void> createUser() async {
@@ -59,9 +59,9 @@ class _CreateOfficeState extends State<CreateOffice> {
     String statusMessage;
     statusMessage = await FirebaseFirestoreFunctions().createOffice(
       name: _nameController.text,
-      floorNumber: int.parse(_floorsNumberController.text),
-      totalDeskCount: int.parse(_totalDesksController.text),
-      usableDeskCount: int.parse(_usableDesksController.text),
+      floorNumber: _floorsNumberController.text.isNotEmpty ? int.parse(_floorsNumberController.text) : -1,
+      totalDeskCount:_totalDesksController.text.isNotEmpty ? int.parse(_totalDesksController.text) : -1,
+      usableDeskCount:_usableDesksController.text.isNotEmpty ? int.parse(_usableDesksController.text) : -1,
       idAdmin: idAdmin,
       idBuilding: widget.id
     );
@@ -74,7 +74,7 @@ class _CreateOfficeState extends State<CreateOffice> {
       _floorsNumberController.clear();
       _totalDesksController.clear();
       _usableDesksController.clear();
-      idAdmin = 'oWDoBLh1S9PoZX9n9y1S8t2LWn23';
+      idAdmin = 'jSd08lygQOeeMmfufeKg9l1eXtz2';
     }
     showSnackBar(context, statusMessage);
   }
@@ -185,7 +185,6 @@ class _CreateOfficeState extends State<CreateOffice> {
               height: 20,
             ),
             TextField(
-                /// TODO fa hint textul sa se duca sus dupa ce e apasat
                 controller: _usableDesksController,
                 focusNode: _usableDesksFocusNode,
                 decoration: InputDecoration(

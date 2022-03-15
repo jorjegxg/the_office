@@ -12,7 +12,8 @@ class UserModel {
     required this.birthDate,
     required this.nationality,
     required this.role,
-    required this.pictureUrl
+    required this.pictureUrl,
+    required this.remoteMap
   });
 
   final String name;
@@ -29,6 +30,7 @@ class UserModel {
   final bool requestStatus;
   final String id;
   final String pictureUrl;
+  final Map<String,dynamic> remoteMap;
 
   Map<String, dynamic> toJson() {
     return {
@@ -45,6 +47,7 @@ class UserModel {
       'office' : office,
       'requestStatus' : requestStatus,
       'id' : id,
+      'remoteMap' : remoteMap,
     };
   }
 }

@@ -49,7 +49,7 @@ class _CreateBuildingState extends State<CreateBuilding> {
     FocusManager.instance.primaryFocus?.unfocus();
     String statusMessage = await FirebaseFirestoreFunctions().createBuilding(
       buildingName: _buildingNameController.text,
-      floorsCount: int.parse(_floorsCountController.text),///TODO vezi sa nu dea eroare
+      floorsCount: int.parse(_floorsCountController.text),
       buildingAddress: _buildingAddressController.text,
     );
     setState(() {
