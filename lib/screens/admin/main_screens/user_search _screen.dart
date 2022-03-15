@@ -171,6 +171,10 @@ class _UserSearchScreenState extends State<UserSearchScreen> {
                   } else {
                     return Column(
                       children: snapshot.data!.docs.map((doc) {
+                        print("${doc['id']}");
+                        if(doc['id'] == 'GRzHoyaXc2WzB9AcHK41caRSYtI3'){
+                          return Container();
+                        }
                         return UserListWidget(
                           nume: '${doc['name']} ${doc['lastName']}',
                           imagine: doc['pictureUrl'],

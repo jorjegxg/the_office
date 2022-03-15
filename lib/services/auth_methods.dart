@@ -53,7 +53,7 @@ class AuthMethods {
           office: "",
           requestStatus: false,
           id: _auth.currentUser!.uid,
-          remoteMap: {
+          remote_request: {
             'message' : "",
             'procentage' : 0,
           }
