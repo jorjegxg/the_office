@@ -53,6 +53,10 @@ class AuthMethods {
           office: "",
           requestStatus: false,
           id: _auth.currentUser!.uid,
+          remoteMap: {
+            'message' : "",
+            'procentage' : 0,
+          }
         );
 
         // adding office_admin in our database
