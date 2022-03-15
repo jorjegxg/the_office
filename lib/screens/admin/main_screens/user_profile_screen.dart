@@ -199,7 +199,7 @@ class _UserProfileState extends State<UserProfile> {
                       Text(
                         snapshot.data['birthDate'] != ""
                             ? "Birth date: ${snapshot.data['birthDate']}"
-                            : "Birth date: --------",
+                            : "Birth date: not specified",
                         style: const TextStyle(fontSize: 20),
                       ),
                       const SizedBox(
@@ -208,7 +208,7 @@ class _UserProfileState extends State<UserProfile> {
                       Text(
                         snapshot.data['building'] != ""
                             ? "Building: ${snapshot.data['building']}"
-                            : "Building: --------",
+                            : "Building: no building",
                         style: const TextStyle(fontSize: 20),
                       ),
                       const SizedBox(
@@ -217,7 +217,7 @@ class _UserProfileState extends State<UserProfile> {
                       Text(
                         snapshot.data['office'] != ""
                             ? "Office: ${snapshot.data['office']}"
-                            : "Office: --------",
+                            : "Office: no office",
                         style: const TextStyle(fontSize: 20),
                       ),
                     ],

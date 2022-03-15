@@ -6,8 +6,6 @@ class StorageMethods {
   final FirebaseStorage _storage = FirebaseStorage.instance;
   final FirebaseAuth _auth = FirebaseAuth.instance;
 
-  ///TODO da upload la poza unde vrei tu
-
   Future<String> uploadFile({
     required String name,
     required File file,

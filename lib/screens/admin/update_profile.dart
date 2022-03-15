@@ -39,7 +39,6 @@ class _UpdateProfileState extends State<UpdateProfile> {
       name: _nameController.text,
       lastName: _lastNameController.text,
       gender: selectedGender,
-      ///todo vezi la data ca poate fi ""
       birthDate: widget.birthDate,
       nationality: _nationalityController.text,
       role: selectedRole,
