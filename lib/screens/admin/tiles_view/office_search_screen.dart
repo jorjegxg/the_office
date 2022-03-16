@@ -89,7 +89,7 @@ class _OfficeSearchScreenState extends State<OfficeSearchScreen>
                 Navigator.push(
                   context,
                   MaterialPageRoute(
-                    builder: (context) => CreateOffice(id: widget.idBuilding),
+                    builder: (context) => CreateOffice(buildingId: widget.idBuilding),
                   ),
                 );
               },
@@ -251,7 +251,7 @@ class _OfficeSearchScreenState extends State<OfficeSearchScreen>
             ),
           ),
           Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 30),
+            padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 50),
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
@@ -333,45 +333,7 @@ class _OfficeSearchScreenState extends State<OfficeSearchScreen>
                         );
                       }
                     }),
-                const Expanded(child: SizedBox()),
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                  children: [
-                    const SizedBox(
-                      width: 10,
-                    ),
-                    Expanded(
-                      child: MaterialButton(
-                        shape: RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(20)),
-                        padding: const EdgeInsets.symmetric(vertical: 30),
-                        child: const Text("Assign office"),
-                        onPressed: () {
-                          ///TODO assign office
-                        },
-                        color: Colors.grey[400],
-                      ),
-                    ),
-                    const SizedBox(
-                      width: 10,
-                    ),
-                    Expanded(
-                      child: MaterialButton(
-                        shape: RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(20)),
-                        padding: const EdgeInsets.symmetric(vertical: 30),
-                        child: const Text("De-assign office"),
-                        onPressed: () {
-                          ///TODO deassign office
-                        },
-                        color: Colors.grey[400],
-                      ),
-                    ),
-                    const SizedBox(
-                      width: 10,
-                    ),
-                  ],
-                ),
+                
                 const SizedBox(
                   height: 20,
                 )

@@ -8,9 +8,9 @@ import 'package:the_office/widgets/show_snack_bar.dart';
 import 'package:the_office/widgets/text_field_input.dart';
 
 class CreateOffice extends StatefulWidget {
-  const CreateOffice({Key? key, required this.id}) : super(key: key);
+  const CreateOffice({Key? key, required this.buildingId}) : super(key: key);
 
-  final String id;
+  final String buildingId;
   @override
   _CreateOfficeState createState() => _CreateOfficeState();
 }
@@ -69,7 +69,7 @@ class _CreateOfficeState extends State<CreateOffice> {
             ? int.parse(_usableDesksController.text)
             : -1,
         idAdmin: idAdmin,
-        idBuilding: widget.id);
+        idBuilding: widget.buildingId);
     setState(() {
       _isLoading = false;
     });
@@ -140,7 +140,7 @@ class _CreateOfficeState extends State<CreateOffice> {
             borderRadius: BorderRadius.vertical(bottom: Radius.circular(20))),
         title: FutureBuilder(
             future:
-                _firebaseFirestore.collection('Buildings').doc(widget.id).get(),
+                _firebaseFirestore.collection('Buildings').doc(widget.buildingId).get(),
             builder: (BuildContext context, AsyncSnapshot snapshot) {
               if (snapshot.connectionState == ConnectionState.done) {
                 if (snapshot.hasData) {

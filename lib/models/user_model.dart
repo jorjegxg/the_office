@@ -13,7 +13,9 @@ class UserModel {
       required this.nationality,
       required this.role,
       required this.pictureUrl,
-      required this.remote_request});
+      required this.remote_request,
+      required this.isActive
+      });
 
   final String name;
   final String lastName;
@@ -22,7 +24,6 @@ class UserModel {
   final String birthDate;
   final String nationality;
   final String role;
-
   final String remoteProcentage;
   final String building;
   final String office;
@@ -30,6 +31,7 @@ class UserModel {
   final String id;
   final String pictureUrl;
   final Map<String, dynamic> remote_request;
+  final bool isActive;
 
   Map<String, dynamic> toJson() {
     return {
@@ -47,6 +49,7 @@ class UserModel {
       'requestStatus': requestStatus,
       'id': id,
       'remote_request': remote_request,
+      'isActive' : isActive
     };
   }
 }

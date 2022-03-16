@@ -26,6 +26,8 @@ class UserProfileView extends StatelessWidget {
   String officeId = "";
   late DocumentSnapshot refB, refO;
 
+  bool isActive = true;
+
   void deAssignUsersOffice() async {
     DocumentSnapshot ref =
         await _firebaseFirestore.collection('Users').doc(id).get();
@@ -45,6 +47,16 @@ class UserProfileView extends StatelessWidget {
         .doc(id)
         .update({'building': '', 'office': ''});
     }
+  }
+  Future<void> deactivateActivateAccount() async{
+   var user = _firebaseFirestore.collection("Users").doc(id);
+   var userData = await user.get();
+   if(userData['isActive'] == true){
+     user.update({'isActive' : false});
+   }else{
+      user.update({'isActive' : true});
+   }
+   
   }
 
   @override
@@ -100,6 +112,9 @@ class UserProfileView extends StatelessWidget {
                 pictureUrl = snapshot.data['pictureUrl'];
                 buildingId = snapshot.data['building'];
                 officeId = snapshot.data['office'];
+
+                isActive = snapshot.data['isActive'];
+                print(isActive);
 
                 return Column(
                   children: [
@@ -261,6 +276,13 @@ class UserProfileView extends StatelessWidget {
                                     ),
                                   ],
                                 ),
+                           const SizedBox(
+                            height: 20,
+                          ),
+                         Text(
+                            "Active account : $isActive",
+                           style: const TextStyle(fontSize: 20,color: Color.fromARGB(255, 1, 0, 80)),
+                          ),
                         ],
                       ),
                     ),
@@ -320,8 +342,8 @@ class UserProfileView extends StatelessWidget {
                             child: Container(
                                 width: MediaQuery.of(context).size.width * 0.2,
                                 child: Center(
-                                    child: Text(
-                                  "Deactivate account",
+                                    child: Text( isActive ?
+                                  "Deactivate account" : "Activate account",
                                   style: TextStyle(color: Colors.white),
                                 ))),
                             onPressed: _firebaseAuth.currentUser!.uid != id
@@ -333,7 +355,7 @@ class UserProfileView extends StatelessWidget {
                                           return AlertDialog(
                                             shape: RoundedRectangleBorder(
                                                 borderRadius:
-                                                    BorderRadius.circular(30)),
+                                                    BorderRadius.circular(5)),
                                             backgroundColor:
                                                 Theme.of(context).primaryColor,
                                             title: const Center(
@@ -349,10 +371,13 @@ class UserProfileView extends StatelessWidget {
                                                   Expanded(
                                                     child: TextButton(
                                                       onPressed: () {
+                                                        deactivateActivateAccount();
                                                         Navigator.pop(context);
                                                       },
-                                                      child: const Text(
-                                                        "Deactivate account",
+                                                      child: Text(
+                                                        isActive ?
+                                                        "Deactivate account" :
+                                                         "Activate account",
                                                         style: TextStyle(
                                                             color:
                                                                 Colors.black),
@@ -371,7 +396,7 @@ class UserProfileView extends StatelessWidget {
                                                             borderRadius:
                                                                 BorderRadius
                                                                     .circular(
-                                                                        18.0),
+                                                                        8.0),
                                                           ),
                                                         ),
                                                       ),
@@ -405,7 +430,7 @@ class UserProfileView extends StatelessWidget {
                                                             borderRadius:
                                                                 BorderRadius
                                                                     .circular(
-                                                                        18.0),
+                                                                        8.0),
                                                           ),
                                                         ),
                                                       ),

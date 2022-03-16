@@ -49,10 +49,11 @@ class _LogInScreenState extends State<LogInScreen> {
 
     if (statusMessage != "success") {
       showSnackBar(context, statusMessage);
-    }
-    setState(() {
+       setState(() {
       isLoading = false;
     });
+    }
+   
   }
 
   @override

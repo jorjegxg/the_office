@@ -58,7 +58,9 @@ class AuthMethods {
               'message': "",
               'procentage': '',
               'status': false,
-            });
+            },
+            isActive: true
+            );
 
         // adding office_admin in our database
         await _firestore

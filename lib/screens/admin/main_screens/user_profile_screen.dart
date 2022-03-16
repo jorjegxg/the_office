@@ -157,16 +157,19 @@ class _UserProfileState extends State<UserProfile> {
                           Column(
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
-                              Text(
-                                '${snapshot.data['name']} ${snapshot.data['lastName']}',
-                                style: const TextStyle(
-                                    fontWeight: FontWeight.bold, fontSize: 25),
+                              Container(
+                                width: 150,
+                                child: Text(
+                                  '${snapshot.data['name']} ${snapshot.data['lastName']}',
+                                  style: const TextStyle(
+                                      fontWeight: FontWeight.bold, fontSize: 25),
+                                ),
                               ),
                               Container(
                                 width: 150,
                                 child: Text(
                                   snapshot.data['role'],
-                                  style: const TextStyle(fontSize: 25),
+                                  style: const TextStyle(fontSize: 24),
                                 ),
                               ),
                             ],

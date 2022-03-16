@@ -2,6 +2,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:the_office/providers/role_provider.dart';
+import 'package:the_office/screens/cont_dezactivat_screen.dart';
 import 'admin/navigation_bar.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 
@@ -15,17 +16,6 @@ class _VerificareContSpecialState extends State<VerificareContSpecial> {
   FirebaseAuth _firebaseAuth = FirebaseAuth.instance;
 
   Future<String> ceRolAre() async {
-    // bool isAdmin = false;
-    // var colectieAdmini =
-    //     await _firebaseFirestore.collection('Administrator').get();
-    // colectieAdmini.docs.forEach((element) {
-    //   if (element['email'] == _firebaseAuth.currentUser!.email) {
-    //     isAdmin = true;
-    //     print("$isAdmin");
-    //   }
-    // });
-    // return isAdmin;
-
     String role;
 
     var refUser = await _firebaseFirestore
@@ -35,8 +25,19 @@ class _VerificareContSpecialState extends State<VerificareContSpecial> {
 
     role = refUser['role'];
     Provider.of<RoleProvider>(context, listen: false).changeRole(role);
-
     return role;
+  }
+
+   Future<bool> eActiv() async {
+    bool isActive;
+
+    var refUser = await _firebaseFirestore
+        .collection('Users')
+        .doc(_firebaseAuth.currentUser!.uid)
+        .get();
+
+    isActive = refUser['isActive'];
+    return isActive;
   }
 
   @override
@@ -45,8 +46,22 @@ class _VerificareContSpecialState extends State<VerificareContSpecial> {
         future: ceRolAre(),
         builder: (context, snapshot) {
           if (snapshot.connectionState == ConnectionState.done) {
-            if (snapshot.hasData) {
-              return NavigationScreen();
+            if (snapshot.hasData) {         
+                   return FutureBuilder(
+                     future: eActiv(),
+                     builder: (context, snapshot2) {
+                       if(!snapshot2.hasData){
+                         return Center(child: CircularProgressIndicator(),);
+                       }else{
+                         if(snapshot2.data == true){
+                          return NavigationScreen();                       
+                         }else{
+                           return ContDezactivatScreen();
+                         }
+                       }
+                      
+                     }
+                   ); 
             } else if (snapshot.hasError) {
               return Center(
                 child: Text("Eroare"),
