@@ -13,34 +13,39 @@ class BuildingSwitchWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Column(
-      children: [
-        RawMaterialButton(
-          shape:
-              RoundedRectangleBorder(borderRadius: BorderRadius.circular(20)),
-          fillColor: Colors.grey[300],
-          onPressed: () =>
-              Navigator.push(context, MaterialPageRoute(builder: (context) {
+    return Column(children: [
+      Divider(
+        height: 0,
+        color: Color.fromARGB(255, 153, 153, 153),
+      ),
+      ListTile(
+        onTap: () {
+          Navigator.push(context, MaterialPageRoute(builder: (context) {
             return SwitchUsersOffice(
               id: id,
               userID: userID,
               buildingName: nume,
             );
-          })),
-          child: ListTile(
-            leading: CircleAvatar(
-              backgroundColor: Colors.white,
-              backgroundImage: NetworkImage(
-                imagine,
-              ),
+          }));
+        },
+        leading: Padding(
+          padding: const EdgeInsets.only(left : 8.0),
+          child: CircleAvatar(
+            backgroundColor: Colors.white,
+            backgroundImage: NetworkImage(
+              imagine,
             ),
-            title: Text(nume),
           ),
         ),
-        SizedBox(
-          height: 20,
-        ),
-      ],
-    );
+        title: Text(nume),
+      ),
+      // SizedBox(
+      //   height: 10,
+      // ),
+      Divider(
+        height: 0,
+        color: Color.fromARGB(255, 153, 153, 153),
+      ),
+    ]);
   }
 }

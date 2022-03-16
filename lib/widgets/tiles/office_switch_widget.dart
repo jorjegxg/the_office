@@ -41,22 +41,26 @@ class OfficeSwitchWidget extends StatelessWidget {
     return Column(
       children: [
         count != 0
-            ? Padding(
-                padding: const EdgeInsets.symmetric(vertical: 10.0),
-                child: RawMaterialButton(
-                  shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(20)),
-                  fillColor: Colors.grey[300],
-                  onPressed:() => assignUsersOffice(context),
-                  child: ListTile(
-                    leading: CircleAvatar(
-                      backgroundColor: Colors.white,
-                      backgroundImage: NetworkImage(imagine),
-                    ),
-                    title: Text(nume),
-                  ),
+            ? Column(
+              children: [
+                Divider(
+                  height: 0,
+                  color: Color.fromARGB(255, 153, 153, 153),
                 ),
-              )
+                ListTile(
+                  onTap: () => assignUsersOffice(context),
+                  leading: CircleAvatar(
+                    backgroundColor: Colors.white,
+                    backgroundImage: NetworkImage(imagine),
+                  ),
+                  title: Text(nume),
+                ),
+                Divider(
+                  height: 0,
+                  color: Color.fromARGB(255, 153, 153, 153),
+                ),
+              ],
+            )
             : SizedBox(),
       ],
     );

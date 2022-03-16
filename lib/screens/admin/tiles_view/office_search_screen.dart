@@ -68,7 +68,7 @@ class _OfficeSearchScreenState extends State<OfficeSearchScreen>
     return Scaffold(
       appBar: AppBar(
         centerTitle: true,
-        title: Text("${widget.buildingName}"),
+        title: Text("Building ${widget.buildingName}"),
         bottom: TabBar(
           indicatorColor: Colors.white,
           controller: _tabController,
@@ -99,8 +99,8 @@ class _OfficeSearchScreenState extends State<OfficeSearchScreen>
         controller: _tabController,
         children: [
           Padding(
-            padding: const EdgeInsets.all(20.0),
-            child: Column(
+            padding: const EdgeInsets.all(10.0),
+            child: ListView(
               children: [
                 Row(
                   children: [
@@ -228,23 +228,21 @@ class _OfficeSearchScreenState extends State<OfficeSearchScreen>
                       if (!snapshot.hasData) {
                         return Center(child: CircularProgressIndicator(),);
                       } else {
-                        return Expanded(
-                          child: Padding(
-                            padding: const EdgeInsets.only(top: 20, bottom: 30),
-                            child: ListView(
-                              children: snapshot.data!.docs
-                                  .map(
-                                    (element) => OfficeListWidget(
-                                      buildingName: widget.buildingName,
-                                      idBuilding: widget.idBuilding,
-                                      nume: element['name'],
-                                      imagine: element['pictureUrl'],
-                                      id: element['id'],
-                                      building: widget.buildingName,
-                                    ),
-                                  )
-                                  .toList(),
-                            ),
+                        return Padding(
+                          padding: const EdgeInsets.only(top: 20, bottom: 30),
+                          child: Column(
+                            children: snapshot.data!.docs
+                                .map(
+                                  (element) => OfficeListWidget(
+                                    buildingName: widget.buildingName,
+                                    idBuilding: widget.idBuilding,
+                                    nume: element['name'],
+                                    imagine: element['pictureUrl'],
+                                    id: element['id'],
+                                    building: widget.buildingName,
+                                  ),
+                                )
+                                .toList(),
                           ),
                         );
                       }

@@ -12,11 +12,11 @@ class SwitchUsersBuilding extends StatelessWidget {
       appBar: AppBar(
         shape: const RoundedRectangleBorder(
             borderRadius: BorderRadius.vertical(bottom: Radius.circular(20))),
-        title: Text("Buildings"),
+        title: Text("Assign building to user"),
         centerTitle: true,
       ),
       body: Padding(
-        padding: const EdgeInsets.all(20.0),
+        padding: const EdgeInsets.only(top : 20.0,left: 20,right: 20),
         child: StreamBuilder<QuerySnapshot>(
             stream: _firebaseFirestore.collection('Buildings').snapshots(),
             builder:

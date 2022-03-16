@@ -11,12 +11,14 @@ class OfficeViewScreen extends StatefulWidget {
       {Key? key,
       required this.id,
       required this.idBuilding,
-      required this.buildingName})
+      required this.buildingName,
+        required this.officeName})
       : super(key: key);
 
   final String id;
   final String idBuilding;
   final String buildingName;
+  final String officeName;
 
 
   @override
@@ -115,11 +117,13 @@ class _OfficeViewScreenState extends State<OfficeViewScreen>
     );
   }
 
+  FirebaseFirestore _firebaseFirestore = FirebaseFirestore.instance;
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text("Office"),///todo adauga numele office-ului
+        title: Text("Office ${widget.officeName}"),///todo adauga numele office-ului
         centerTitle: true,
         bottom: TabBar(
           indicatorColor: Colors.white,
@@ -143,47 +147,27 @@ class _OfficeViewScreenState extends State<OfficeViewScreen>
         controller: _tabController,
         children: [
           const Text("REZOLVAAAAAAA"),
-          Column(
-            children: [
-              const SizedBox(
-                height: 30,
-              ),
-              const Text(
-                "Administrator",
-                style: TextStyle(
-                  fontSize: 20,
-                ),
-              ),
-              const Padding(
-                padding: EdgeInsets.all(20.0),
-                child: UserListWidget(
-                  nume: "1gg",
-                  imagine:
-                      "https://firebasestorage.googleapis.com/v0/b/the-office-ef23a.appspot.com/o/istockphoto-1177487069-612x612.jpg?alt=media&token=dd5bdcae-ca21-4dd3-81fc-8ffe90dfe2c8",
-                  rol: "Amdin",
-                  id: 'sdrhgsrh',
-                ),
-              ),
-              const Text(
-                "Employees",
-                style: TextStyle(
-                  fontSize: 20,
-                ),
-              ),
-              Expanded(
-                child: Padding(
-                  padding: const EdgeInsets.only(
-                      left: 20, right: 20, top: 20, bottom: 30),
-                  child: ListView.builder(
-                    itemCount: office_list.length,
-                    itemBuilder: (BuildContext context, int index) {
-                      return office_list[index];
-                    },
-                  ),
-                ),
-              ),
-            ],
-          ),
+          StreamBuilder(
+              stream: _firebaseFirestore.collection('Buildings').doc(widget.idBuilding).collection('Offices').doc(widget.id).snapshots(),
+              builder: (BuildContext context,
+                  AsyncSnapshot snapshot) {
+                if (!snapshot.hasData) {
+                  return Center(child: CircularProgressIndicator());
+                } else {
+                  return Column(
+                    children: (snapshot.data!['usersId'] as List<dynamic>).map((newId) {
+                      ///todo repara
+                      return Text(newId);
+                          // return UserListWidget(
+                          //   nume: '${snapshot2.data['name']} ${snapshot2.data['lastName']}',
+                          //   imagine: snapshot2.data['pictureUrl'],
+                          //   rol: snapshot2.data['role'],
+                          //   id: snapshot2.data['id'],
+                          // );
+                    }).toList(),
+                  );
+                }
+              }),
           StreamBuilder(
               stream: _firestore
                   .collection('Buildings')

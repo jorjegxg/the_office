@@ -27,13 +27,14 @@ class OfficeListWidget extends StatelessWidget {
                         id: id,
                         idBuilding: idBuilding,
                         buildingName: buildingName,
+                        officeName: nume,
                       )),
             );
           },
-          tileColor: Color(0xFF398AB9),
+          tileColor: Colors.white,
           contentPadding: const EdgeInsets.symmetric(vertical: 10.0),
-          shape:
-              RoundedRectangleBorder(borderRadius: BorderRadius.circular(27)),
+          // shape:
+          //     RoundedRectangleBorder(borderRadius: BorderRadius.circular(27)),
           //tileColor: Color(0xFF398AB9),
           leading: Padding(
             padding: const EdgeInsets.only(left: 17.0),
@@ -57,15 +58,19 @@ class OfficeListWidget extends StatelessWidget {
           title: Text(
             nume,
             style: TextStyle(
-              color: Colors.white,
+              color: Colors.black,
               //fontWeight: FontWeight.w500,
               fontSize: 20,
             ),
           ),
           //,style: TextStyle(color: Colors.white,fontWeight: FontWeight.bold,fontSize: 18),),
         ),
-        SizedBox(
-          height: 20,
+        // SizedBox(
+        //   height: 20,
+        // ),
+        Divider(
+          height:0,
+          //color: Color.fromARGB(255, 180, 180, 180),
         ),
       ],
     );

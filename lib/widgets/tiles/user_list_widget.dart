@@ -24,10 +24,10 @@ class UserListWidget extends StatelessWidget {
                   )),
             );
           },
-          tileColor: Color(0xFF398AB9),
+          tileColor: Colors.white,
           contentPadding: const EdgeInsets.all(1.0),
           shape:
-              RoundedRectangleBorder(borderRadius: BorderRadius.circular(27)),
+              RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
           //tileColor: Color(0xFF398AB9),
           leading: Padding(
             padding: const EdgeInsets.only(left: 17.0),
@@ -51,7 +51,7 @@ class UserListWidget extends StatelessWidget {
           title: Text(
             nume,
             style: TextStyle(
-              color: Colors.white,
+              color: Colors.black,
               //fontWeight: FontWeight.w500,
               fontSize: 20,
             ),
@@ -60,14 +60,18 @@ class UserListWidget extends StatelessWidget {
           subtitle: Text(
             rol,
             style: TextStyle(
-              color: Colors.white,
+              color: Color.fromARGB(255, 41, 41, 41),
               fontSize: 16,
             ),
           ), //,style: TextStyle(color: Colors.white),),
         ),
-        SizedBox(
-          height: 15,
+        Divider(
+          height:0,
+         // color: Color.fromARGB(255, 211, 211, 211),
         ),
+        // SizedBox(
+        //   height: 15,
+        // ),
       ],
     );
   }

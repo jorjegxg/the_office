@@ -26,8 +26,8 @@ class BuildingSearchScreen extends StatelessWidget {
         },
       ),
       body: Padding(
-        padding: const EdgeInsets.all(20.0),
-        child: Column(
+        padding: const EdgeInsets.only(left : 10,right: 10,top: 20),
+        child: ListView(
           children: [
             Row(
               children: [
@@ -155,17 +155,15 @@ class BuildingSearchScreen extends StatelessWidget {
                   if (!snapshot.hasData) {
                     return Center(child: CircularProgressIndicator());
                   } else {
-                    return Expanded(
-                      child: ListView(
-                        children: snapshot.data!.docs.map((doc) {
-                          return BuildingListWidget(
-                            nume: doc['name'],
-                            imagine: doc['pictureUrl'],
-                            adress: doc['buildingAdress'],
-                            id: doc['id'],
-                          );
-                        }).toList(),
-                      ),
+                    return Column(
+                      children: snapshot.data!.docs.map((doc) {
+                        return BuildingListWidget(
+                          nume: doc['name'],
+                          imagine: doc['pictureUrl'],
+                          adress: doc['buildingAdress'],
+                          id: doc['id'],
+                        );
+                      }).toList(),
                     );
                   }
                 }),

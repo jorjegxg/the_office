@@ -14,6 +14,7 @@ class BuildingListWidget extends StatelessWidget {
   Widget build(BuildContext context) {
     return Column(
       children: [
+        
         ListTile(
           onTap: () {
             Navigator.push(
@@ -25,10 +26,10 @@ class BuildingListWidget extends StatelessWidget {
               ),
             );
           },
-          tileColor: Color(0xFF398AB9),
+          tileColor: Colors.white,
           contentPadding: const EdgeInsets.all(1.0),
-          shape:
-              RoundedRectangleBorder(borderRadius: BorderRadius.circular(27)),
+          // shape:
+          //     RoundedRectangleBorder(borderRadius: BorderRadius.circular(27)),
           //tileColor: Color(0xFF398AB9),
           leading: Padding(
             padding: const EdgeInsets.only(left: 17.0),
@@ -52,7 +53,7 @@ class BuildingListWidget extends StatelessWidget {
           title: Text(
             nume,
             style: TextStyle(
-              color: Colors.white,
+              color: Colors.black,
               //fontWeight: FontWeight.w500,
               fontSize: 20,
             ),
@@ -61,13 +62,14 @@ class BuildingListWidget extends StatelessWidget {
           subtitle: Text(
             adress,
             style: TextStyle(
-              color: Colors.white,
+              color: Colors.black,
               fontSize: 16,
             ),
           ), //,style: TextStyle(color: Colors.white),),
         ),
-        SizedBox(
-          height: 20,
+         Divider(
+          height:0,
+          //color: Color.fromARGB(255, 180, 180, 180),
         ),
       ],
     );

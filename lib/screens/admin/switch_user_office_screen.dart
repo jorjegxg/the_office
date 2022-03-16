@@ -17,7 +17,7 @@ class SwitchUsersOffice extends StatelessWidget {
       appBar: AppBar(
         shape: const RoundedRectangleBorder(
             borderRadius: BorderRadius.vertical(bottom: Radius.circular(20))),
-        title: Text("Offices"),
+        title: Text("Assign office to user"),
         centerTitle: true,
       ),
       body: Padding(
