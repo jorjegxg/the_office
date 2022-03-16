@@ -1,5 +1,11 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
+import 'package:the_office/services/firebase_firestore_functions.dart';
+
+import '../../../providers/role_provider.dart';
 
 class ViewRemoteRequest extends StatelessWidget {
   ViewRemoteRequest({
@@ -7,11 +13,14 @@ class ViewRemoteRequest extends StatelessWidget {
     required this.imagine,
     required this.remoteProcentage,
     required this.message,
+    required this.id,
+    required this.adminMessage,
   });
-  final String nume, imagine, message;
-  final int remoteProcentage;
+  final String nume, imagine, message, id, adminMessage;
+  final String remoteProcentage;
   final TextEditingController textEditingController = TextEditingController();
   //Casuta pop-up bottom sheet
+  final FirebaseFirestore _firebase = FirebaseFirestore.instance;
   Widget bottomSheet(BuildContext context) {
     return Column(
       children: [
@@ -91,6 +100,16 @@ class ViewRemoteRequest extends StatelessWidget {
                       color: Colors.white),
                 ),
                 onPressed: () {
+                  Map<String, dynamic> updatedData = {
+                    'procentage': '',
+                    'message': '',
+                    'adminMessage': textEditingController.text,
+                    'status': false,
+                  };
+                  _firebase.collection('Users').doc(id).update({
+                    'remoteProcentage': remoteProcentage,
+                    'remote_request': updatedData,
+                  });
                   Navigator.pop(context);
                 },
                 color: Colors.red,
@@ -132,6 +151,7 @@ class ViewRemoteRequest extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    print(adminMessage);
     return Scaffold(
       appBar: AppBar(
         // shape: const RoundedRectangleBorder(
@@ -154,7 +174,7 @@ class ViewRemoteRequest extends StatelessWidget {
             Row(
               children: [
                 CircleAvatar(
-                  backgroundImage: AssetImage(
+                  backgroundImage: NetworkImage(
                     imagine,
                   ),
                   radius: 30,
@@ -212,63 +232,159 @@ class ViewRemoteRequest extends StatelessWidget {
             const SizedBox(
               height: 10,
             ),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-              children: [
-                const SizedBox(
-                  width: 10,
-                ),
-                //refuse button
-                Expanded(
-                  child: MaterialButton(
-                    shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(20)),
-                    padding: const EdgeInsets.symmetric(vertical: 10),
-                    child: const Text(
-                      "Refuse",
-                      style: TextStyle(
-                          fontSize: 20,
-                          fontWeight: FontWeight.bold,
-                          color: Colors.white),
-                    ),
-                    onPressed: () {
-                      showModalBottomSheet(
-                          shape: const RoundedRectangleBorder(
-                              borderRadius: BorderRadius.vertical(
-                                  top: Radius.circular(20))),
-                          context: context,
-                          builder: bottomSheet);
-                    },
-                    color: Colors.red,
-                  ),
-                ),
-                const SizedBox(
-                  width: 10,
-                ),
-                //accept button
-                Expanded(
-                  child: MaterialButton(
-                    shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(20)),
-                    padding: const EdgeInsets.symmetric(vertical: 10),
-                    child: const Text(
-                      "Accept",
-                      style: TextStyle(
-                          fontSize: 20,
-                          fontWeight: FontWeight.bold,
-                          color: Colors.white),
-                    ),
-                    onPressed: () {
-                      Navigator.pop(context);
-                    },
-                    color: Colors.green,
-                  ),
-                ),
-                const SizedBox(
-                  width: 10,
-                ),
-              ],
-            ),
+            Provider.of<RoleProvider>(context).getRole() == 'Administrator'
+                ? Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                    children: [
+                      const SizedBox(
+                        width: 10,
+                      ),
+                      //refuse button
+                      Expanded(
+                        child: MaterialButton(
+                          shape: RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(20)),
+                          padding: const EdgeInsets.symmetric(vertical: 10),
+                          child: const Text(
+                            "Refuse",
+                            style: TextStyle(
+                                fontSize: 20,
+                                fontWeight: FontWeight.bold,
+                                color: Colors.white),
+                          ),
+                          onPressed: () {
+                            showModalBottomSheet(
+                                shape: const RoundedRectangleBorder(
+                                    borderRadius: BorderRadius.vertical(
+                                        top: Radius.circular(20))),
+                                context: context,
+                                builder: bottomSheet);
+                          },
+                          color: Colors.red,
+                        ),
+                      ),
+                      const SizedBox(
+                        width: 10,
+                      ),
+                      //accept button
+                      Expanded(
+                        child: MaterialButton(
+                          shape: RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(20)),
+                          padding: const EdgeInsets.symmetric(vertical: 10),
+                          child: const Text(
+                            "Accept",
+                            style: TextStyle(
+                                fontSize: 20,
+                                fontWeight: FontWeight.bold,
+                                color: Colors.white),
+                          ),
+                          onPressed: () {
+                            Map<String, dynamic> updatedData = {
+                              'procentage': '',
+                              'message': '',
+                              'adminMessage': '',
+                              'status': false,
+                            };
+                            if (remoteProcentage == '100') {
+                              _firebase.collection('Users').doc(id).update({
+                                'remoteProcentage': remoteProcentage,
+                                'requestStatus': false,
+                                'request_remote': updatedData,
+                                'office': '',
+                              });
+                            } else {
+                              _firebase.collection('Users').doc(id).update({
+                                'remoteProcentage': remoteProcentage,
+                                'requestStatus': false,
+                                'request_remote': updatedData,
+                              });
+                            }
+                            Navigator.pop(context);
+                          },
+                          color: Colors.green,
+                        ),
+                      ),
+                      const SizedBox(
+                        width: 10,
+                      ),
+                    ],
+                  )
+                : adminMessage != ''
+                    ? MaterialButton(
+                        minWidth: double.infinity,
+                        shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(20)),
+                        padding: const EdgeInsets.symmetric(vertical: 10),
+                        child: const Text(
+                          "See reason",
+                          style: TextStyle(
+                              fontSize: 20,
+                              fontWeight: FontWeight.bold,
+                              color: Colors.white),
+                        ),
+                        onPressed: () {
+                          showDialog(
+                              barrierDismissible: false,
+                              context: context,
+                              builder: (BuildContext context) {
+                                return AlertDialog(
+                                  shape: RoundedRectangleBorder(
+                                      borderRadius: BorderRadius.circular(30)),
+                                  backgroundColor:
+                                      Theme.of(context).primaryColor,
+                                  title: Center(
+                                      child: Text(
+                                    'g',
+                                    style: const TextStyle(
+                                        color: Colors.white, fontSize: 30),
+                                  )),
+                                  actions: [
+                                    TextButton(
+                                      onPressed: () {
+                                        Map<String, dynamic> updatedData = {
+                                          'message': '',
+                                          'procentage': '',
+                                          'adminMessage': '',
+                                          'status': false,
+                                        };
+                                        _firebase
+                                            .collection('Users')
+                                            .doc(id)
+                                            .update({
+                                          'requestStatus': false,
+                                          'remote_request': updatedData,
+                                        });
+                                        Navigator.pop(context);
+                                      },
+                                      child: const Text(
+                                        "Close",
+                                        style: TextStyle(color: Colors.black),
+                                      ),
+                                      style: ButtonStyle(
+                                        backgroundColor:
+                                            MaterialStateProperty.resolveWith(
+                                                (state) => Colors.white),
+                                        shape: MaterialStateProperty.all<
+                                            RoundedRectangleBorder>(
+                                          RoundedRectangleBorder(
+                                            borderRadius:
+                                                BorderRadius.circular(18.0),
+                                          ),
+                                        ),
+                                      ),
+                                    ),
+                                  ],
+                                );
+                              });
+
+                          Navigator.pop(context);
+                        },
+                        color: Colors.green,
+                      )
+                    : Container(
+                        child: const Text('Status Pending'),
+                      ),
           ],
         ),
       ),

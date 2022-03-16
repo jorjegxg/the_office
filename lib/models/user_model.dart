@@ -23,7 +23,7 @@ class UserModel {
   final String nationality;
   final String role;
 
-  final int remoteProcentage;
+  final String remoteProcentage;
   final String building;
   final String office;
   final bool requestStatus;

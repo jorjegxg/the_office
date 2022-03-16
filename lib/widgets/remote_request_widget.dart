@@ -2,17 +2,20 @@ import 'package:flutter/material.dart';
 import 'package:the_office/screens/admin/create_screens/view_remote_request_screen.dart';
 
 class RemoteRequestWidget extends StatelessWidget {
-  RemoteRequestWidget(
-      {required this.nume,
-      required this.imagine,
-      required this.message,
-      required this.remoteProcentage,
-      required this.requestStatus,
-      required this.role,
-      required this.mine});
+  RemoteRequestWidget({
+    required this.nume,
+    required this.imagine,
+    required this.message,
+    required this.remoteProcentage,
+    required this.requestStatus,
+    required this.role,
+    required this.id,
+    required this.mine,
+    required this.adminMessage,
+  });
 
-  final String nume, imagine, message, role;
-  int remoteProcentage;
+  final String nume, imagine, message, role, id, adminMessage;
+  String remoteProcentage;
   bool requestStatus, mine;
 
   @override
@@ -71,7 +74,7 @@ class RemoteRequestWidget extends StatelessWidget {
                       Container(
                         width: MediaQuery.of(context).size.width,
                         child: Text(
-                          nume,
+                          message,
                           style: TextStyle(fontSize: 15),
                           maxLines: 3,
                         ),
@@ -91,12 +94,15 @@ class RemoteRequestWidget extends StatelessWidget {
                   Navigator.push(
                     context,
                     MaterialPageRoute(
-                        builder: (context) => ViewRemoteRequest(
-                              nume: nume,
-                              imagine: imagine,
-                              remoteProcentage: remoteProcentage,
-                              message: message,
-                            )),
+                      builder: (context) => ViewRemoteRequest(
+                        nume: nume,
+                        imagine: imagine,
+                        remoteProcentage: remoteProcentage,
+                        message: message,
+                        id: id,
+                        adminMessage: adminMessage,
+                      ),
+                    ),
                   );
                 },
               ),
@@ -156,7 +162,7 @@ class RemoteRequestWidget extends StatelessWidget {
                   Container(
                     width: MediaQuery.of(context).size.width,
                     child: Text(
-                      nume,
+                      message,
                       style: TextStyle(fontSize: 15),
                       maxLines: 3,
                     ),
@@ -181,6 +187,8 @@ class RemoteRequestWidget extends StatelessWidget {
                           imagine: imagine,
                           remoteProcentage: remoteProcentage,
                           message: message,
+                          id: id,
+                          adminMessage: adminMessage,
                         )),
               );
             },
