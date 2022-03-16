@@ -147,7 +147,9 @@ class _OfficeViewScreenState extends State<OfficeViewScreen>
       body: TabBarView(
         controller: _tabController,
         children: [
-          const Text("REZOLVAAAAAAA"),
+          GridTile(child: 
+            Text("esafgsae")
+          ),
           Column(
             children: [
               StreamBuilder(
@@ -202,13 +204,6 @@ class _OfficeViewScreenState extends State<OfficeViewScreen>
                           });
                     }
                   }),
-              Padding(
-                padding: const EdgeInsets.all(20.0),
-                child: Text(
-                  "Workers in the office",
-                  style: TextStyle(fontSize: 25),
-                ),
-              ),
               StreamBuilder(
                   stream: _firebaseFirestore
                       .collection('Buildings')
@@ -221,36 +216,49 @@ class _OfficeViewScreenState extends State<OfficeViewScreen>
                       return Center(child: CircularProgressIndicator());
                     } else {
                       return Column(
-                        children: (snapshot.data!['usersId'] as List<dynamic>)
-                            .map((newId) {
-                          return StreamBuilder(
-                              stream: _firebaseFirestore
-                                  .collection("Users")
-                                  .doc(newId)
-                                  .snapshots(),
-                              builder: (BuildContext context,
-                                  AsyncSnapshot snapshot2) {
-                                if (!snapshot2.hasData) {
-                                  return Center(
-                                    child: CircularProgressIndicator(),
-                                  );
-                                } else {
-                                  return UserListWidget(
-                                    nume:
-                                        '${snapshot2.data['name']} ${snapshot2.data['lastName']}',
-                                    imagine: snapshot2.data['pictureUrl'],
-                                    rol: snapshot2.data['role'],
-                                    id: snapshot2.data['id'],
-                                  );
-                                }
-                              });
-                          // return UserListWidget(
-                          //   nume: '${snapshot2.data['name']} ${snapshot2.data['lastName']}',
-                          //   imagine: snapshot2.data['pictureUrl'],
-                          //   rol: snapshot2.data['role'],
-                          //   id: snapshot2.data['id'],
-                          // );
-                        }).toList(),
+                        children: [
+                          ((snapshot.data!['usersId'] as List<dynamic>).length != 0) ?
+                          Padding(
+                            padding: const EdgeInsets.all(20.0),
+                            child: Text(
+                              "Workers in the office",
+                              style: TextStyle(fontSize: 25),
+                            ),
+                          ) : Text("Nobody is working in this office",style: TextStyle(fontSize: 15),),
+                          Column(
+                            children:
+                                (snapshot.data!['usersId'] as List<dynamic>)
+                                    .map((newId) {
+                              return StreamBuilder(
+                                  stream: _firebaseFirestore
+                                      .collection("Users")
+                                      .doc(newId)
+                                      .snapshots(),
+                                  builder: (BuildContext context,
+                                      AsyncSnapshot snapshot2) {
+                                    if (!snapshot2.hasData) {
+                                      return Center(
+                                        child: CircularProgressIndicator(),
+                                      );
+                                    } else {
+                                      return UserListWidget(
+                                        nume:
+                                            '${snapshot2.data['name']} ${snapshot2.data['lastName']}',
+                                        imagine: snapshot2.data['pictureUrl'],
+                                        rol: snapshot2.data['role'],
+                                        id: snapshot2.data['id'],
+                                      );
+                                    }
+                                  });
+                              // return UserListWidget(
+                              //   nume: '${snapshot2.data['name']} ${snapshot2.data['lastName']}',
+                              //   imagine: snapshot2.data['pictureUrl'],
+                              //   rol: snapshot2.data['role'],
+                              //   id: snapshot2.data['id'],
+                              // );
+                            }).toList(),
+                          ),
+                        ],
                       );
                     }
                   }),
