@@ -1,7 +1,10 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
+import 'package:the_office/providers/role_provider.dart';
 import 'package:the_office/screens/admin/create_screens/create_user.dart';
+import 'package:the_office/screens/admin/update_office.dart';
 import 'package:the_office/widgets/show_snack_bar.dart';
 import 'package:the_office/widgets/tiles/user_list_widget.dart';
 import 'package:pie_chart/pie_chart.dart';
@@ -26,37 +29,36 @@ class OfficeViewScreen extends StatefulWidget {
 
 class _OfficeViewScreenState extends State<OfficeViewScreen>
     with TickerProviderStateMixin {
+
+  String officeName = "";
+  int floorNumber = -1;
+  int totalDeskCount = -1;
+  int usableDeskCount = -1;
+  int occupiedDeskCount = -1;
+  String idAdmin = "";
+
+
   FirebaseFirestore _firestore = FirebaseFirestore.instance;
   late TabController _tabController;
-
-  final List<Widget> office_list = [
-    UserListWidget(
-      nume: "1gg",
-      imagine:
-          "https://firebasestorage.googleapis.com/v0/b/the-office-ef23a.appspot.com/o/istockphoto-1177487069-612x612.jpg?alt=media&token=dd5bdcae-ca21-4dd3-81fc-8ffe90dfe2c8",
-      id: 'sdrhgsrh',
-      rol: "Amdin",
-    ),
-    UserListWidget(
-      nume: "TACE",
-      imagine:
-          "https://firebasestorage.googleapis.com/v0/b/the-office-ef23a.appspot.com/o/istockphoto-1177487069-612x612.jpg?alt=media&token=dd5bdcae-ca21-4dd3-81fc-8ffe90dfe2c8",
-      id: 'sdrhgsrh',
-      rol: "Amdin",
-    ),
-  ];
-
-  final String cladire = "A";
-  final double numarBirouri = 300;
-  final double birouriUtilizabile = 100;
-  final double birouriOcupate = 90;
-  final int numarEtaj = 3;
 
   @override
   void initState() {
     super.initState();
     _tabController = TabController(length: 3, vsync: this);
     _tabController.addListener(_handleTabChange);
+  }
+
+  void getOfficeData() async{
+   var ref = await _firebaseFirestore.collection("Buildings").doc(widget.idBuilding).collection("Offices").doc(widget.id).get();
+
+   officeName = ref['name'];
+   floorNumber = ref['floorsCount'];
+   totalDeskCount = ref['totalDeskCount'];
+   usableDeskCount = ref['usableDeskCount'];
+   idAdmin = ref['idAdmin'];
+   occupiedDeskCount = ref['numberOfOccupiedDesks'];
+   //print(occupiedDeskCount);
+
   }
 
   @override
@@ -118,14 +120,35 @@ class _OfficeViewScreenState extends State<OfficeViewScreen>
 
   FirebaseFirestore _firebaseFirestore = FirebaseFirestore.instance;
 
+  
   @override
   Widget build(BuildContext context) {
+     getOfficeData();
     return Scaffold(
       appBar: AppBar(
         title: Text("Office ${widget.officeName}"),
-
-        ///todo adauga numele office-ului
         centerTitle: true,
+        actions: [
+          Provider.of<RoleProvider>(context).getRole() == "Administrator"
+              ? IconButton(
+                  onPressed: () {
+                    Navigator.push(context,
+                        MaterialPageRoute(builder: (context) {
+                      return UpdateOffice(
+                        officeName: officeName,
+                        floorNumber: floorNumber,
+                        totalDeskCount: totalDeskCount,
+                        usableDeskCount: usableDeskCount,
+                        idAdmin: idAdmin,
+                        idBuilding: widget.idBuilding,
+                        idOffice: widget.id,
+                        occupiedDeskCount: occupiedDeskCount,
+                      );
+                    }));
+                  },
+                  icon: Icon(Icons.edit))
+              : Container()
+        ],
         bottom: TabBar(
           indicatorColor: Colors.white,
           controller: _tabController,
@@ -147,9 +170,7 @@ class _OfficeViewScreenState extends State<OfficeViewScreen>
       body: TabBarView(
         controller: _tabController,
         children: [
-          GridTile(child: 
-            Text("esafgsae")
-          ),
+          GridTile(child: Text("esafgsae")),
           Column(
             children: [
               StreamBuilder(
@@ -163,10 +184,12 @@ class _OfficeViewScreenState extends State<OfficeViewScreen>
                     if (!snapshot.hasData) {
                       return Center(child: CircularProgressIndicator());
                     } else {
+                      idAdmin = snapshot.data['idAdmin'];
+                    
                       return StreamBuilder(
                           stream: _firebaseFirestore
                               .collection("Users")
-                              .doc(snapshot.data['idAdmin'])
+                              .doc(idAdmin)
                               .snapshots(),
                           builder: (context, AsyncSnapshot snapshot2) {
                             if (!snapshot2.hasData) {
@@ -174,8 +197,7 @@ class _OfficeViewScreenState extends State<OfficeViewScreen>
                             } else {
                               if (snapshot2.data['name'] != "No" &&
                                   snapshot2.data['lastName'] != "admin") {
-                                print(snapshot2.data['name'] +
-                                    snapshot2.data['lastName']);
+                                    
                                 return Column(
                                   children: [
                                     Padding(
@@ -216,15 +238,26 @@ class _OfficeViewScreenState extends State<OfficeViewScreen>
                       return Center(child: CircularProgressIndicator());
                     } else {
                       return Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
-                          ((snapshot.data!['usersId'] as List<dynamic>).length != 0) ?
-                          Padding(
-                            padding: const EdgeInsets.all(20.0),
-                            child: Text(
-                              "Workers in the office",
-                              style: TextStyle(fontSize: 25),
-                            ),
-                          ) : Text("Nobody is working in this office",style: TextStyle(fontSize: 15),),
+                          ((snapshot.data!['usersId'] as List<dynamic>)
+                                      .length !=
+                                  0)
+                              ? Padding(
+                                  padding: const EdgeInsets.symmetric(
+                                      vertical: 10.0, horizontal: 5),
+                                  child: Text(
+                                    "Workers in the office :",
+                                    style: TextStyle(fontSize: 25),
+                                  ),
+                                )
+                              : Padding(
+                                  padding: const EdgeInsets.all(8.0),
+                                  child: Text(
+                                    "Nobody is working in this office",
+                                    style: TextStyle(fontSize: 22),
+                                  ),
+                                ),
                           Column(
                             children:
                                 (snapshot.data!['usersId'] as List<dynamic>)
@@ -282,6 +315,13 @@ class _OfficeViewScreenState extends State<OfficeViewScreen>
                       child: CircularProgressIndicator(),
                     );
                   } else {
+
+                    officeName = widget.officeName;
+                    floorNumber = snapshot.data['floorsCount'];
+                    totalDeskCount = snapshot.data['totalDeskCount'];
+                    usableDeskCount = snapshot.data['usableDeskCount'];
+                  
+
                     return Padding(
                       padding: const EdgeInsets.symmetric(
                           horizontal: 20, vertical: 30),
@@ -297,21 +337,21 @@ class _OfficeViewScreenState extends State<OfficeViewScreen>
                               height: 20,
                             ),
                             Text(
-                              "Floor number: ${snapshot.data['floorsCount']}",
+                              "Floor number: ${floorNumber}",
                               style: const TextStyle(fontSize: 20),
                             ),
                             const SizedBox(
                               height: 20,
                             ),
                             Text(
-                              "Number of desks: ${snapshot.data['totalDeskCount']}",
+                              "Number of desks: ${totalDeskCount}",
                               style: const TextStyle(fontSize: 20),
                             ),
                             const SizedBox(
                               height: 20,
                             ),
                             Text(
-                              "Number of usable desks: ${snapshot.data['usableDeskCount']}",
+                              "Number of usable desks: ${usableDeskCount}",
                               style: const TextStyle(fontSize: 20),
                             ),
                             const SizedBox(
@@ -325,16 +365,19 @@ class _OfficeViewScreenState extends State<OfficeViewScreen>
                               height: 20,
                             ),
                             Text(
-                              "Total free desks: ${snapshot.data['usableDeskCount'] - snapshot.data['numberOfOccupiedDesks']}",
+                              "Total free desks: ${usableDeskCount - snapshot.data['numberOfOccupiedDesks']}",
                               style: const TextStyle(fontSize: 20),
                             ),
                             const SizedBox(
                               height: 20,
                             ),
                             PieChart(
+                              colorList: [
+                                Colors.blue,
+                                Colors.red,
+                              ],
                               dataMap: {
-                                "Free desks": (snapshot
-                                            .data['usableDeskCount'] -
+                                "Free desks": (usableDeskCount -
                                         snapshot.data['numberOfOccupiedDesks'])
                                     .toDouble(),
                                 "Ocupied desks":
@@ -355,42 +398,25 @@ class _OfficeViewScreenState extends State<OfficeViewScreen>
                             const SizedBox(
                               height: 20,
                             ),
-                            Row(
-                              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                              children: [
-                                RawMaterialButton(
-                                  fillColor: Colors.blue[200],
-                                  onPressed: () {},
-                                  child: Container(
-                                    width:
-                                        MediaQuery.of(context).size.width * 0.4,
-                                    padding: const EdgeInsets.all(8.0),
-                                    child: Center(
-                                      child: Text(
-                                        "Edit office",
-                                        style: TextStyle(fontSize: 20),
-                                      ),
+                            Center(
+                              child: RawMaterialButton(
+                                shape: RoundedRectangleBorder(borderRadius:BorderRadius.circular(10)),
+                                fillColor: Color(0xff398AB9),
+                                onPressed: () {
+                                  showAlertDialog(context);
+                                },
+                                child: Container(
+                                  width:
+                                      MediaQuery.of(context).size.width * 0.4,
+                                  padding: const EdgeInsets.all(8.0),
+                                  child: Center(
+                                    child: Text(
+                                      "Delete office",
+                                      style: TextStyle(fontSize: 20,color: Colors.white),
                                     ),
                                   ),
                                 ),
-                                RawMaterialButton(
-                                  fillColor: Colors.blue[200],
-                                  onPressed: () {
-                                    showAlertDialog(context);
-                                  },
-                                  child: Container(
-                                    width:
-                                        MediaQuery.of(context).size.width * 0.4,
-                                    padding: const EdgeInsets.all(8.0),
-                                    child: Center(
-                                      child: Text(
-                                        "Delete office",
-                                        style: TextStyle(fontSize: 20),
-                                      ),
-                                    ),
-                                  ),
-                                ),
-                              ],
+                              ),
                             ),
                           ],
                         ),

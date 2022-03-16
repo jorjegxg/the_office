@@ -91,6 +91,7 @@ class UserProfileView extends StatelessWidget {
           builder: (BuildContext context, AsyncSnapshot snapshot) {
             if (snapshot.connectionState == ConnectionState.active) {
               if (snapshot.hasData) {
+                
                 name = snapshot.data['name'];
                 lastName = snapshot.data['lastName'];
                 gender = snapshot.data['gender'];
