@@ -13,7 +13,8 @@ class UpdateProfile extends StatefulWidget {
     required this.birthDate,
     required this.nationality,
     required this.role,
-    required this.pictureUrl,required this.id,}) : super(key: key);
+    required this.pictureUrl,
+    required this.id,}) : super(key: key);
 
     final String name;
     final String lastName;
@@ -49,9 +50,7 @@ class _UpdateProfileState extends State<UpdateProfile> {
       _isLoading = false;
     });
     if (statusMessage == 'success') {
-      _nameController.clear();
-      _lastNameController.clear();
-      _nationalityController.clear();
+      Navigator.pop(context);
       setState(() {
         _date = null;
       });
@@ -239,7 +238,7 @@ class _UpdateProfileState extends State<UpdateProfile> {
               ),
               onPressed: () {
                 updateUser();
-                Navigator.pop(context);
+                
               } ,
             ),
           ],

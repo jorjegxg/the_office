@@ -26,23 +26,25 @@ class UserProfileView extends StatelessWidget {
   String officeId = "";
   late DocumentSnapshot refB, refO;
 
-  void assignUsersOffice() async {
+  void deAssignUsersOffice() async {
     DocumentSnapshot ref =
         await _firebaseFirestore.collection('Users').doc(id).get();
-    await _firebaseFirestore
-        .collection('Buildings')
-        .doc(ref['building'])
-        .collection('Offices')
-        .doc(ref['office'])
-        .update({
-      'usersId': FieldValue.arrayRemove([id]),
-      'numberOfOccupiedDesks': FieldValue.increment(-1),
-    });
-
-    await _firebaseFirestore
+    var building = await ref['building'];
+    if (building != "") {
+      await _firebaseFirestore
+          .collection('Buildings')
+          .doc(ref['building'])
+          .collection('Offices')
+          .doc(ref['office'])
+          .update({
+        'usersId': FieldValue.arrayRemove([id]),
+        'numberOfOccupiedDesks': FieldValue.increment(-1),
+      });
+       await _firebaseFirestore
         .collection('Users')
         .doc(id)
         .update({'building': '', 'office': ''});
+    }
   }
 
   @override
@@ -88,6 +90,7 @@ class UserProfileView extends StatelessWidget {
           builder: (BuildContext context, AsyncSnapshot snapshot) {
             if (snapshot.connectionState == ConnectionState.active) {
               if (snapshot.hasData) {
+                
                 name = snapshot.data['name'];
                 lastName = snapshot.data['lastName'];
                 gender = snapshot.data['gender'];
@@ -306,7 +309,7 @@ class UserProfileView extends StatelessWidget {
                                 ),
                               ),
                             ),
-                            onPressed: assignUsersOffice,
+                            onPressed: deAssignUsersOffice,
                             color: Color(0xFF398AB9),
                           ),
                           MaterialButton(

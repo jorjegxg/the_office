@@ -53,8 +53,11 @@ class FirebaseFirestoreFunctions {
           totalDeskCount != -1 &&
           usableDeskCount != -1 &&
           idAdmin.isNotEmpty) {
+
         if (totalDeskCount < usableDeskCount)
           return 'Total desk count can\'t be less than total desk count';
+
+          
 
         String uuid = Uuid().v1();
 
@@ -87,4 +90,59 @@ class FirebaseFirestoreFunctions {
 
     return statusMessage;
   }
+
+Future<String> updateOffice({
+    required String name,
+    required int floorNumber,
+    required int totalDeskCount,
+    required int usableDeskCount,
+    required String idAdmin,
+    required String idBuilding,
+    required String idOffice,
+    required int occupiedDeskCount,
+  }) async {
+    String statusMessage = 'Some error occured';
+    try {
+      if (name.isNotEmpty &&
+          floorNumber != -1 &&
+          totalDeskCount != -1 &&
+          usableDeskCount != -1 &&
+          occupiedDeskCount != -1) {
+
+
+        if (totalDeskCount < usableDeskCount)
+          return 'Total desk count can\'t be less than total desk count';
+
+         if (occupiedDeskCount > usableDeskCount)
+          return 'Number of usable desks count can\'t be less than the number of occupied desks (${occupiedDeskCount})';  
+
+      
+          Map<String,dynamic> officeMap = {
+          'name': name,
+          'floorNumber': floorNumber,
+          'totalDeskCount': totalDeskCount,
+          'usableDeskCount': usableDeskCount,
+          'id': idOffice,
+          'idAdmin': idAdmin,
+          'idBuilding': idBuilding,
+         };
+
+        var reff = await _firebaseFirestore
+            .collection('Buildings')
+            .doc(idBuilding)
+            .collection('Offices')
+            .doc(idOffice)
+            .update(officeMap);
+
+        statusMessage = 'success';
+      } else {
+        statusMessage = "Please enter all the fields";
+      }
+    } catch (e) {
+      statusMessage = e.toString();
+    }
+
+    return statusMessage;
+  }
+  
 }

@@ -36,7 +36,7 @@ class _UserSearchScreenState extends State<UserSearchScreen> {
         },
       ),
       body: Padding(
-        padding: const EdgeInsets.all(20.0),
+        padding: const EdgeInsets.only(left: 10,right: 10,top: 20,),
         child: Column(
           children: [
             Expanded(
@@ -158,7 +158,7 @@ class _UserSearchScreenState extends State<UserSearchScreen> {
                       ),
                     ],
                   ),
-                  const SizedBox(
+                  SizedBox(
                     height: 30,
                   ),
                   StreamBuilder<QuerySnapshot>(
@@ -171,6 +171,9 @@ class _UserSearchScreenState extends State<UserSearchScreen> {
                         } else {
                           return Column(
                             children: snapshot.data!.docs.map((doc) {
+                              if (doc['id'] == 'GRzHoyaXc2WzB9AcHK41caRSYtI3') {
+                                return Container();
+                              }
                               return UserListWidget(
                                 nume: '${doc['name']} ${doc['lastName']}',
                                 imagine: doc['pictureUrl'],
