@@ -26,23 +26,25 @@ class UserProfileView extends StatelessWidget {
   String officeId = "";
   late DocumentSnapshot refB, refO;
 
-  void assignUsersOffice() async {
+  void deAssignUsersOffice() async {
     DocumentSnapshot ref =
         await _firebaseFirestore.collection('Users').doc(id).get();
-    await _firebaseFirestore
-        .collection('Buildings')
-        .doc(ref['building'])
-        .collection('Offices')
-        .doc(ref['office'])
-        .update({
-      'usersId': FieldValue.arrayRemove([id]),
-      'numberOfOccupiedDesks': FieldValue.increment(-1),
-    });
-
-    await _firebaseFirestore
+    var building = await ref['building'];
+    if (building != "") {
+      await _firebaseFirestore
+          .collection('Buildings')
+          .doc(ref['building'])
+          .collection('Offices')
+          .doc(ref['office'])
+          .update({
+        'usersId': FieldValue.arrayRemove([id]),
+        'numberOfOccupiedDesks': FieldValue.increment(-1),
+      });
+       await _firebaseFirestore
         .collection('Users')
         .doc(id)
         .update({'building': '', 'office': ''});
+    }
   }
 
   ///todo la deasign office intreaba daca e sigur
@@ -188,68 +190,77 @@ class UserProfileView extends StatelessWidget {
                           const SizedBox(
                             height: 20,
                           ),
-                          buildingId.isNotEmpty ?
-                          StreamBuilder(
-                              stream: _firebaseFirestore
-                                  .collection('Buildings')
-                                  .doc(buildingId)
-                                  .snapshots(),
-                              builder: (BuildContext context,
-                                  AsyncSnapshot snapshot2) {
-                                if (!snapshot2.hasData) {
-                                  return Center(
-                                    child: CircularProgressIndicator(),
-                                  );
-                                } else {
-                                  return Column(
-                                    crossAxisAlignment: CrossAxisAlignment.start,
-                                    children: [
-                                      Text(
-                                        snapshot2.data['name'] != ""
-                                            ? "Building: ${snapshot2.data['name']}"
-                                            : "Building: no building",
-                                        style: const TextStyle(fontSize: 20),
-                                      ),
-                                      const SizedBox(
-                                        height: 20,
-                                      ),
-                                      StreamBuilder(
-                                        stream: _firebaseFirestore
-                                            .collection('Buildings')
-                                            .doc(buildingId)
-                                            .collection("Offices")
-                                            .doc(officeId)
-                                            .snapshots(),
-                                        builder: (BuildContext context,AsyncSnapshot snapshot3) {
-                                          if(!snapshot3.hasData){
-                                            return Center(child: CircularProgressIndicator(),);
-                                          }else{
-                                            return Text(
-                                              snapshot3.data['name'] != ""
-                                                  ? "Office: ${snapshot3.data['name']}"
-                                                  : "Office: no office",
-                                              style: const TextStyle(fontSize: 20),
-                                            );
-                                          }
-
-                                        }
-                                      ),
-                                    ],
-                                  );
-                                }
-                              })
-                          : Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                              const Text("Building: no building",
-                              style: const TextStyle(fontSize: 20),),
-                              const SizedBox(
-                                height: 20,
-                              ),
-                              const Text("Office: no office",
-                                style: const TextStyle(fontSize: 20),),
-                            ],
-                          ),
+                          buildingId.isNotEmpty
+                              ? StreamBuilder(
+                                  stream: _firebaseFirestore
+                                      .collection('Buildings')
+                                      .doc(buildingId)
+                                      .snapshots(),
+                                  builder: (BuildContext context,
+                                      AsyncSnapshot snapshot2) {
+                                    if (!snapshot2.hasData) {
+                                      return Center(
+                                        child: CircularProgressIndicator(),
+                                      );
+                                    } else {
+                                      return Column(
+                                        crossAxisAlignment:
+                                            CrossAxisAlignment.start,
+                                        children: [
+                                          Text(
+                                            snapshot2.data['name'] != ""
+                                                ? "Building: ${snapshot2.data['name']}"
+                                                : "Building: no building",
+                                            style:
+                                                const TextStyle(fontSize: 20),
+                                          ),
+                                          const SizedBox(
+                                            height: 20,
+                                          ),
+                                          StreamBuilder(
+                                              stream: _firebaseFirestore
+                                                  .collection('Buildings')
+                                                  .doc(buildingId)
+                                                  .collection("Offices")
+                                                  .doc(officeId)
+                                                  .snapshots(),
+                                              builder: (BuildContext context,
+                                                  AsyncSnapshot snapshot3) {
+                                                if (!snapshot3.hasData) {
+                                                  return Center(
+                                                    child:
+                                                        CircularProgressIndicator(),
+                                                  );
+                                                } else {
+                                                  return Text(
+                                                    snapshot3.data['name'] != ""
+                                                        ? "Office: ${snapshot3.data['name']}"
+                                                        : "Office: no office",
+                                                    style: const TextStyle(
+                                                        fontSize: 20),
+                                                  );
+                                                }
+                                              }),
+                                        ],
+                                      );
+                                    }
+                                  })
+                              : Column(
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  children: [
+                                    const Text(
+                                      "Building: no building",
+                                      style: const TextStyle(fontSize: 20),
+                                    ),
+                                    const SizedBox(
+                                      height: 20,
+                                    ),
+                                    const Text(
+                                      "Office: no office",
+                                      style: const TextStyle(fontSize: 20),
+                                    ),
+                                  ],
+                                ),
                         ],
                       ),
                     ),
@@ -298,7 +309,7 @@ class UserProfileView extends StatelessWidget {
                                 ),
                               ),
                             ),
-                            onPressed: assignUsersOffice,
+                            onPressed: deAssignUsersOffice,
                             color: Color(0xFF398AB9),
                           ),
                           MaterialButton(
