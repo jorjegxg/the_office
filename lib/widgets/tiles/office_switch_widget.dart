@@ -1,6 +1,5 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
-import 'package:the_office/screens/admin/tiles_view/office_view_screen.dart';
 
 class OfficeSwitchWidget extends StatelessWidget {
   OfficeSwitchWidget(
@@ -30,10 +29,11 @@ class OfficeSwitchWidget extends StatelessWidget {
       'usableDeskCount': FieldValue.increment(-1),
       'numberOfOccupiedDesks': FieldValue.increment(1),
     });
-    await _firebaseFirestore
-        .collection('Users')
-        .doc(userID)
-        .update({'building': buildingID, 'office': id});
+    await _firebaseFirestore.collection('Users').doc(userID).update({
+      'building': buildingID,
+      'office': id,
+      'remoteProcentage': '0',
+    });
   }
 
   @override

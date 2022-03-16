@@ -30,6 +30,7 @@ class RemoteRequestWidget extends StatelessWidget {
                 ),
                 color: Theme.of(context).primaryColor,
                 child: ListTile(
+                  minVerticalPadding: 10,
                   title: Row(
                     children: [
                       CircleAvatar(
@@ -109,7 +110,7 @@ class RemoteRequestWidget extends StatelessWidget {
             )
           : SizedBox();
     } else {
-      if (mine == true && requestStatus == true) {
+      if (mine == true && (requestStatus == true || adminMessage != '')) {
         return Padding(
           padding: const EdgeInsets.all(15.0),
           child: MaterialButton(
@@ -118,6 +119,7 @@ class RemoteRequestWidget extends StatelessWidget {
             ),
             color: Theme.of(context).primaryColor,
             child: ListTile(
+              minVerticalPadding: 10,
               title: Row(
                 children: [
                   CircleAvatar(

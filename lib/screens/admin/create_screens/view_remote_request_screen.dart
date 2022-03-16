@@ -23,6 +23,7 @@ class ViewRemoteRequest extends StatelessWidget {
   final FirebaseFirestore _firebase = FirebaseFirestore.instance;
   Widget bottomSheet(BuildContext context) {
     return Column(
+      mainAxisSize: MainAxisSize.min,
       children: [
         Padding(
           padding: const EdgeInsets.only(
@@ -36,45 +37,42 @@ class ViewRemoteRequest extends StatelessWidget {
               borderRadius: BorderRadius.circular(20),
             ),
             leading: CircleAvatar(
-              backgroundImage: AssetImage(
+              backgroundImage: NetworkImage(
                 imagine,
               ),
             ),
             title: Text(nume),
           ),
         ),
-        Expanded(
-          child: Padding(
-            padding: const EdgeInsets.all(20),
-            child: Container(
-              decoration: BoxDecoration(
-                color: const Color(0xffDFDFDF),
-                borderRadius: BorderRadius.circular(20),
-              ),
-              child: Padding(
-                padding: const EdgeInsets.all(20.0),
-                child: TextField(
-                  maxLines: double.maxFinite.floor(),
-                  controller: textEditingController,
-                  decoration: InputDecoration(
-                    border: OutlineInputBorder(
-                      borderRadius: BorderRadius.circular(20),
-                      borderSide:
-                          const BorderSide(width: 0, color: Colors.white),
-                    ),
-                    enabled: true,
-                    enabledBorder: OutlineInputBorder(
-                      borderRadius: BorderRadius.circular(20),
-                      borderSide: BorderSide(width: 0, color: Colors.white),
-                    ),
-                    focusedBorder: OutlineInputBorder(
-                      borderRadius: BorderRadius.circular(20),
-                      borderSide: BorderSide(width: 0, color: Colors.white),
-                    ),
-                    filled: true,
-                    fillColor: Colors.white,
-                    hintText: "Text",
+        Padding(
+          padding: const EdgeInsets.all(20),
+          child: Container(
+            decoration: BoxDecoration(
+              color: const Color(0xffDFDFDF),
+              borderRadius: BorderRadius.circular(20),
+            ),
+            child: Padding(
+              padding: const EdgeInsets.all(20.0),
+              child: TextField(
+                maxLines: 10,
+                controller: textEditingController,
+                decoration: InputDecoration(
+                  border: OutlineInputBorder(
+                    borderRadius: BorderRadius.circular(20),
+                    borderSide: const BorderSide(width: 0, color: Colors.white),
                   ),
+                  enabled: true,
+                  enabledBorder: OutlineInputBorder(
+                    borderRadius: BorderRadius.circular(20),
+                    borderSide: BorderSide(width: 0, color: Colors.white),
+                  ),
+                  focusedBorder: OutlineInputBorder(
+                    borderRadius: BorderRadius.circular(20),
+                    borderSide: BorderSide(width: 0, color: Colors.white),
+                  ),
+                  filled: true,
+                  fillColor: Colors.white,
+                  hintText: "Text",
                 ),
               ),
             ),
@@ -101,16 +99,17 @@ class ViewRemoteRequest extends StatelessWidget {
                 ),
                 onPressed: () {
                   Map<String, dynamic> updatedData = {
-                    'procentage': '',
-                    'message': '',
+                    'procentage': remoteProcentage,
+                    'message': message,
                     'adminMessage': textEditingController.text,
                     'status': false,
                   };
                   _firebase.collection('Users').doc(id).update({
-                    'remoteProcentage': remoteProcentage,
                     'remote_request': updatedData,
+                    'requestStatus': false,
                   });
-                  Navigator.pop(context);
+                  int count = 0;
+                  Navigator.of(context).popUntil((_) => count++ >= 2);
                 },
                 color: Colors.red,
               ),
@@ -151,7 +150,6 @@ class ViewRemoteRequest extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    print(adminMessage);
     return Scaffold(
       appBar: AppBar(
         // shape: const RoundedRectangleBorder(
@@ -254,11 +252,20 @@ class ViewRemoteRequest extends StatelessWidget {
                           ),
                           onPressed: () {
                             showModalBottomSheet(
-                                shape: const RoundedRectangleBorder(
-                                    borderRadius: BorderRadius.vertical(
-                                        top: Radius.circular(20))),
-                                context: context,
-                                builder: bottomSheet);
+                              isScrollControlled: true,
+                              shape: const RoundedRectangleBorder(
+                                  borderRadius: BorderRadius.vertical(
+                                      top: Radius.circular(20))),
+                              context: context,
+                              builder: (context) => SingleChildScrollView(
+                                child: Container(
+                                    padding: EdgeInsets.only(
+                                        bottom: MediaQuery.of(context)
+                                            .viewInsets
+                                            .bottom),
+                                    child: bottomSheet(context)),
+                              ),
+                            );
                           },
                           color: Colors.red,
                         ),
@@ -290,14 +297,15 @@ class ViewRemoteRequest extends StatelessWidget {
                               _firebase.collection('Users').doc(id).update({
                                 'remoteProcentage': remoteProcentage,
                                 'requestStatus': false,
-                                'request_remote': updatedData,
+                                'remote_request': updatedData,
                                 'office': '',
+                                'building': '',
                               });
                             } else {
                               _firebase.collection('Users').doc(id).update({
                                 'remoteProcentage': remoteProcentage,
                                 'requestStatus': false,
-                                'request_remote': updatedData,
+                                'remote_request': updatedData,
                               });
                             }
                             Navigator.pop(context);
@@ -335,7 +343,7 @@ class ViewRemoteRequest extends StatelessWidget {
                                       Theme.of(context).primaryColor,
                                   title: Center(
                                       child: Text(
-                                    'g',
+                                    adminMessage,
                                     style: const TextStyle(
                                         color: Colors.white, fontSize: 30),
                                   )),
@@ -383,7 +391,17 @@ class ViewRemoteRequest extends StatelessWidget {
                         color: Colors.green,
                       )
                     : Container(
-                        child: const Text('Status Pending'),
+                        decoration: BoxDecoration(
+                            color: Colors.grey,
+                            borderRadius: BorderRadius.circular(20)),
+                        padding: const EdgeInsets.symmetric(vertical: 20),
+                        width: double.infinity,
+                        child: const Center(
+                            child: Text(
+                          'Status: Pending',
+                          style: TextStyle(
+                              fontSize: 20, fontWeight: FontWeight.bold),
+                        )),
                       ),
           ],
         ),

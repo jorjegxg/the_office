@@ -373,7 +373,7 @@ class _OfficeViewScreenState extends State<OfficeViewScreen>
                             ),
                             PieChart(
                               colorList: [
-                                Colors.blue,
+                                Color(0xff398AB9),
                                 Colors.red,
                               ],
                               dataMap: {
