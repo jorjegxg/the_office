@@ -12,14 +12,13 @@ class OfficeViewScreen extends StatefulWidget {
       required this.id,
       required this.idBuilding,
       required this.buildingName,
-        required this.officeName})
+      required this.officeName})
       : super(key: key);
 
   final String id;
   final String idBuilding;
   final String buildingName;
   final String officeName;
-
 
   @override
   State<OfficeViewScreen> createState() => _OfficeViewScreenState();
@@ -70,7 +69,7 @@ class _OfficeViewScreenState extends State<OfficeViewScreen>
     setState(() {});
   }
 
-   showAlertDialog(BuildContext ctx) {
+  showAlertDialog(BuildContext ctx) {
     showDialog(
       barrierDismissible: false,
       context: context,
@@ -88,25 +87,25 @@ class _OfficeViewScreenState extends State<OfficeViewScreen>
             MaterialButton(
               child: Text("Yes I am sure"),
               onPressed: () async {
-
-                FirebaseFirestore _firebaseFirestore = FirebaseFirestore.instance;
+                FirebaseFirestore _firebaseFirestore =
+                    FirebaseFirestore.instance;
                 var ref = await _firebaseFirestore
                     .collection('Buildings')
                     .doc(widget.idBuilding)
                     .collection('Offices');
 
-                var ref2 =  ref.doc(widget.id);
+                var ref2 = ref.doc(widget.id);
                 var document = await ref2.get();
                 var refList = await document['usersId'] as List<dynamic>;
                 var emptyList = refList.isEmpty;
 
                 ///todo verifica daca e vre-un user
                 Navigator.of(context).pop();
-                if(emptyList){
+                if (emptyList) {
                   print("delete");
                   ref2.delete();
                   Navigator.of(ctx).pop();
-                }else{
+                } else {
                   showSnackBar(ctx, "Office is not empty");
                 }
               },
@@ -123,7 +122,9 @@ class _OfficeViewScreenState extends State<OfficeViewScreen>
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text("Office ${widget.officeName}"),///todo adauga numele office-ului
+        title: Text("Office ${widget.officeName}"),
+
+        ///todo adauga numele office-ului
         centerTitle: true,
         bottom: TabBar(
           indicatorColor: Colors.white,
@@ -147,27 +148,114 @@ class _OfficeViewScreenState extends State<OfficeViewScreen>
         controller: _tabController,
         children: [
           const Text("REZOLVAAAAAAA"),
-          StreamBuilder(
-              stream: _firebaseFirestore.collection('Buildings').doc(widget.idBuilding).collection('Offices').doc(widget.id).snapshots(),
-              builder: (BuildContext context,
-                  AsyncSnapshot snapshot) {
-                if (!snapshot.hasData) {
-                  return Center(child: CircularProgressIndicator());
-                } else {
-                  return Column(
-                    children: (snapshot.data!['usersId'] as List<dynamic>).map((newId) {
-                      ///todo repara
-                      return Text(newId);
+          Column(
+            children: [
+              StreamBuilder(
+                  stream: _firebaseFirestore
+                      .collection("Buildings")
+                      .doc(widget.idBuilding)
+                      .collection("Offices")
+                      .doc(widget.id)
+                      .snapshots(),
+                  builder: (context, AsyncSnapshot snapshot) {
+                    if (!snapshot.hasData) {
+                      return Center(child: CircularProgressIndicator());
+                    } else {
+                      return StreamBuilder(
+                          stream: _firebaseFirestore
+                              .collection("Users")
+                              .doc(snapshot.data['idAdmin'])
+                              .snapshots(),
+                          builder: (context, AsyncSnapshot snapshot2) {
+                            if (!snapshot2.hasData) {
+                              return Center(child: CircularProgressIndicator());
+                            } else {
+                              if (snapshot2.data['name'] != "No" &&
+                                  snapshot2.data['lastName'] != "admin") {
+                                print(snapshot2.data['name'] +
+                                    snapshot2.data['lastName']);
+                                return Column(
+                                  children: [
+                                    Padding(
+                                      padding: const EdgeInsets.all(20.0),
+                                      child: Text(
+                                        "Office administrator",
+                                        style: TextStyle(fontSize: 25),
+                                      ),
+                                    ),
+                                    UserListWidget(
+                                      nume:
+                                          '${snapshot2.data['name']} ${snapshot2.data['lastName']}',
+                                      imagine: snapshot2.data['pictureUrl'],
+                                      rol: snapshot2.data['role'],
+                                      id: snapshot2.data['id'],
+                                    ),
+                                    Divider(
+                                      color: Colors.black,
+                                    ),
+                                  ],
+                                );
+                              } else {
+                                return Container();
+                              }
+                            }
+                          });
+                    }
+                  }),
+              Padding(
+                padding: const EdgeInsets.all(20.0),
+                child: Text(
+                  "Workers in the office",
+                  style: TextStyle(fontSize: 25),
+                ),
+              ),
+              StreamBuilder(
+                  stream: _firebaseFirestore
+                      .collection('Buildings')
+                      .doc(widget.idBuilding)
+                      .collection('Offices')
+                      .doc(widget.id)
+                      .snapshots(),
+                  builder: (BuildContext context, AsyncSnapshot snapshot) {
+                    if (!snapshot.hasData) {
+                      return Center(child: CircularProgressIndicator());
+                    } else {
+                      return Column(
+                        children: (snapshot.data!['usersId'] as List<dynamic>)
+                            .map((newId) {
+                          return StreamBuilder(
+                              stream: _firebaseFirestore
+                                  .collection("Users")
+                                  .doc(newId)
+                                  .snapshots(),
+                              builder: (BuildContext context,
+                                  AsyncSnapshot snapshot2) {
+                                if (!snapshot2.hasData) {
+                                  return Center(
+                                    child: CircularProgressIndicator(),
+                                  );
+                                } else {
+                                  return UserListWidget(
+                                    nume:
+                                        '${snapshot2.data['name']} ${snapshot2.data['lastName']}',
+                                    imagine: snapshot2.data['pictureUrl'],
+                                    rol: snapshot2.data['role'],
+                                    id: snapshot2.data['id'],
+                                  );
+                                }
+                              });
                           // return UserListWidget(
                           //   nume: '${snapshot2.data['name']} ${snapshot2.data['lastName']}',
                           //   imagine: snapshot2.data['pictureUrl'],
                           //   rol: snapshot2.data['role'],
                           //   id: snapshot2.data['id'],
                           // );
-                    }).toList(),
-                  );
-                }
-              }),
+                        }).toList(),
+                      );
+                    }
+                  }),
+            ],
+          ),
           StreamBuilder(
               stream: _firestore
                   .collection('Buildings')
@@ -176,7 +264,7 @@ class _OfficeViewScreenState extends State<OfficeViewScreen>
                   .doc(widget.id)
                   .snapshots(),
               builder: (BuildContext context, AsyncSnapshot snapshot) {
-                try{
+                try {
                   if (!snapshot.hasData) {
                     return Center(
                       child: CircularProgressIndicator(),
@@ -237,14 +325,16 @@ class _OfficeViewScreenState extends State<OfficeViewScreen>
                             ),
                             PieChart(
                               dataMap: {
-                                "Free desks": (snapshot.data['usableDeskCount'] -
-                                    snapshot.data['numberOfOccupiedDesks'])
+                                "Free desks": (snapshot
+                                            .data['usableDeskCount'] -
+                                        snapshot.data['numberOfOccupiedDesks'])
                                     .toDouble(),
                                 "Ocupied desks":
-                                (snapshot.data['numberOfOccupiedDesks'])
-                                    .toDouble(),
+                                    (snapshot.data['numberOfOccupiedDesks'])
+                                        .toDouble(),
                               },
-                              chartRadius: MediaQuery.of(context).size.width / 2,
+                              chartRadius:
+                                  MediaQuery.of(context).size.width / 2,
                               chartValuesOptions: const ChartValuesOptions(
                                 showChartValueBackground: true,
                                 showChartValues: true,
@@ -265,7 +355,7 @@ class _OfficeViewScreenState extends State<OfficeViewScreen>
                                   onPressed: () {},
                                   child: Container(
                                     width:
-                                    MediaQuery.of(context).size.width * 0.4,
+                                        MediaQuery.of(context).size.width * 0.4,
                                     padding: const EdgeInsets.all(8.0),
                                     child: Center(
                                       child: Text(
@@ -282,7 +372,7 @@ class _OfficeViewScreenState extends State<OfficeViewScreen>
                                   },
                                   child: Container(
                                     width:
-                                    MediaQuery.of(context).size.width * 0.4,
+                                        MediaQuery.of(context).size.width * 0.4,
                                     padding: const EdgeInsets.all(8.0),
                                     child: Center(
                                       child: Text(
@@ -299,7 +389,7 @@ class _OfficeViewScreenState extends State<OfficeViewScreen>
                       ),
                     );
                   }
-                }catch(e){
+                } catch (e) {
                   print(e.toString());
                 }
                 return Text('State: ${snapshot.connectionState}');
