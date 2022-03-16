@@ -56,7 +56,7 @@ class AuthMethods {
             remote_request: {
               'adminMessage': '',
               'message': "",
-              'procentage': '',
+              'procentage': '0',
               'status': false,
             });
 

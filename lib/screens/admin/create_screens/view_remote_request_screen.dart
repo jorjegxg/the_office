@@ -338,7 +338,7 @@ class ViewRemoteRequest extends StatelessWidget {
                               builder: (BuildContext context) {
                                 return AlertDialog(
                                   shape: RoundedRectangleBorder(
-                                      borderRadius: BorderRadius.circular(30)),
+                                      borderRadius: BorderRadius.circular(10)),
                                   backgroundColor:
                                       Theme.of(context).primaryColor,
                                   title: Center(
@@ -348,36 +348,38 @@ class ViewRemoteRequest extends StatelessWidget {
                                         color: Colors.white, fontSize: 30),
                                   )),
                                   actions: [
-                                    TextButton(
-                                      onPressed: () {
-                                        Map<String, dynamic> updatedData = {
-                                          'message': '',
-                                          'procentage': '',
-                                          'adminMessage': '',
-                                          'status': false,
-                                        };
-                                        _firebase
-                                            .collection('Users')
-                                            .doc(id)
-                                            .update({
-                                          'requestStatus': false,
-                                          'remote_request': updatedData,
-                                        });
-                                        Navigator.pop(context);
-                                      },
-                                      child: const Text(
-                                        "Close",
-                                        style: TextStyle(color: Colors.black),
-                                      ),
-                                      style: ButtonStyle(
-                                        backgroundColor:
-                                            MaterialStateProperty.resolveWith(
-                                                (state) => Colors.white),
-                                        shape: MaterialStateProperty.all<
-                                            RoundedRectangleBorder>(
-                                          RoundedRectangleBorder(
-                                            borderRadius:
-                                                BorderRadius.circular(18.0),
+                                    Center(
+                                      child: TextButton(
+                                        onPressed: () {
+                                          Map<String, dynamic> updatedData = {
+                                            'message': '',
+                                            'procentage': '',
+                                            'adminMessage': '0',
+                                            'status': false,
+                                          };
+                                          _firebase
+                                              .collection('Users')
+                                              .doc(id)
+                                              .update({
+                                            'requestStatus': false,
+                                            'remote_request': updatedData,
+                                          });
+                                          Navigator.pop(context);
+                                        },
+                                        child: const Text(
+                                          "Close",
+                                          style: TextStyle(color: Colors.black),
+                                        ),
+                                        style: ButtonStyle(
+                                          backgroundColor:
+                                              MaterialStateProperty.resolveWith(
+                                                  (state) => Colors.white),
+                                          shape: MaterialStateProperty.all<
+                                              RoundedRectangleBorder>(
+                                            RoundedRectangleBorder(
+                                              borderRadius:
+                                                  BorderRadius.circular(18.0),
+                                            ),
                                           ),
                                         ),
                                       ),
