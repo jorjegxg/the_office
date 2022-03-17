@@ -243,6 +243,7 @@ class UserProfileView extends StatelessWidget {
                                                 builder: (BuildContext context,
                                                     AsyncSnapshot snapshot3) {
                                                   if (!snapshot3.hasData) {
+                      
                                                     return Center(
                                                       child:
                                                           CircularProgressIndicator(),

@@ -55,7 +55,7 @@ class _UserSearchScreenState extends State<UserSearchScreen> {
                     children: [
                       Expanded(
                         child: TextField(
-
+                              autofocus: false,
                             ///fa hint textul sa se duca sus dupa ce e apasat
                             controller: _textController,
                             decoration: InputDecoration(
@@ -195,14 +195,13 @@ class _UserSearchScreenState extends State<UserSearchScreen> {
                         if (!snapshot.hasData) {
                           return Center(child: CircularProgressIndicator());
                         } else {
-                          print("Stream are data");
                           return Column(
                             children: snapshot.data!.docs.map((doc) {
                               if (doc['id'] == 'GRzHoyaXc2WzB9AcHK41caRSYtI3') {
                                 return Container();
                               }
                               if (datiUpdateOdata == "") {
-                                print(datiUpdateOdata);
+
                                 return UserListWidget(
                                   nume: '${doc['name']} ${doc['lastName']}',
                                   imagine: doc['pictureUrl'],
@@ -210,13 +209,12 @@ class _UserSearchScreenState extends State<UserSearchScreen> {
                                   id: doc['id'],
                                 );
                               } else {
-                                print("Textfield are ceva in el");
-                                print("Numele : " + doc['name']);
+
 
                                 if ((doc['name'] as String).toLowerCase()
                                     .contains(datiUpdateOdata.toLowerCase()) || (doc['lastName'] as String).toLowerCase()
                                     .contains(datiUpdateOdata.toLowerCase())) {
-                                  print("Numele contine");
+
                                   return UserListWidget(
                                     nume: '${doc['name']} ${doc['lastName']}',
                                     imagine: doc['pictureUrl'],
