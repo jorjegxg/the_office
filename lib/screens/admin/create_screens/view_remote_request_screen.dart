@@ -269,7 +269,7 @@ class ViewRemoteRequest extends StatelessWidget {
                               ),
                             );
                           },
-                          color: Colors.red,
+                          color: Color(0xffAC477C),
                         ),
                       ),
                       const SizedBox(
@@ -312,7 +312,7 @@ class ViewRemoteRequest extends StatelessWidget {
                             }
                             Navigator.pop(context);
                           },
-                          color: Colors.green,
+                          color: Color(0xff6D74B7),
                         ),
                       ),
                       const SizedBox(

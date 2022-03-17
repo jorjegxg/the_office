@@ -297,8 +297,8 @@ class UserProfileView extends StatelessWidget {
                           ],
                         ),
                       ),
-                      const SizedBox(
-                        height: 50,
+                      SizedBox(
+                        height: 70,
                       ),
                       Padding(
                         padding: const EdgeInsets.symmetric(vertical: 10.0),
