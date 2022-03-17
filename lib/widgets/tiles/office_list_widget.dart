@@ -1,7 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:the_office/screens/admin/tiles_view/office_view_screen.dart';
-import 'package:the_office/screens/admin/tiles_view/user_profile_view.dart';
-
 class OfficeListWidget extends StatelessWidget {
   const OfficeListWidget(
       {required this.nume,

@@ -11,6 +11,7 @@ class CreateOffice extends StatefulWidget {
   const CreateOffice({Key? key, required this.buildingId}) : super(key: key);
 
   final String buildingId;
+
   @override
   _CreateOfficeState createState() => _CreateOfficeState();
 }
@@ -139,8 +140,10 @@ class _CreateOfficeState extends State<CreateOffice> {
         shape: const RoundedRectangleBorder(
             borderRadius: BorderRadius.vertical(bottom: Radius.circular(20))),
         title: FutureBuilder(
-            future:
-                _firebaseFirestore.collection('Buildings').doc(widget.buildingId).get(),
+            future: _firebaseFirestore
+                .collection('Buildings')
+                .doc(widget.buildingId)
+                .get(),
             builder: (BuildContext context, AsyncSnapshot snapshot) {
               if (snapshot.connectionState == ConnectionState.done) {
                 if (snapshot.hasData) {
@@ -215,27 +218,26 @@ class _CreateOfficeState extends State<CreateOffice> {
                   width: MediaQuery.of(context).size.width * 0.5,
                   child: StreamBuilder(
                       stream: FirebaseFirestore.instance
-                          .collection('Users')
+                          .collection('Users').where('role',isNotEqualTo: 'Employee' )
                           .snapshots(),
                       builder: (BuildContext context,
                           AsyncSnapshot<QuerySnapshot> snapshot) {
                         if (snapshot.connectionState ==
                                 ConnectionState.active ||
                             snapshot.connectionState ==
-                                ConnectionState.done) if (snapshot.hasData) {
+                                ConnectionState.done)
+                          if (snapshot.hasData) {
                           return DropdownButton(
                             isExpanded: true,
                             value: idAdmin,
-                            items: snapshot.data!.docs
-                                .map(
-                                  (element) => DropdownMenuItem<String>(
-                                    value: element['id'],
-                                    child: Text(element['name'] +
-                                        ' ' +
-                                        element['lastName']),
-                                  ),
-                                )
-                                .toList(),
+                            items: snapshot.data!.docs.map((element) {
+                              return DropdownMenuItem<String>(
+                                value: element['id'],
+                                child: Text(element['name'] +
+                                    ' ' +
+                                    element['lastName']),
+                              );
+                            }).toList(),
                             onChanged: (String? value) {
                               setState(() {
                                 idAdmin = value!;

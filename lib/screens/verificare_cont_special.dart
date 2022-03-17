@@ -51,7 +51,7 @@ class _VerificareContSpecialState extends State<VerificareContSpecial> {
                      future: eActiv(),
                      builder: (context, snapshot2) {
                        if(!snapshot2.hasData){
-                         return Center(child: CircularProgressIndicator(),);
+                         return Scaffold(body: Center(child: CircularProgressIndicator(),));
                        }else{
                          if(snapshot2.data == true){
                           return NavigationScreen();                       

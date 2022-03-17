@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:the_office/screens/admin/tiles_view/user_profile_view.dart';
+import 'package:the_office/screens/admin/tiles_view/user_profile_view.dart' as  profile;
 
 class UserListWidget extends StatelessWidget {
   const UserListWidget(
@@ -19,7 +19,7 @@ class UserListWidget extends StatelessWidget {
             Navigator.push(
               context,
               MaterialPageRoute(
-                  builder: (context) => UserProfileView(
+                  builder: (context) => profile.UserProfileView(
                     id: id,
                   )),
             );

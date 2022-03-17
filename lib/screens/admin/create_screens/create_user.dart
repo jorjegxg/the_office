@@ -249,6 +249,8 @@ class _CreateUserState extends State<CreateUser> {
               ),
               onPressed: () => createUser(),
             ),
+            SizedBox(height: 20,
+            )
           ],
         ),
       ),

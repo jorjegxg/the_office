@@ -220,8 +220,9 @@ class _RemoteRequestScreenState extends State<RemoteRequestScreen> {
             if (!snapshot.hasData) {
               return const Center(child: CircularProgressIndicator());
             } else {
+              
               return ListView(
-                  children: snapshot.data!.docs.map((doc) {
+                  children: snapshot.data!.docs.map((doc) {    
                 return RemoteRequestWidget(
                   nume: '${doc['name']} ${doc['lastName']}',
                   message: doc['remote_request']['message'],
