@@ -7,7 +7,6 @@ class SwitchUsersOffice extends StatelessWidget {
 
   final String id, userID, buildingName;
 
-
   SwitchUsersOffice(
       {required this.id, required this.userID, required this.buildingName});
 
@@ -43,6 +42,7 @@ class SwitchUsersOffice extends StatelessWidget {
                       buildingID: id,
                       userID: userID,
                       buildingName: buildingName,
+                      officeAdmin: doc['idAdmin'],
                     );
                   }).toList(),
                 );

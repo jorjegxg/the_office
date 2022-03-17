@@ -51,15 +51,15 @@ class UserProfileView extends StatelessWidget {
           .update({'building': '', 'office': ''});
     }
   }
-  Future<void> deactivateActivateAccount() async{
-   var user = _firebaseFirestore.collection("Users").doc(id);
-   var userData = await user.get();
-   if(userData['isActive'] == true){
-     user.update({'isActive' : false});
-   }else{
-      user.update({'isActive' : true});
-   }
-   
+
+  Future<void> deactivateActivateAccount() async {
+    var user = _firebaseFirestore.collection("Users").doc(id);
+    var userData = await user.get();
+    if (userData['isActive'] == true) {
+      user.update({'isActive': false});
+    } else {
+      user.update({'isActive': true});
+    }
   }
 
   @override
@@ -130,13 +130,14 @@ class UserProfileView extends StatelessWidget {
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
                             Padding(
-                              padding: const EdgeInsets.symmetric(vertical: 40.0),
+                              padding:
+                                  const EdgeInsets.symmetric(vertical: 40.0),
                               child: Row(
                                 children: [
                                   ///TODO fa sa poata da pick image adminul
                                   Stack(
                                     children: [
-                                      CircleAvatar(
+                                      const CircleAvatar(
                                         backgroundImage: AssetImage(
                                             'imagini/no-profile-picture-icon.png'),
                                         radius: 40,
@@ -153,7 +154,8 @@ class UserProfileView extends StatelessWidget {
                                     width: 40,
                                   ),
                                   Column(
-                                    crossAxisAlignment: CrossAxisAlignment.start,
+                                    crossAxisAlignment:
+                                        CrossAxisAlignment.start,
                                     children: [
                                       SizedBox(
                                         width: 150,
@@ -247,14 +249,14 @@ class UserProfileView extends StatelessWidget {
                                                 builder: (BuildContext context,
                                                     AsyncSnapshot snapshot3) {
                                                   if (!snapshot3.hasData) {
-                      
                                                     return Center(
                                                       child:
                                                           CircularProgressIndicator(),
                                                     );
                                                   } else {
                                                     return Text(
-                                                      snapshot3.data['name'] != ""
+                                                      snapshot3.data['name'] !=
+                                                              ""
                                                           ? "Office: ${snapshot3.data['name']}"
                                                           : "Office: no office",
                                                       style: const TextStyle(
@@ -267,7 +269,8 @@ class UserProfileView extends StatelessWidget {
                                       }
                                     })
                                 : Column(
-                                    crossAxisAlignment: CrossAxisAlignment.start,
+                                    crossAxisAlignment:
+                                        CrossAxisAlignment.start,
                                     children: [
                                       const Text(
                                         "Building: no building",
@@ -282,176 +285,270 @@ class UserProfileView extends StatelessWidget {
                                       ),
                                     ],
                                   ),
-                             const SizedBox(
+                            const SizedBox(
                               height: 20,
                             ),
-                           Text(
+                            Text(
                               "Active account : $isActive",
-                             style: const TextStyle(fontSize: 20,),
+                              style: const TextStyle(
+                                fontSize: 20,
+                              ),
                             ),
                           ],
                         ),
                       ),
-                      SizedBox(
+                      const SizedBox(
                         height: 50,
                       ),
                       Padding(
                         padding: const EdgeInsets.symmetric(vertical: 10.0),
-                        child: Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                          children: [
-                            MaterialButton(
-                              padding: EdgeInsets.symmetric(vertical: 10),
-                              minWidth: MediaQuery.of(context).size.width * 0.25,
-                              shape: RoundedRectangleBorder(
-                                  borderRadius: BorderRadius.circular(10)),
-                              child: Container(
-                                width: MediaQuery.of(context).size.width * 0.2,
-                                child: Text(
-                                  "Assign a \n office",
-                                  style: TextStyle(color: Colors.white),
-                                ),
-                              ),
-                              onPressed: () {
-                                Navigator.push(
-                                  context,
-                                  MaterialPageRoute(
-                                    builder: (context) => SwitchUsersBuilding(
-                                      userID: id,
+                        child: Provider.of<RoleProvider>(context).getRole() ==
+                                'Administrator'
+                            ? Row(
+                                mainAxisAlignment:
+                                    MainAxisAlignment.spaceEvenly,
+                                children: [
+                                  MaterialButton(
+                                    padding: EdgeInsets.symmetric(vertical: 10),
+                                    minWidth:
+                                        MediaQuery.of(context).size.width *
+                                            0.25,
+                                    shape: RoundedRectangleBorder(
+                                        borderRadius:
+                                            BorderRadius.circular(10)),
+                                    child: Container(
+                                      width: MediaQuery.of(context).size.width *
+                                          0.2,
+                                      child: const Text(
+                                        "Assign a \n office",
+                                        style: TextStyle(color: Colors.white),
+                                      ),
                                     ),
+                                    onPressed: () {
+                                      Navigator.push(
+                                        context,
+                                        MaterialPageRoute(
+                                          builder: (context) =>
+                                              SwitchUsersBuilding(
+                                            userID: id,
+                                          ),
+                                        ),
+                                      );
+                                    },
+                                    //"De-assign office"
+                                    color: Color(0xFF398AB9),
                                   ),
-                                );
-                              },
-                              //"De-assign office"
-                              color: Color(0xFF398AB9),
-                            ),
-                            MaterialButton(
-                              padding: EdgeInsets.symmetric(vertical: 10),
-                              minWidth: MediaQuery.of(context).size.width * 0.25,
-                              shape: RoundedRectangleBorder(
-                                  borderRadius: BorderRadius.circular(10)),
-                              child: Container(
-                                width: MediaQuery.of(context).size.width * 0.2,
-                                child: Center(
-                                  child: Text(
-                                    "De-assign a office",
-                                    style: TextStyle(color: Colors.white),
+                                  MaterialButton(
+                                    padding: EdgeInsets.symmetric(vertical: 10),
+                                    minWidth:
+                                        MediaQuery.of(context).size.width *
+                                            0.25,
+                                    shape: RoundedRectangleBorder(
+                                        borderRadius:
+                                            BorderRadius.circular(10)),
+                                    child: Container(
+                                      width: MediaQuery.of(context).size.width *
+                                          0.2,
+                                      child: const Center(
+                                        child: Text(
+                                          "De-assign a office",
+                                          style: TextStyle(color: Colors.white),
+                                        ),
+                                      ),
+                                    ),
+                                    onPressed: deAssignUsersOffice,
+                                    color: Color(0xFF398AB9),
                                   ),
-                                ),
-                              ),
-                              onPressed: deAssignUsersOffice,
-                              color: Color(0xFF398AB9),
-                            ),
-                            MaterialButton(
-                              padding: EdgeInsets.symmetric(vertical: 10),
-                              minWidth: MediaQuery.of(context).size.width * 0.25,
-                              shape: RoundedRectangleBorder(
-                                  borderRadius: BorderRadius.circular(10)),
-                              child: Container(
-                                  width: MediaQuery.of(context).size.width * 0.2,
-                                  child: Center(
-                                      child: Text( isActive ?
-                                    "Deactivate account" : "Activate account",
-                                    style: TextStyle(color: Colors.white),
-                                  ))),
-                              onPressed: _firebaseAuth.currentUser!.uid != id
-                                  ? () {
-                                      showDialog(
-                                          barrierDismissible: false,
-                                          context: context,
-                                          builder: (BuildContext context) {
-                                            return AlertDialog(
-
-                                              title: const Center(
-                                                  child: Text(
-                                                "Are you sure?",
-
-                                              )),
-                                              actions: [
-                                                Row(
-                                                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                                                  children: [
-                                                    Expanded(
-                                                      child: TextButton(
-                                                        onPressed: () {
-                                                          deactivateActivateAccount();
-                                                          Navigator.pop(context);
-                                                        },
-                                                        child: Text(
-                                                          isActive ?
-                                                          "Deactivate account" :
-                                                           "Activate account",
-                                                          style: TextStyle(
-                                                              color:
-                                                                  Colors.black),
-                                                        ),
-                                                        style: ButtonStyle(
-                                                          backgroundColor:
-                                                              MaterialStateProperty
-                                                                  .resolveWith(
-                                                                      (state) =>
-                                                                          Colors
-                                                                              .white),
-                                                          shape: MaterialStateProperty
-                                                              .all<
-                                                                  RoundedRectangleBorder>(
-                                                            RoundedRectangleBorder(
-                                                              borderRadius:
-                                                                  BorderRadius
-                                                                      .circular(
-                                                                          8.0),
-                                                            ),
+                                  MaterialButton(
+                                    padding: EdgeInsets.symmetric(vertical: 10),
+                                    minWidth:
+                                        MediaQuery.of(context).size.width *
+                                            0.25,
+                                    shape: RoundedRectangleBorder(
+                                        borderRadius:
+                                            BorderRadius.circular(10)),
+                                    child: Container(
+                                        width:
+                                            MediaQuery.of(context).size.width *
+                                                0.2,
+                                        child: Center(
+                                            child: Text(
+                                          isActive
+                                              ? "Deactivate account"
+                                              : "Activate account",
+                                          style: TextStyle(color: Colors.white),
+                                        ))),
+                                    onPressed:
+                                        _firebaseAuth.currentUser!.uid != id
+                                            ? () {
+                                                showDialog(
+                                                    barrierDismissible: false,
+                                                    context: context,
+                                                    builder:
+                                                        (BuildContext context) {
+                                                      return AlertDialog(
+                                                        title: const Center(
+                                                            child: Text(
+                                                          "Are you sure?",
+                                                        )),
+                                                        actions: [
+                                                          Row(
+                                                            mainAxisAlignment:
+                                                                MainAxisAlignment
+                                                                    .spaceEvenly,
+                                                            children: [
+                                                              Expanded(
+                                                                child:
+                                                                    TextButton(
+                                                                  onPressed:
+                                                                      () {
+                                                                    deactivateActivateAccount();
+                                                                    Navigator.pop(
+                                                                        context);
+                                                                  },
+                                                                  child: Text(
+                                                                    isActive
+                                                                        ? "Deactivate account"
+                                                                        : "Activate account",
+                                                                    style: const TextStyle(
+                                                                        color: Colors
+                                                                            .black),
+                                                                  ),
+                                                                  style:
+                                                                      ButtonStyle(
+                                                                    backgroundColor:
+                                                                        MaterialStateProperty.resolveWith((state) =>
+                                                                            Colors.white),
+                                                                    shape: MaterialStateProperty
+                                                                        .all<
+                                                                            RoundedRectangleBorder>(
+                                                                      RoundedRectangleBorder(
+                                                                        borderRadius:
+                                                                            BorderRadius.circular(8.0),
+                                                                      ),
+                                                                    ),
+                                                                  ),
+                                                                ),
+                                                              ),
+                                                              const SizedBox(
+                                                                width: 5,
+                                                              ),
+                                                              Expanded(
+                                                                child:
+                                                                    TextButton(
+                                                                  onPressed:
+                                                                      () {
+                                                                    Navigator.pop(
+                                                                        context);
+                                                                  },
+                                                                  child:
+                                                                      const Text(
+                                                                    "Cancel",
+                                                                    style: TextStyle(
+                                                                        color: Colors
+                                                                            .black),
+                                                                  ),
+                                                                  style:
+                                                                      ButtonStyle(
+                                                                    backgroundColor:
+                                                                        MaterialStateProperty.resolveWith((state) =>
+                                                                            Colors.white),
+                                                                    shape: MaterialStateProperty
+                                                                        .all<
+                                                                            RoundedRectangleBorder>(
+                                                                      RoundedRectangleBorder(
+                                                                        borderRadius:
+                                                                            BorderRadius.circular(8.0),
+                                                                      ),
+                                                                    ),
+                                                                  ),
+                                                                ),
+                                                              ),
+                                                            ],
                                                           ),
-                                                        ),
-                                                      ),
-                                                    ),
-                                                    const SizedBox(
-                                                      width: 5,
-                                                    ),
-                                                    Expanded(
-                                                      child: TextButton(
-                                                        onPressed: () {
-                                                          Navigator.pop(context);
-                                                        },
-                                                        child: const Text(
-                                                          "Cancel",
-                                                          style: TextStyle(
-                                                              color:
-                                                                  Colors.black),
-                                                        ),
-                                                        style: ButtonStyle(
-                                                          backgroundColor:
-                                                              MaterialStateProperty
-                                                                  .resolveWith(
-                                                                      (state) =>
-                                                                          Colors
-                                                                              .white),
-                                                          shape: MaterialStateProperty
-                                                              .all<
-                                                                  RoundedRectangleBorder>(
-                                                            RoundedRectangleBorder(
-                                                              borderRadius:
-                                                                  BorderRadius
-                                                                      .circular(
-                                                                          8.0),
-                                                            ),
-                                                          ),
-                                                        ),
-                                                      ),
-                                                    ),
-                                                  ],                          
+                                                        ],
+                                                      );
+                                                    });
+                                              }
+                                            : () {},
+                                    color: _firebaseAuth.currentUser!.uid != id
+                                        ? Color(0xFF398AB9)
+                                        : Colors.grey,
+                                  ),
+                                ],
+                              )
+                            : Provider.of<RoleProvider>(context).getRole() ==
+                                    'Employee'
+                                ? null
+                                : role == 'Employee'
+                                    ? Row(
+                                        mainAxisAlignment:
+                                            MainAxisAlignment.spaceEvenly,
+                                        children: [
+                                          MaterialButton(
+                                            padding: EdgeInsets.symmetric(
+                                                vertical: 10),
+                                            minWidth: MediaQuery.of(context)
+                                                    .size
+                                                    .width *
+                                                0.25,
+                                            shape: RoundedRectangleBorder(
+                                                borderRadius:
+                                                    BorderRadius.circular(10)),
+                                            child: Container(
+                                              width: MediaQuery.of(context)
+                                                      .size
+                                                      .width *
+                                                  0.2,
+                                              child: const Text(
+                                                "Assign a \n office",
+                                                style: TextStyle(
+                                                    color: Colors.white),
+                                              ),
+                                            ),
+                                            onPressed: () {
+                                              Navigator.push(
+                                                context,
+                                                MaterialPageRoute(
+                                                  builder: (context) =>
+                                                      SwitchUsersBuilding(
+                                                    userID: id,
+                                                  ),
                                                 ),
-                                              ],
-                                            );
-                                          });
-                                    }
-                                  : () {},
-                              color: _firebaseAuth.currentUser!.uid != id
-                                  ? Color(0xFF398AB9)
-                                  : Colors.grey,
-                            )
-                          ],
-                        ),
+                                              );
+                                            },
+                                            //"De-assign office"
+                                            color: Color(0xFF398AB9),
+                                          ),
+                                          MaterialButton(
+                                            padding: EdgeInsets.symmetric(
+                                                vertical: 10),
+                                            minWidth: MediaQuery.of(context)
+                                                    .size
+                                                    .width *
+                                                0.25,
+                                            shape: RoundedRectangleBorder(
+                                                borderRadius:
+                                                    BorderRadius.circular(10)),
+                                            child: Container(
+                                              width: MediaQuery.of(context)
+                                                      .size
+                                                      .width *
+                                                  0.2,
+                                              child: const Center(
+                                                child: Text(
+                                                  "De-assign a office",
+                                                  style: TextStyle(
+                                                      color: Colors.white),
+                                                ),
+                                              ),
+                                            ),
+                                            onPressed: deAssignUsersOffice,
+                                            color: Color(0xFF398AB9),
+                                          ),
+                                        ],
+                                      )
+                                    : null,
                       ),
                     ],
                   ),

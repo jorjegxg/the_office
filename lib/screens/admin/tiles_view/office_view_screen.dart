@@ -41,7 +41,7 @@ class _OfficeViewScreenState extends State<OfficeViewScreen>
   @override
   void initState() {
     super.initState();
-    _tabController = TabController(length: 3, vsync: this);
+    _tabController = TabController(length: 2, vsync: this);
     _tabController.addListener(_handleTabChange);
   }
 
@@ -155,11 +155,6 @@ class _OfficeViewScreenState extends State<OfficeViewScreen>
           tabs: const <Widget>[
             Tab(
               child: Icon(
-                Icons.dvr,
-              ),
-            ),
-            Tab(
-              child: Icon(
                 Icons.view_list,
               ),
             ),
@@ -172,7 +167,6 @@ class _OfficeViewScreenState extends State<OfficeViewScreen>
       body: TabBarView(
         controller: _tabController,
         children: [
-          GridTile(child: Text("esafgsae")),
           Column(
             children: [
               StreamBuilder(
