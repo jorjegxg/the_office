@@ -36,7 +36,6 @@ class _OfficeViewScreenState extends State<OfficeViewScreen>
   int occupiedDeskCount = -1;
   String idAdmin = "";
 
-  FirebaseFirestore _firestore = FirebaseFirestore.instance;
   late TabController _tabController;
 
   @override
@@ -300,7 +299,7 @@ class _OfficeViewScreenState extends State<OfficeViewScreen>
             ],
           ),
           StreamBuilder(
-              stream: _firestore
+              stream: _firebaseFirestore
                   .collection('Buildings')
                   .doc(widget.idBuilding)
                   .collection('Offices')

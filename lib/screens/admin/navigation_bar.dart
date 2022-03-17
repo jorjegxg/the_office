@@ -1,11 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:provider/provider.dart';
+import 'package:the_office/screens/admin/tiles_view/office_view_screen.dart';
 import '../../providers/role_provider.dart';
 import 'main_screens/building_search _screen.dart';
 import 'main_screens/user_search _screen.dart';
 import 'main_screens/remote_requests_screen.dart';
 import 'package:the_office/screens/admin/main_screens/user_profile_screen.dart';
+import 'package:the_office/screens/select_screens.dart';
 
 class NavigationScreen extends StatefulWidget {
   NavigationScreen({Key? key}) : super(key: key);
@@ -124,7 +126,7 @@ class _TabNavigatorState extends State<TabNavigator> {
         child = const UserSearchScreen();
         break;
       case "Page2":
-        child : BuildingSearchScreen();
+        child = SelectScreens();
         break;
       case "Page3":
         child = RemoteRequestScreen();
