@@ -1,9 +1,12 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 import 'package:the_office/screens/admin/create_screens/create_user.dart';
 import 'package:the_office/widgets/tiles/user_list_widget.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:the_office/widgets/text_field_input.dart';
+
+import '../../../providers/role_provider.dart';
 
 class UserSearchScreen extends StatefulWidget {
   const UserSearchScreen({Key? key}) : super(key: key);
@@ -26,17 +29,24 @@ class _UserSearchScreenState extends State<UserSearchScreen> {
         // shape: const RoundedRectangleBorder(
         //     borderRadius: BorderRadius.vertical(bottom: Radius.circular(20))),
       ),
-      floatingActionButton: FloatingActionButton(
-        child: const Icon(Icons.person_add),
-        onPressed: () {
-          Navigator.push(
-            context,
-            MaterialPageRoute(builder: (context) => const CreateUser()),
-          );
-        },
-      ),
+      floatingActionButton: Provider.of<RoleProvider>(context).getRole() ==
+              'Administrator'
+          ? FloatingActionButton(
+              child: const Icon(Icons.person_add),
+              onPressed: () {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(builder: (context) => const CreateUser()),
+                );
+              },
+            )
+          : null,
       body: Padding(
-        padding: const EdgeInsets.only(left: 10,right: 10,top: 20,),
+        padding: const EdgeInsets.only(
+          left: 10,
+          right: 10,
+          top: 20,
+        ),
         child: Column(
           children: [
             Expanded(
