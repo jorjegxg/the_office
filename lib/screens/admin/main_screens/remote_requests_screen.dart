@@ -18,7 +18,7 @@ class _RemoteRequestScreenState extends State<RemoteRequestScreen> {
   final TextEditingController textEditingController1 = TextEditingController();
   String? _dropDownValue = '0';
   var currentUserId = FirebaseAuth.instance.currentUser!.uid;
-
+  var hasOne = false;
   Widget bottomSheet(BuildContext context) {
     return StatefulBuilder(
       builder: (BuildContext context, setState) {

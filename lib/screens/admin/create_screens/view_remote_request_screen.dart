@@ -109,7 +109,9 @@ class ViewRemoteRequest extends StatelessWidget {
                     'requestStatus': false,
                   });
                   int count = 0;
-                  Navigator.of(context).popUntil((_) => count++ >= 2);
+                  textEditingController.text != ''
+                      ? Navigator.of(context).popUntil((_) => count++ >= 2)
+                      : SizedBox();
                 },
                 color: Colors.red,
               ),

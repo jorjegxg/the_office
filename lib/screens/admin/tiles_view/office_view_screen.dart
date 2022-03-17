@@ -29,14 +29,12 @@ class OfficeViewScreen extends StatefulWidget {
 
 class _OfficeViewScreenState extends State<OfficeViewScreen>
     with TickerProviderStateMixin {
-
   String officeName = "";
   int floorNumber = -1;
   int totalDeskCount = -1;
   int usableDeskCount = -1;
   int occupiedDeskCount = -1;
   String idAdmin = "";
-
 
   FirebaseFirestore _firestore = FirebaseFirestore.instance;
   late TabController _tabController;
@@ -48,17 +46,21 @@ class _OfficeViewScreenState extends State<OfficeViewScreen>
     _tabController.addListener(_handleTabChange);
   }
 
-  void getOfficeData() async{
-   var ref = await _firebaseFirestore.collection("Buildings").doc(widget.idBuilding).collection("Offices").doc(widget.id).get();
+  void getOfficeData() async {
+    var ref = await _firebaseFirestore
+        .collection("Buildings")
+        .doc(widget.idBuilding)
+        .collection("Offices")
+        .doc(widget.id)
+        .get();
 
-   officeName = ref['name'];
-   floorNumber = ref['floorsCount'];
-   totalDeskCount = ref['totalDeskCount'];
-   usableDeskCount = ref['usableDeskCount'];
-   idAdmin = ref['idAdmin'];
-   occupiedDeskCount = ref['numberOfOccupiedDesks'];
-   //print(occupiedDeskCount);
-
+    officeName = ref['name'];
+    floorNumber = ref['floorsCount'];
+    totalDeskCount = ref['totalDeskCount'];
+    usableDeskCount = ref['usableDeskCount'];
+    idAdmin = ref['idAdmin'];
+    occupiedDeskCount = ref['numberOfOccupiedDesks'];
+    //print(occupiedDeskCount);
   }
 
   @override
@@ -120,10 +122,9 @@ class _OfficeViewScreenState extends State<OfficeViewScreen>
 
   FirebaseFirestore _firebaseFirestore = FirebaseFirestore.instance;
 
-  
   @override
   Widget build(BuildContext context) {
-     getOfficeData();
+    getOfficeData();
     return Scaffold(
       appBar: AppBar(
         title: Text("Office ${widget.officeName}"),
@@ -163,7 +164,9 @@ class _OfficeViewScreenState extends State<OfficeViewScreen>
                 Icons.view_list,
               ),
             ),
-            Tab(child: Icon(Icons.info)),
+            Tab(
+              child: Icon(Icons.info),
+            ),
           ],
         ),
       ),
@@ -185,7 +188,7 @@ class _OfficeViewScreenState extends State<OfficeViewScreen>
                       return Center(child: CircularProgressIndicator());
                     } else {
                       idAdmin = snapshot.data['idAdmin'];
-                    
+
                       return StreamBuilder(
                           stream: _firebaseFirestore
                               .collection("Users")
@@ -197,7 +200,6 @@ class _OfficeViewScreenState extends State<OfficeViewScreen>
                             } else {
                               if (snapshot2.data['name'] != "No" &&
                                   snapshot2.data['lastName'] != "admin") {
-                                    
                                 return Column(
                                   children: [
                                     Padding(
@@ -315,12 +317,10 @@ class _OfficeViewScreenState extends State<OfficeViewScreen>
                       child: CircularProgressIndicator(),
                     );
                   } else {
-
                     officeName = widget.officeName;
                     floorNumber = snapshot.data['floorsCount'];
                     totalDeskCount = snapshot.data['totalDeskCount'];
                     usableDeskCount = snapshot.data['usableDeskCount'];
-                  
 
                     return Padding(
                       padding: const EdgeInsets.symmetric(
@@ -400,7 +400,8 @@ class _OfficeViewScreenState extends State<OfficeViewScreen>
                             ),
                             Center(
                               child: RawMaterialButton(
-                                shape: RoundedRectangleBorder(borderRadius:BorderRadius.circular(10)),
+                                shape: RoundedRectangleBorder(
+                                    borderRadius: BorderRadius.circular(10)),
                                 fillColor: Color(0xff398AB9),
                                 onPressed: () {
                                   showAlertDialog(context);
@@ -412,7 +413,8 @@ class _OfficeViewScreenState extends State<OfficeViewScreen>
                                   child: Center(
                                     child: Text(
                                       "Delete office",
-                                      style: TextStyle(fontSize: 20,color: Colors.white),
+                                      style: TextStyle(
+                                          fontSize: 20, color: Colors.white),
                                     ),
                                   ),
                                 ),

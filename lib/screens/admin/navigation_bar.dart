@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:provider/provider.dart';
+import '../../providers/role_provider.dart';
 import 'main_screens/building_search _screen.dart';
 import 'main_screens/user_search _screen.dart';
 import 'main_screens/remote_requests_screen.dart';
@@ -122,7 +124,7 @@ class _TabNavigatorState extends State<TabNavigator> {
         child = const UserSearchScreen();
         break;
       case "Page2":
-        child = BuildingSearchScreen();
+        child =Provider.of<RoleProvider>(context).getRole()!='Employee'? BuildingSearchScreen():;
         break;
       case "Page3":
         child = RemoteRequestScreen();
