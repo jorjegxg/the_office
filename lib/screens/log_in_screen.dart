@@ -1,3 +1,4 @@
+import 'package:animated_text_kit/animated_text_kit.dart';
 import 'package:flutter/material.dart';
 import 'package:the_office/widgets/custom_button.dart';
 import 'package:the_office/services/auth_methods.dart';
@@ -78,9 +79,16 @@ class _LogInScreenState extends State<LogInScreen> {
                   height: MediaQuery.of(context).size.height / 6,
                 ),
                 //titlu
-                const Text(
-                  'The office',
-                  style: TextStyle(fontSize: 45),
+                AnimatedTextKit(
+                  totalRepeatCount: 100,
+                  pause: Duration(milliseconds: 500),
+                  animatedTexts: [
+                    TyperAnimatedText( 'The office',
+                      textStyle: TextStyle(fontSize: 45),
+                      speed: Duration(milliseconds: 500),
+                    ),
+                  ],
+
                 ),
                 //spatiu
                 SizedBox(

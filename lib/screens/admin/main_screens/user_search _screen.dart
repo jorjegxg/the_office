@@ -61,8 +61,7 @@ class _UserSearchScreenState extends State<UserSearchScreen> {
                     children: [
                       Expanded(
                         child: TextField(
-                              autofocus: false,
-                            ///fa hint textul sa se duca sus dupa ce e apasat
+                            autofocus: false,
                             controller: _textController,
                             decoration: InputDecoration(
                               hintText: "Search users",
