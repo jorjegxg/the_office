@@ -13,7 +13,7 @@ class ContDezactivatScreen extends StatelessWidget {
         children: [
           Center(
             child: Text(
-              "Your account in deactivated \n sorry :(",
+              "Your account is deactivated \n sorry :(",
               style: TextStyle(fontSize: 25),
             ),
           ),

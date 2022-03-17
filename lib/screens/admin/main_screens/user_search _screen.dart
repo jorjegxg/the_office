@@ -16,10 +16,15 @@ class _UserSearchScreenState extends State<UserSearchScreen> {
   FirebaseFirestore _firebaseFirestore = FirebaseFirestore.instance;
 
   final TextEditingController _textController = TextEditingController();
-  final List<Widget> user_list = [];
-
+  String datiUpdateOdata = "";
   @override
   Widget build(BuildContext context) {
+    
+    final inputBorder = OutlineInputBorder(
+      borderRadius: BorderRadius.circular(12),
+      borderSide: Divider.createBorderSide(context),
+    );
+
     return Scaffold(
       appBar: AppBar(
         title: const Center(child: Text("Users")),
@@ -36,7 +41,11 @@ class _UserSearchScreenState extends State<UserSearchScreen> {
         },
       ),
       body: Padding(
-        padding: const EdgeInsets.only(left: 10,right: 10,top: 20,),
+        padding: const EdgeInsets.only(
+          left: 10,
+          right: 10,
+          top: 20,
+        ),
         child: Column(
           children: [
             Expanded(
@@ -45,117 +54,134 @@ class _UserSearchScreenState extends State<UserSearchScreen> {
                   Row(
                     children: [
                       Expanded(
-                        child: TextFieldInput(
-                          textEditingController: _textController,
-                          hintText: "Search users",
-                        ),
+                        child: TextField(
+
+                            ///fa hint textul sa se duca sus dupa ce e apasat
+                            controller: _textController,
+                            decoration: InputDecoration(
+                              hintText: "Search users",
+                              border: inputBorder,
+                              focusedBorder: inputBorder,
+                              enabledBorder: inputBorder,
+                              filled: true,
+                              contentPadding: const EdgeInsets.all(8),
+                            ),
+                            onChanged: (value){
+                              setState(() {
+                                datiUpdateOdata = value;
+                                print("datiUpdateOdata : " + datiUpdateOdata);
+                              });
+                            },
+                            onEditingComplete: () {
+                              FocusManager.instance.primaryFocus?.unfocus();
+                            }),
                       ),
-                      Padding(
-                        padding: const EdgeInsets.only(left: 10),
-                        child: GestureDetector(
-                          child: Icon(
-                            Icons.filter_list,
-                          ),
-                          onTap: () {
-                            // showDialog(
-                            //     barrierDismissible: false,
-                            //     context: context,
-                            //     builder: (BuildContext context) {
-                            //       return AlertDialog(
-                            //         shape: RoundedRectangleBorder(
-                            //             borderRadius: BorderRadius.circular(30)),
-                            //         backgroundColor: Theme.of(context).primaryColor,
-                            //         title: const Center(
-                            //             child: Text(
-                            //           "Search filters",
-                            //           style: TextStyle(
-                            //               color: Colors.white, fontSize: 30),
-                            //         )),
-                            //         actions: [
-                            //           Column(
-                            //             children: [
-                            //               DropdownButton(
-                            //                 isExpanded: true,
-                            //                 focusColor: Colors.grey,
-                            //                 value: selectedGender,
-                            //                 items: genderItems,
-                            //                 onChanged: (String? value) {
-                            //                   setState(() {
-                            //                     selectedGender = value!;
-                            //                   });
-                            //                 },
-                            //               ),
-                            //               DropdownButton(
-                            //                 isExpanded: true,
-                            //                 focusColor: Colors.grey,
-                            //                 value: selectedGender,
-                            //                 items: genderItems,
-                            //                 onChanged: (String? value) {
-                            //                   setState(() {
-                            //                     selectedGender = value!;
-                            //                   });
-                            //                 },
-                            //               ),
-                            //             ],
-                            //           ),
-                            //           Row(
-                            //             children: [
-                            //               Expanded(
-                            //                 child: TextButton(
-                            //                   onPressed: () {
-                            //                     Navigator.pop(context);
-                            //                   },
-                            //                   child: const Text(
-                            //                     "Deactivate account",
-                            //                     style: TextStyle(color: Colors.black),
-                            //                   ),
-                            //                   style: ButtonStyle(
-                            //                     backgroundColor:
-                            //                         MaterialStateProperty.resolveWith(
-                            //                             (state) => Colors.white),
-                            //                     shape: MaterialStateProperty.all<
-                            //                         RoundedRectangleBorder>(
-                            //                       RoundedRectangleBorder(
-                            //                         borderRadius:
-                            //                             BorderRadius.circular(18.0),
-                            //                       ),
-                            //                     ),
-                            //                   ),
-                            //                 ),
-                            //               ),
-                            //               const SizedBox(
-                            //                 width: 5,
-                            //               ),
-                            //               Expanded(
-                            //                 child: TextButton(
-                            //                   onPressed: () {
-                            //                     Navigator.pop(context);
-                            //                   },
-                            //                   child: const Text(
-                            //                     "Cancel",
-                            //                     style: TextStyle(color: Colors.black),
-                            //                   ),
-                            //                   style: ButtonStyle(
-                            //                     backgroundColor:
-                            //                         MaterialStateProperty.resolveWith(
-                            //                             (state) => Colors.white),
-                            //                     shape: MaterialStateProperty.all<
-                            //                         RoundedRectangleBorder>(
-                            //                       RoundedRectangleBorder(
-                            //                         borderRadius:
-                            //                             BorderRadius.circular(18.0),
-                            //                       ),
-                            //                     ),
-                            //                   ),
-                            //                 ),
-                            //               ),
-                            //             ],
-                            //           ),
-                            //         ],
-                            //       );)};
-                          },
-                        ),
-                      ),
+                      // Padding(
+                      //   padding: const EdgeInsets.only(left: 10),
+                      //   child: GestureDetector(
+                      //     child: Icon(
+                      //       Icons.filter_list,
+                      //     ),
+                      //     onTap: () {
+                      //       // showDialog(
+                      //       //     barrierDismissible: false,
+                      //       //     context: context,
+                      //       //     builder: (BuildContext context) {
+                      //       //       return AlertDialog(
+                      //       //         shape: RoundedRectangleBorder(
+                      //       //             borderRadius: BorderRadius.circular(30)),
+                      //       //         backgroundColor: Theme.of(context).primaryColor,
+                      //       //         title: const Center(
+                      //       //             child: Text(
+                      //       //           "Search filters",
+                      //       //           style: TextStyle(
+                      //       //               color: Colors.white, fontSize: 30),
+                      //       //         )),
+                      //       //         actions: [
+                      //       //           Column(
+                      //       //             children: [
+                      //       //               DropdownButton(
+                      //       //                 isExpanded: true,
+                      //       //                 focusColor: Colors.grey,
+                      //       //                 value: selectedGender,
+                      //       //                 items: genderItems,
+                      //       //                 onChanged: (String? value) {
+                      //       //                   setState(() {
+                      //       //                     selectedGender = value!;
+                      //       //                   });
+                      //       //                 },
+                      //       //               ),
+                      //       //               DropdownButton(
+                      //       //                 isExpanded: true,
+                      //       //                 focusColor: Colors.grey,
+                      //       //                 value: selectedGender,
+                      //       //                 items: genderItems,
+                      //       //                 onChanged: (String? value) {
+                      //       //                   setState(() {
+                      //       //                     selectedGender = value!;
+                      //       //                   });
+                      //       //                 },
+                      //       //               ),
+                      //       //             ],
+                      //       //           ),
+                      //       //           Row(
+                      //       //             children: [
+                      //       //               Expanded(
+                      //       //                 child: TextButton(
+                      //       //                   onPressed: () {
+                      //       //                     Navigator.pop(context);
+                      //       //                   },
+                      //       //                   child: const Text(
+                      //       //                     "Deactivate account",
+                      //       //                     style: TextStyle(color: Colors.black),
+                      //       //                   ),
+                      //       //                   style: ButtonStyle(
+                      //       //                     backgroundColor:
+                      //       //                         MaterialStateProperty.resolveWith(
+                      //       //                             (state) => Colors.white),
+                      //       //                     shape: MaterialStateProperty.all<
+                      //       //                         RoundedRectangleBorder>(
+                      //       //                       RoundedRectangleBorder(
+                      //       //                         borderRadius:
+                      //       //                             BorderRadius.circular(18.0),
+                      //       //                       ),
+                      //       //                     ),
+                      //       //                   ),
+                      //       //                 ),
+                      //       //               ),
+                      //       //               const SizedBox(
+                      //       //                 width: 5,
+                      //       //               ),
+                      //       //               Expanded(
+                      //       //                 child: TextButton(
+                      //       //                   onPressed: () {
+                      //       //                     Navigator.pop(context);
+                      //       //                   },
+                      //       //                   child: const Text(
+                      //       //                     "Cancel",
+                      //       //                     style: TextStyle(color: Colors.black),
+                      //       //                   ),
+                      //       //                   style: ButtonStyle(
+                      //       //                     backgroundColor:
+                      //       //                         MaterialStateProperty.resolveWith(
+                      //       //                             (state) => Colors.white),
+                      //       //                     shape: MaterialStateProperty.all<
+                      //       //                         RoundedRectangleBorder>(
+                      //       //                       RoundedRectangleBorder(
+                      //       //                         borderRadius:
+                      //       //                             BorderRadius.circular(18.0),
+                      //       //                       ),
+                      //       //                     ),
+                      //       //                   ),
+                      //       //                 ),
+                      //       //               ),
+                      //       //             ],
+                      //       //           ),
+                      //       //         ],
+                      //       //       );)};
+                      //     },
+                      //   ),
+                      // ),
                     ],
                   ),
                   SizedBox(
@@ -169,17 +195,38 @@ class _UserSearchScreenState extends State<UserSearchScreen> {
                         if (!snapshot.hasData) {
                           return Center(child: CircularProgressIndicator());
                         } else {
+                          print("Stream are data");
                           return Column(
                             children: snapshot.data!.docs.map((doc) {
                               if (doc['id'] == 'GRzHoyaXc2WzB9AcHK41caRSYtI3') {
                                 return Container();
                               }
-                              return UserListWidget(
-                                nume: '${doc['name']} ${doc['lastName']}',
-                                imagine: doc['pictureUrl'],
-                                rol: doc['role'],
-                                id: doc['id'],
-                              );
+                              if (datiUpdateOdata == "") {
+                                print(datiUpdateOdata);
+                                return UserListWidget(
+                                  nume: '${doc['name']} ${doc['lastName']}',
+                                  imagine: doc['pictureUrl'],
+                                  rol: doc['role'],
+                                  id: doc['id'],
+                                );
+                              } else {
+                                print("Textfield are ceva in el");
+                                print("Numele : " + doc['name']);
+
+                                if ((doc['name'] as String).toLowerCase()
+                                    .contains(datiUpdateOdata.toLowerCase()) || (doc['lastName'] as String).toLowerCase()
+                                    .contains(datiUpdateOdata.toLowerCase())) {
+                                  print("Numele contine");
+                                  return UserListWidget(
+                                    nume: '${doc['name']} ${doc['lastName']}',
+                                    imagine: doc['pictureUrl'],
+                                    rol: doc['role'],
+                                    id: doc['id'],
+                                  );
+                                } else {
+                                  return Container();
+                                }
+                              }
                             }).toList(),
                           );
                         }
