@@ -357,17 +357,11 @@ class UserProfileView extends StatelessWidget {
                                           context: context,
                                           builder: (BuildContext context) {
                                             return AlertDialog(
-                                              shape: RoundedRectangleBorder(
-                                                  borderRadius:
-                                                      BorderRadius.circular(5)),
-                                              backgroundColor:
-                                                  Theme.of(context).primaryColor,
+
                                               title: const Center(
                                                   child: Text(
                                                 "Are you sure?",
-                                                style: TextStyle(
-                                                    color: Colors.white,
-                                                    fontSize: 30),
+
                                               )),
                                               actions: [
                                                 Row(

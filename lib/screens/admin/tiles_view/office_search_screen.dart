@@ -22,6 +22,8 @@ class OfficeSearchScreen extends StatefulWidget {
 
 class _OfficeSearchScreenState extends State<OfficeSearchScreen>
     with TickerProviderStateMixin {
+
+  String valoareSearch = "";
   FirebaseFirestore _firebaseFirestore = FirebaseFirestore.instance;
 
   final TextEditingController _textController = TextEditingController();
@@ -65,6 +67,12 @@ class _OfficeSearchScreenState extends State<OfficeSearchScreen>
 
   @override
   Widget build(BuildContext context) {
+
+    final inputBorder = OutlineInputBorder(
+      borderRadius: BorderRadius.circular(12),
+      borderSide: Divider.createBorderSide(context),
+    );
+
     return Scaffold(
       appBar: AppBar(
         centerTitle: true,
@@ -105,117 +113,134 @@ class _OfficeSearchScreenState extends State<OfficeSearchScreen>
                 Row(
                   children: [
                     Expanded(
-                      child: TextFieldInput(
-                        textEditingController: _textController,
-                        hintText: "Search office",
-                      ),
-                    ),
-                    Padding(
-                      padding: const EdgeInsets.only(left: 10),
-                      child: GestureDetector(
-                        child: Icon(
-                          Icons.filter_list,
+                      child: TextField(
+                        autofocus: false,
+                        ///fa hint textul sa se duca sus dupa ce e apasat
+                        controller: _textController,
+                        decoration: InputDecoration(
+                          hintText: "Search office",
+                          border: inputBorder,
+                          focusedBorder: inputBorder,
+                          enabledBorder: inputBorder,
+                          filled: true,
+                          contentPadding: const EdgeInsets.all(8),
                         ),
-                        onTap: () {
-                          // showDialog(
-                          //     barrierDismissible: false,
-                          //     context: context,
-                          //     builder: (BuildContext context) {
-                          //       return AlertDialog(
-                          //         shape: RoundedRectangleBorder(
-                          //             borderRadius: BorderRadius.circular(30)),
-                          //         backgroundColor: Theme.of(context).primaryColor,
-                          //         title: const Center(
-                          //             child: Text(
-                          //           "Search filters",
-                          //           style: TextStyle(
-                          //               color: Colors.white, fontSize: 30),
-                          //         )),
-                          //         actions: [
-                          //           Column(
-                          //             children: [
-                          //               DropdownButton(
-                          //                 isExpanded: true,
-                          //                 focusColor: Colors.grey,
-                          //                 value: selectedGender,
-                          //                 items: genderItems,
-                          //                 onChanged: (String? value) {
-                          //                   setState(() {
-                          //                     selectedGender = value!;
-                          //                   });
-                          //                 },
-                          //               ),
-                          //               DropdownButton(
-                          //                 isExpanded: true,
-                          //                 focusColor: Colors.grey,
-                          //                 value: selectedGender,
-                          //                 items: genderItems,
-                          //                 onChanged: (String? value) {
-                          //                   setState(() {
-                          //                     selectedGender = value!;
-                          //                   });
-                          //                 },
-                          //               ),
-                          //             ],
-                          //           ),
-                          //           Row(
-                          //             children: [
-                          //               Expanded(
-                          //                 child: TextButton(
-                          //                   onPressed: () {
-                          //                     Navigator.pop(context);
-                          //                   },
-                          //                   child: const Text(
-                          //                     "Deactivate account",
-                          //                     style: TextStyle(color: Colors.black),
-                          //                   ),
-                          //                   style: ButtonStyle(
-                          //                     backgroundColor:
-                          //                         MaterialStateProperty.resolveWith(
-                          //                             (state) => Colors.white),
-                          //                     shape: MaterialStateProperty.all<
-                          //                         RoundedRectangleBorder>(
-                          //                       RoundedRectangleBorder(
-                          //                         borderRadius:
-                          //                             BorderRadius.circular(18.0),
-                          //                       ),
-                          //                     ),
-                          //                   ),
-                          //                 ),
-                          //               ),
-                          //               const SizedBox(
-                          //                 width: 5,
-                          //               ),
-                          //               Expanded(
-                          //                 child: TextButton(
-                          //                   onPressed: () {
-                          //                     Navigator.pop(context);
-                          //                   },
-                          //                   child: const Text(
-                          //                     "Cancel",
-                          //                     style: TextStyle(color: Colors.black),
-                          //                   ),
-                          //                   style: ButtonStyle(
-                          //                     backgroundColor:
-                          //                         MaterialStateProperty.resolveWith(
-                          //                             (state) => Colors.white),
-                          //                     shape: MaterialStateProperty.all<
-                          //                         RoundedRectangleBorder>(
-                          //                       RoundedRectangleBorder(
-                          //                         borderRadius:
-                          //                             BorderRadius.circular(18.0),
-                          //                       ),
-                          //                     ),
-                          //                   ),
-                          //                 ),
-                          //               ),
-                          //             ],
-                          //           ),
-                          //         ],
-                          //       );)};
+                        onChanged: (value){
+                          setState(() {
+                          valoareSearch = value;
+                          });
                         },
+                        onEditingComplete: () {
+                            FocusManager.instance.primaryFocus?.unfocus();
+                        }
                       ),
                     ),
+                    // Padding(
+                    //   padding: const EdgeInsets.only(left: 10),
+                    //   child: GestureDetector(
+                    //     child: Icon(
+                    //       Icons.filter_list,
+                    //     ),
+                    //     onTap: () {
+                    //       // showDialog(
+                    //       //     barrierDismissible: false,
+                    //       //     context: context,
+                    //       //     builder: (BuildContext context) {
+                    //       //       return AlertDialog(
+                    //       //         shape: RoundedRectangleBorder(
+                    //       //             borderRadius: BorderRadius.circular(30)),
+                    //       //         backgroundColor: Theme.of(context).primaryColor,
+                    //       //         title: const Center(
+                    //       //             child: Text(
+                    //       //           "Search filters",
+                    //       //           style: TextStyle(
+                    //       //               color: Colors.white, fontSize: 30),
+                    //       //         )),
+                    //       //         actions: [
+                    //       //           Column(
+                    //       //             children: [
+                    //       //               DropdownButton(
+                    //       //                 isExpanded: true,
+                    //       //                 focusColor: Colors.grey,
+                    //       //                 value: selectedGender,
+                    //       //                 items: genderItems,
+                    //       //                 onChanged: (String? value) {
+                    //       //                   setState(() {
+                    //       //                     selectedGender = value!;
+                    //       //                   });
+                    //       //                 },
+                    //       //               ),
+                    //       //               DropdownButton(
+                    //       //                 isExpanded: true,
+                    //       //                 focusColor: Colors.grey,
+                    //       //                 value: selectedGender,
+                    //       //                 items: genderItems,
+                    //       //                 onChanged: (String? value) {
+                    //       //                   setState(() {
+                    //       //                     selectedGender = value!;
+                    //       //                   });
+                    //       //                 },
+                    //       //               ),
+                    //       //             ],
+                    //       //           ),
+                    //       //           Row(
+                    //       //             children: [
+                    //       //               Expanded(
+                    //       //                 child: TextButton(
+                    //       //                   onPressed: () {
+                    //       //                     Navigator.pop(context);
+                    //       //                   },
+                    //       //                   child: const Text(
+                    //       //                     "Deactivate account",
+                    //       //                     style: TextStyle(color: Colors.black),
+                    //       //                   ),
+                    //       //                   style: ButtonStyle(
+                    //       //                     backgroundColor:
+                    //       //                         MaterialStateProperty.resolveWith(
+                    //       //                             (state) => Colors.white),
+                    //       //                     shape: MaterialStateProperty.all<
+                    //       //                         RoundedRectangleBorder>(
+                    //       //                       RoundedRectangleBorder(
+                    //       //                         borderRadius:
+                    //       //                             BorderRadius.circular(18.0),
+                    //       //                       ),
+                    //       //                     ),
+                    //       //                   ),
+                    //       //                 ),
+                    //       //               ),
+                    //       //               const SizedBox(
+                    //       //                 width: 5,
+                    //       //               ),
+                    //       //               Expanded(
+                    //       //                 child: TextButton(
+                    //       //                   onPressed: () {
+                    //       //                     Navigator.pop(context);
+                    //       //                   },
+                    //       //                   child: const Text(
+                    //       //                     "Cancel",
+                    //       //                     style: TextStyle(color: Colors.black),
+                    //       //                   ),
+                    //       //                   style: ButtonStyle(
+                    //       //                     backgroundColor:
+                    //       //                         MaterialStateProperty.resolveWith(
+                    //       //                             (state) => Colors.white),
+                    //       //                     shape: MaterialStateProperty.all<
+                    //       //                         RoundedRectangleBorder>(
+                    //       //                       RoundedRectangleBorder(
+                    //       //                         borderRadius:
+                    //       //                             BorderRadius.circular(18.0),
+                    //       //                       ),
+                    //       //                     ),
+                    //       //                   ),
+                    //       //                 ),
+                    //       //               ),
+                    //       //             ],
+                    //       //           ),
+                    //       //         ],
+                    //       //       );)};
+                    //     },
+                    //   ),
+                    // ),
                   ],
                 ),
                 StreamBuilder<QuerySnapshot>(
@@ -233,14 +258,31 @@ class _OfficeSearchScreenState extends State<OfficeSearchScreen>
                           child: Column(
                             children: snapshot.data!.docs
                                 .map(
-                                  (element) => OfficeListWidget(
-                                    buildingName: widget.buildingName,
-                                    idBuilding: widget.idBuilding,
-                                    nume: element['name'],
-                                    imagine: element['pictureUrl'],
-                                    id: element['id'],
-                                    building: widget.buildingName,
-                                  ),
+                                  (element) {
+                                    if(valoareSearch == ""){
+                                      return OfficeListWidget(
+                                        buildingName: widget.buildingName,
+                                        idBuilding: widget.idBuilding,
+                                        nume: element['name'],
+                                        imagine: element['pictureUrl'],
+                                        id: element['id'],
+                                        building: widget.buildingName,
+                                      );
+                                    }else{
+                                      if((element['name'] as String).toLowerCase().contains(valoareSearch.toLowerCase())){
+                                        return OfficeListWidget(
+                                          buildingName: widget.buildingName,
+                                          idBuilding: widget.idBuilding,
+                                          nume: element['name'],
+                                          imagine: element['pictureUrl'],
+                                          id: element['id'],
+                                          building: widget.buildingName,
+                                        );
+                                      }else{
+                                        return Container();
+                                      }
+                                    }
+                                  }
                                 )
                                 .toList(),
                           ),

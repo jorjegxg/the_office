@@ -86,6 +86,7 @@ class _UserProfileState extends State<UserProfile> {
           "Profile",
           style: TextStyle(fontSize: 23),
         ),
+        centerTitle: true,
         actions: [
           GestureDetector(
             child: Icon(Icons.logout),

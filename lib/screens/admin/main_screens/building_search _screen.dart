@@ -51,6 +51,7 @@ class _BuildingSearchScreenState extends State<BuildingSearchScreen> {
               children: [
                 Expanded(
                   child: TextField(
+                    autofocus: false,
                     ///fa hint textul sa se duca sus dupa ce e apasat
                     controller: _textController,
                     decoration: InputDecoration(
