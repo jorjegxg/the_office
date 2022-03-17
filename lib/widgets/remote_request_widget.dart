@@ -30,7 +30,7 @@ class RemoteRequestWidget extends StatelessWidget {
                 ),
                 color: Theme.of(context).primaryColor,
                 child: ListTile(
-                  minVerticalPadding: 10,
+                  minVerticalPadding: 15,
                   title: Row(
                     children: [
                       CircleAvatar(
@@ -119,7 +119,7 @@ class RemoteRequestWidget extends StatelessWidget {
             ),
             color: Theme.of(context).primaryColor,
             child: ListTile(
-              minVerticalPadding: 10,
+              minVerticalPadding: 15,
               title: Row(
                 children: [
                   CircleAvatar(

@@ -16,15 +16,22 @@ class _RemoteRequestScreenState extends State<RemoteRequestScreen> {
   FirebaseFirestore _firebaseFirestore = FirebaseFirestore.instance;
   final TextEditingController textEditingController = TextEditingController();
   final TextEditingController textEditingController1 = TextEditingController();
-  String? _dropDownValue;
+  String? _dropDownValue = '0';
   var currentUserId = FirebaseAuth.instance.currentUser!.uid;
-
+  var hasOne = false;
   Widget bottomSheet(BuildContext context) {
     return StatefulBuilder(
       builder: (BuildContext context, setState) {
         return Column(
           mainAxisSize: MainAxisSize.min,
           children: [
+            const Padding(
+              padding: EdgeInsets.only(top: 8.0),
+              child: Text(
+                "Remote percentage",
+                style: TextStyle(fontSize: 20),
+              ),
+            ),
             Padding(
               padding: const EdgeInsets.only(
                 left: 20.0,
@@ -38,24 +45,14 @@ class _RemoteRequestScreenState extends State<RemoteRequestScreen> {
                 ),
                 child: Padding(
                   padding: const EdgeInsets.all(10.0),
-                  child: DropdownButton(
-                    hint: const Text("Select Percentage"),
-                    value: _dropDownValue,
-                    isExpanded: true,
-                    iconSize: 20.0,
-                    style: const TextStyle(color: Colors.black),
-                    items: List<String>.generate(
-                        100, (int index) => '${index + 1}').map(
-                      (val) {
-                        return DropdownMenuItem<String>(
-                          value: val,
-                          child: Text(val),
-                        );
-                      },
-                    ).toList(),
-                    onChanged: (String? val) {
+                  child: Slider(
+                    value: double.parse(_dropDownValue!),
+                    max: 100,
+                    divisions: 100,
+                    label: "${double.parse(_dropDownValue!).round()}%",
+                    onChanged: (double value) {
                       setState(() {
-                        _dropDownValue = val;
+                        _dropDownValue = value.toString();
                       });
                     },
                   ),
@@ -133,7 +130,7 @@ class _RemoteRequestScreenState extends State<RemoteRequestScreen> {
 
                       Navigator.pop(context);
                     },
-                    color: Colors.grey[400],
+                    color: Colors.green[400],
                   ),
                 ),
                 const SizedBox(
