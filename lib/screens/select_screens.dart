@@ -14,10 +14,11 @@ class SelectScreens extends StatelessWidget {
   var currentUserId = FirebaseAuth.instance.currentUser!.uid;
   String id = '', idBuilding = '', buildingName = '', officeName = '';
 
-  void getOfficeData() async {
+  Future<void> getOfficeData() async {
     var ref1 = await _firestore.collection('Users').doc(currentUserId).get();
-    id = ref1['office'];
-    idBuilding = ref1['building'];
+    id = await ref1['office'];
+    idBuilding = await ref1['building'];
+
     if (!id.isEmpty && !idBuilding.isEmpty) {
       var ref = await _firestore
           .collection("Buildings")
@@ -25,25 +26,30 @@ class SelectScreens extends StatelessWidget {
           .collection("Offices")
           .doc(id)
           .get();
-      var ref2 =
-          await _firestore.collection("Buildings").doc(ref1[idBuilding]).get();
-      buildingName = ref2['name'];
-      officeName = ref['name'];
+      var ref2 = await _firestore.collection("Buildings").doc(idBuilding).get();
+      buildingName = await ref2['name'];
+      officeName = await ref['name'];
     }
+    print(id);
+    print(idBuilding);
   }
 
   @override
   Widget build(BuildContext context) {
     getOfficeData();
-    return Provider.of<RoleProvider>(context).getRole() != 'Employee'
-        ? BuildingSearchScreen()
-        : (!id.isEmpty && !idBuilding.isEmpty)
-            ? OfficeViewScreen(
-                id: id,
-                idBuilding: idBuilding,
-                buildingName: buildingName,
-                officeName: officeName,
-              )
-            : EmptyOffice();
+    return FutureBuilder(
+        future: getOfficeData(),
+        builder: (context, snapshot) {
+          return Provider.of<RoleProvider>(context).getRole() != 'Employee'
+              ? BuildingSearchScreen()
+              : (!id.isEmpty && !idBuilding.isEmpty)
+                  ? OfficeViewScreen(
+                      id: id,
+                      idBuilding: idBuilding,
+                      buildingName: buildingName,
+                      officeName: officeName,
+                    )
+                  : EmptyOffice();
+        });
   }
 }
